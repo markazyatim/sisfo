@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yayasan Markaz Yatim Duafa Qurani</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-green: #008767;
+            --sky-gradient: linear-gradient(135deg, #e0f2f1 0%, #ffffff 100%);
+        }
+
+        body { background-color: #f4f7f6; font-family: 'Inter', sans-serif; margin: 0; }
+
+        /* Top Bar */
+        .top-bar { background-color: var(--primary-green); color: white; font-size: 0.8rem; padding: 10px 0; }
+        .top-bar a { color: white; text-decoration: none; transition: 0.3s; }
+        .top-bar a:hover { opacity: 0.8; }
+
+        /* Navbar */
+        .navbar { background-color: white; box-shadow: 0 2px 10px rgba(0,0,0,0.1); padding: 10px 0; }
+        .navbar-brand img { height: 45px; margin-right: 12px; }
+        .brand-text .main-name { font-weight: 700; color: #2c3e50; line-height: 1.1; font-size: 0.95rem; text-transform: uppercase; }
+        
+        .nav-menu-custom .nav-link {
+            color: #475569 !important;
+            font-weight: 700;
+            font-size: 0.85rem;
+            margin: 0 8px;
+            text-transform: uppercase;
+            cursor: pointer;
+        }
+        .nav-menu-custom .nav-link.active { color: var(--primary-green) !important; border-bottom: 2px solid var(--primary-green); }
+        .btn-login { background-color: var(--primary-green); color: white !important; font-weight: 700; border-radius: 5px; padding: 5px 20px !important; }
+
+        /* Hero Section (Tanpa Gambar Orang/Gedung) */
+        .hero {
+            background: var(--sky-gradient);
+            min-height: 250px; /* Diperkecil karena gambar dihilangkan */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 40px 20px;
+        }
+        .hero-logo img { width: 80px; margin-bottom: 20px; }
+        .hero-title { font-weight: 800; font-size: 2rem; color: #333; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* Card Form */
+        .form-section { margin-top: -30px; position: relative; z-index: 100; max-width: 850px; margin-bottom: 80px; }
+        .card { border: none; border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.15); min-height: 200px; background: white; }
+        
+        .placeholder-text { padding: 60px 20px; text-align: center; color: #94a3b8; }
+        .placeholder-text i { font-size: 3.5rem; margin-bottom: 15px; opacity: 0.2; color: var(--primary-green); }
+
+        .section-header { color: var(--primary-green); font-weight: 700; margin-bottom: 20px; border-bottom: 2px solid #f1f5f9; padding-bottom: 8px; font-size: 1.1rem; }
+        .btn-submit { background-color: var(--primary-green); border: none; padding: 14px; font-weight: 700; border-radius: 12px; transition: 0.3s; }
+        .btn-submit:hover { background-color: #006b52; transform: translateY(-2px); }
+
+        #loading {
+            background: rgba(255,255,255,0.9); position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            z-index: 1000; display: flex; flex-direction: column; justify-content: center; align-items: center; border-radius: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="top-bar">
+    <div class="container d-flex justify-content-between">
+        <div>
+            <a href="https://maps.app.goo.gl/ovmQiQMX4edV4xM66">
+                <i class="fas fa-map-marker-alt me-2"></i> Klik Lokasi: Yayasan Markaz Yatim Duafa Qurani
+            </a>
+        </div>
+        <div class="d-none d-md-block"><i class="fas fa-envelope me-2"></i> info@markazyatim.org</div>
+    </div>
+</div>
+
+<nav class="navbar navbar-expand-lg sticky-top">
+    <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="index.html">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/9/9c/Logo_of_Ministry_of_Education_and_Culture_of_Republic_of_Indonesia.p.svg" alt="Logo">
+            <div class="brand-text">
+                <div class="main-name">YAYASAN MARKAZ</div>
+                <div class="main-name">YATIM DUAFA QURANI</div>
+            </div>
+        </a>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto align-items-center nav-menu-custom nav nav-pills" id="pills-tab">
+                <li class="nav-item">
+                    <button class="nav-link" data-bs-toggle="pill" data-bs-target="#tab-santri">Santri</button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" data-bs-toggle="pill" data-bs-target="#tab-pegawai">Pegawai</button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" data-bs-toggle="pill" data-bs-target="#tab-jadwal">Jadwal</button>
+                </li>
+                <li class="nav-item ms-lg-3">
+                    <a href="#" class="nav-link btn-login text-white">LOGIN</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<section class="hero">
+    <div class="hero-logo"><img src="https://upload.wikimedia.org/wikipedia/commons/9/9c/Logo_of_Ministry_of_Education_and_Culture_of_Republic_of_Indonesia.p.svg" alt="Logo"></div>
+    <h1 class="hero-title">SISTEM DATA TERPADU<br>MARKAZ QURANI</h1>
+</section>
+
+<div class="container form-section">
+    <div class="card position-relative">
+        <div id="loading" class="d-none">
+            <div class="spinner-border text-success" style="width: 3rem; height: 3rem;"></div>
+            <p class="mt-3 fw-bold">Sedang Mengolah Data...</p>
+        </div>
+
+        <div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane fade show active">
+                <div class="placeholder-text">
+                    <i class="fas fa-hand-pointer d-block"></i>
+                    <h4>Selamat Datang</h4>
+                    <p>Silakan klik menu <b>Santri</b>, <b>Pegawai</b>, atau <b>Jadwal</b> untuk mulai mengisi data.</p>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="tab-santri">
+                <div class="p-4">
+                    <form id="formSantri">
+                        <div class="section-header"><i class="fas fa-user-graduate me-2"></i>DATA PRIBADI SANTRI</div>
+                        <div class="mb-3"><label class="form-label fw-bold">Nama Lengkap Santri</label><input type="text" name="nama" class="form-control" placeholder="Input Nama" required></div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3"><label class="form-label fw-bold">Tempat Lahir</label><input type="text" name="tempatlahir" class="form-control" required></div>
+                            <div class="col-md-6 mb-3"><label class="form-label fw-bold">Tanggal Lahir</label><input type="date" name="tanggallahir" class="form-control" required></div>
+                        </div>
+
+                        <div class="section-header mt-4"><i class="fas fa-users me-2"></i>DATA ORANG TUA / WALI</div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3"><label class="form-label fw-bold">Nama Ayah</label><input type="text" name="ayah" class="form-control" required></div>
+                            <div class="col-md-6 mb-3"><label class="form-label fw-bold">Nama Ibu</label><input type="text" name="ibu" class="form-control" required></div>
+                        </div>
+                        <div class="mb-3"><label class="form-label fw-bold">No. HP Orang Tua (WhatsApp)</label><input type="number" name="hp_ortu" class="form-control" placeholder="08xxxx" required></div>
+
+                        <div class="section-header mt-4"><i class="fas fa-id-card me-2"></i>DATA TAMBAHAN</div>
+                        <div class="mb-3"><label class="form-label fw-bold">NIK Santri (Sesuai KK)</label><input type="number" name="nik" class="form-control" required></div>
+                        <div class="mb-3"><label class="form-label fw-bold">Alamat Lengkap</label><textarea name="alamat" class="form-control" rows="2" placeholder="Alamat asal santri" required></textarea></div>
+
+                        <input type="hidden" name="targetSheet" value="Santri">
+                        <button type="submit" class="btn btn-success btn-submit w-100 text-white mt-3">SIMPAN DATA SANTRI</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="tab-pegawai">
+                <div class="p-4">
+                    <form id="formPegawai">
+                        <div class="section-header"><i class="fas fa-user-tie me-2"></i>DATA USTADZ / PEGAWAI</div>
+                        <div class="mb-3"><label class="form-label fw-bold">Nama Lengkap</label><input type="text" name="nama" class="form-control" required></div>
+                        <div class="mb-3"><label class="form-label fw-bold">Jabatan / Bagian</label><input type="text" name="jabatan" class="form-control" placeholder="Contoh: Pengajar Tahfidz" required></div>
+                        <input type="hidden" name="targetSheet" value="Pegawai">
+                        <button type="submit" class="btn btn-success btn-submit w-100 text-white mt-3">SIMPAN DATA PEGAWAI</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="tab-jadwal">
+                <div class="p-4">
+                    <form id="formJadwal">
+                        <div class="section-header"><i class="fas fa-calendar-alt me-2"></i>JADWAL KEGIATAN</div>
+                        <div class="mb-3"><label class="form-label fw-bold">Nama Kegiatan</label><input type="text" name="mapel" class="form-control" placeholder="Nama Halaqah/Pelajaran" required></div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Hari</label>
+                                <select name="hari" class="form-select">
+                                    <option>Senin</option><option>Selasa</option><option>Rabu</option><option>Kamis</option><option>Jumat</option><option>Sabtu</option><option>Ahad</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3"><label class="form-label fw-bold">Waktu</label><input type="text" name="jam" class="form-control" placeholder="05:00 - 07:00" required></div>
+                        </div>
+                        <input type="hidden" name="targetSheet" value="Jadwal">
+                        <button type="submit" class="btn btn-success btn-submit w-100 text-white mt-3">SIMPAN JADWAL</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // MASUKKAN URL GOOGLE APPS SCRIPT ANDA DI SINI
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzJAoH4U-NDERQT2ZsyS935zQ7UsqgcsW9f7cEmWCFGtcbUonr2JhDc90FEudip5Fzg/exec";
+
+    document.querySelectorAll('form').forEach(form => {
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+            document.getElementById('loading').classList.remove('d-none');
+            
+            fetch(SCRIPT_URL, { method: 'POST', body: new URLSearchParams(new FormData(form))})
+            .then(res => res.text())
+            .then(hasil => {
+                document.getElementById('loading').classList.add('d-none');
+                alert("Alhamdulillah, data berhasil disimpan!");
+                form.reset();
+            })
+            .catch(err => {
+                document.getElementById('loading').classList.add('d-none');
+                alert("Terjadi kesalahan koneksi.");
+            });
+        });
+    });
+</script>
+</body>
+</html>
