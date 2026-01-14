@@ -42,37 +42,36 @@
         
         <div class="tab-pane fade show active" id="tab-santri">
             <div class="card p-4">
-                <div class="d-flex justify-content-between mb-3">
-                    <h4>Data Santri</h4>
-                    <button class="btn btn-success" onclick="openModal('Santri')"><i class="fa fa-plus"></i> Tambah Santri</button>
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="fw-bold text-success">DATA SANTRI</h4>
+                    <button class="btn btn-success" onclick="openModal('Santri')"><i class="fa fa-plus"></i> TAMBAH SANTRI</button>
                 </div>
-                <button class="btn btn-outline-primary mb-3" onclick="loadData('Santri')">Tampilkan Semua Data Santri</button>
-                <div id="out-Santri" class="table-responsive"></div>
-            </div>
+                <button class="btn btn-outline-success w-100 mb-3" onclick="loadData('Santri')">TAMPILKAN / REFRESH DATA SANTRI</button>
+                <div id="out-Santri"></div> </div>
         </div>
 
         <div class="tab-pane fade" id="tab-pegawai">
             <div class="card p-4">
-                <div class="d-flex justify-content-between mb-3">
-                    <h4>Data Pegawai</h4>
-                    <button class="btn btn-success" onclick="openModal('Pegawai')"><i class="fa fa-plus"></i> Tambah Pegawai</button>
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="fw-bold text-success">DATA PEGAWAI</h4>
+                    <button class="btn btn-success" onclick="openModal('Pegawai')"><i class="fa fa-plus"></i> TAMBAH PEGAWAI</button>
                 </div>
-                <button class="btn btn-outline-primary mb-3" onclick="loadData('Pegawai')">Tampilkan Semua Data Pegawai</button>
-                <div id="out-Pegawai" class="table-responsive"></div>
+                <button class="btn btn-outline-success w-100 mb-3" onclick="loadData('Pegawai')">TAMPILKAN / REFRESH DATA PEGAWAI</button>
+                <div id="out-Pegawai"></div>
             </div>
         </div>
 
         <div class="tab-pane fade" id="tab-jadwal">
             <div class="card p-4">
-                <div class="d-flex justify-content-between mb-3">
-                    <h4>Mata Pelajaran</h4>
-                    <div>
-                        <button class="btn btn-primary" onclick="loadData('Jadwal', 'Ganjil')">Ganjil</button>
-                        <button class="btn btn-info text-white" onclick="loadData('Jadwal', 'Genap')">Genap</button>
-                        <button class="btn btn-success" onclick="openModal('Jadwal')"><i class="fa fa-plus"></i> Tambah Pelajaran</button>
-                    </div>
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="fw-bold text-success">MATA PELAJARAN</h4>
+                    <button class="btn btn-success" onclick="openModal('Jadwal')"><i class="fa fa-plus"></i> TAMBAH PELAJARAN</button>
                 </div>
-                <div id="out-Jadwal" class="table-responsive text-nowrap"></div>
+                <div class="btn-group w-100 mb-3">
+                    <button class="btn btn-primary" onclick="loadData('Jadwal', 'Ganjil')">LIHAT SEMESTER GANJIL</button>
+                    <button class="btn btn-info text-white" onclick="loadData('Jadwal', 'Genap')">LIHAT SEMESTER GENAP</button>
+                </div>
+                <div id="out-Jadwal"></div>
             </div>
         </div>
 
@@ -214,4 +213,5 @@
 </script>
 </body>
 </html>
+
 
