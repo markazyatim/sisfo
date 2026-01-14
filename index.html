@@ -13,45 +13,33 @@
             --sidebar-active: #0099ff; 
             --content-bg: #f4f7f9;
         }
-
         body { background-color: var(--content-bg); font-family: 'Segoe UI', sans-serif; }
-
-        /* Sidebar Styling */
         .wrapper { display: flex; align-items: stretch; min-height: 100vh; }
         #sidebar {
-            min-width: 260px;
-            max-width: 260px;
-            background: var(--sidebar-bg);
-            color: #fff;
-            position: fixed;
-            height: 100%;
-            transition: 0.3s;
+            min-width: 260px; max-width: 260px;
+            background: var(--sidebar-bg); color: #fff;
+            position: fixed; height: 100%; transition: 0.3s;
         }
         .sidebar-header { padding: 30px 20px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); }
         .sidebar-header h5 { font-size: 0.9rem; font-weight: bold; line-height: 1.5; }
-        
         #sidebar ul li { padding: 5px 15px; }
         #sidebar ul li a {
-            padding: 12px 15px;
-            display: block;
-            color: rgba(255,255,255,0.7);
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: 500;
+            padding: 12px 15px; display: block; color: rgba(255,255,255,0.7);
+            text-decoration: none; border-radius: 8px; font-weight: 500;
         }
         #sidebar ul li a i { margin-right: 12px; width: 20px; text-align: center; }
         #sidebar ul li a.active { background: var(--sidebar-active); color: white; }
-
-        /* Content Styling */
         #content { width: 100%; padding: 30px; margin-left: 260px; }
         .card { border-radius: 12px; border: none; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
         .section-title { background: #e9ecef; padding: 10px; font-weight: bold; color: #1a2c3d; border-left: 5px solid var(--sidebar-active); margin: 15px 0; border-radius: 4px; }
-
-        /* Loading Screen */
         #loading { 
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
             background: rgba(255,255,255,0.8); z-index: 9999; justify-content: center; align-items: center; flex-direction: column;
         }
+        /* Style Tambahan untuk Search Box */
+        .search-box { position: relative; }
+        .search-box i { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #6c757d; }
+        .search-box input { padding-left: 45px; border-radius: 10px; }
     </style>
 </head>
 <body>
@@ -78,44 +66,51 @@
             
             <div class="tab-pane fade show active" id="tab-santri">
                 <div class="card p-4">
-                    <h5 class="fw-bold mb-4">Input Data Santri</h5>
-                    <div class="search-container mb-4">
-            <div class="input-group">
-                <span class="input-group-text bg-white border-end-0">
-                    <i class="fas fa-search text-muted"></i>
-                </span>
-                <input type="text" id="cariSantri" class="form-control border-start-0 ps-0" 
-                       placeholder="Ketik Nama, NIK, atau Status untuk menyaring data..." 
-                       onkeyup="filterTabel('Santri', 'cariSantri')">
-            </div>
-        </div>
-                    <div class="mt-4">
-                        <button class="btn btn-primary px-4" onclick="quickSaveSantri()">Simpan</button>
-                        <button class="btn btn-outline-dark ms-2" onclick="loadData('Santri')">Tampilkan Data</button>
+                    <h5 class="fw-bold mb-4">Data Santri</h5>
+                    <div class="row g-2 mb-3">
+                        <div class="col-md-9 search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="cariSantri" class="form-control" placeholder="Cari Nama, NIK, atau Status Santri..." onkeyup="filterTabel('Santri', 'cariSantri')">
+                        </div>
+                        <div class="col-md-3">
+                            <button class="btn btn-primary w-100" onclick="openModal('Santri')"><i class="fa fa-plus me-2"></i>Tambah Santri</button>
+                        </div>
                     </div>
-                    <div id="out-Santri" class="mt-4"></div>
+                    <button class="btn btn-outline-dark btn-sm mb-3" onclick="loadData('Santri')"><i class="fas fa-sync"></i> Refresh</button>
+                    <div id="out-Santri"></div>
                 </div>
             </div>
 
             <div class="tab-pane fade" id="tab-pegawai">
                 <div class="card p-4">
-                    <div class="d-flex justify-content-between mb-3">
-                        <h5 class="fw-bold">Data Pegawai</h5>
-                        <button class="btn btn-primary btn-sm" onclick="openModal('Pegawai')"><i class="fa fa-plus"></i> Tambah Pegawai</button>
+                    <h5 class="fw-bold mb-4">Data Pegawai</h5>
+                    <div class="row g-2 mb-3">
+                        <div class="col-md-9 search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="cariPegawai" class="form-control" placeholder="Cari Nama atau Jabatan Pegawai..." onkeyup="filterTabel('Pegawai', 'cariPegawai')">
+                        </div>
+                        <div class="col-md-3">
+                            <button class="btn btn-primary w-100" onclick="openModal('Pegawai')"><i class="fa fa-plus me-2"></i>Tambah Pegawai</button>
+                        </div>
                     </div>
-                    <button class="btn btn-outline-dark w-100 mb-3" onclick="loadData('Pegawai')">Refresh Data Pegawai</button>
+                    <button class="btn btn-outline-dark btn-sm mb-3" onclick="loadData('Pegawai')"><i class="fas fa-sync"></i> Refresh</button>
                     <div id="out-Pegawai"></div>
                 </div>
             </div>
 
             <div class="tab-pane fade" id="tab-jadwal">
                 <div class="card p-4">
-                    <div class="d-flex justify-content-between mb-3">
-                        <h5 class="fw-bold">Jadwal Pelajaran</h5>
-                        <button class="btn btn-primary btn-sm" onclick="openModal('Jadwal')"><i class="fa fa-plus"></i> Tambah Jadwal</button>
+                    <h5 class="fw-bold mb-4">Jadwal Pelajaran</h5>
+                    <div class="row g-2 mb-3">
+                        <div class="col-md-9 search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="cariJadwal" class="form-control" placeholder="Cari Hari, Materi, atau Guru..." onkeyup="filterTabel('Jadwal', 'cariJadwal')">
+                        </div>
+                        <div class="col-md-3">
+                            <button class="btn btn-primary w-100" onclick="openModal('Jadwal')"><i class="fa fa-plus me-2"></i>Tambah Jadwal</button>
+                        </div>
                     </div>
-                    <div class="btn-group w-100 mb-3">
-                    </div>
+                    <button class="btn btn-outline-dark btn-sm mb-3" onclick="loadData('Jadwal')"><i class="fas fa-sync"></i> Refresh Jadwal</button>
                     <div id="out-Jadwal"></div>
                 </div>
             </div>
@@ -134,7 +129,7 @@
                 </div>
                 <div class="modal-body" id="modalBody"></div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary w-100">Simpan Perubahan</button>
+                    <button type="submit" class="btn btn-primary w-100">Simpan Data</button>
                 </div>
             </form>
         </div>
@@ -143,22 +138,21 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwy1f9x5BSjlW9dCYad2qyv3IEkLAhyTTyXcsPIGAUIMfCVPnPYtwT_QfBQ95FxukDV/exec";
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwy1f9x5BSjlW9dCYad2qyv3IEkLAhyTTyXcsPIGAUIMfCVPnPYtwT_QfBQ95FxukDV/exec"; // Ganti dengan URL script Anda
 
     function toggleLoading(s) { document.getElementById('loading').style.display = s ? 'flex' : 'none'; }
 
-    // 1. OTOMATIS LOAD DATA SAAT PINDAH TAB
+    // OTOMATIS LOAD DATA SAAT PINDAH TAB
     document.querySelectorAll('a[data-bs-toggle="tab"]').forEach(tab => {
         tab.addEventListener('shown.bs.tab', (e) => {
-            const target = e.target.getAttribute("href");
-            if (target === "#tab-santri") loadData('Santri');
-            if (target === "#tab-pegawai") loadData('Pegawai');
-            if (target === "#tab-jadwal") loadData('Jadwal', 'Ganjil');
+            const target = e.target.getAttribute("href").replace("#tab-", "");
+            const type = target.charAt(0).toUpperCase() + target.slice(1);
+            loadData(type);
         });
     });
 
-    // 2. LOAD DATA
-    function loadData(type, filter = null) {
+    // FUNGSI LOAD DATA (Jadwal muncul tanpa filter paksaan)
+    function loadData(type) {
         toggleLoading(true);
         const container = document.getElementById('out-' + type);
         container.innerHTML = `<div class="text-center p-3"><div class="spinner-border text-primary"></div></div>`;
@@ -166,15 +160,17 @@
         fetch(`${SCRIPT_URL}?targetSheet=${type}`)
         .then(r => r.json())
         .then(res => {
-            let filteredRows = res.rows;
-            if (type === 'Jadwal' && filter) filteredRows = res.rows.filter(r => String(r[10]).trim() === filter);
-
-            let html = `<div class="table-responsive"><table class="table table-bordered table-sm align-middle bg-white small">`;
+            if (res.rows.length === 0) {
+                container.innerHTML = "<div class='alert alert-info'>Data kosong.</div>";
+                toggleLoading(false);
+                return;
+            }
+            let html = `<div class="table-responsive"><table class="table table-hover table-bordered table-sm align-middle bg-white small">`;
             html += `<thead class="table-dark text-nowrap"><tr>`;
             res.header.forEach(h => html += `<th>${h}</th>`);
             html += `<th class="text-center">AKSI</th></tr></thead><tbody>`;
             
-            filteredRows.forEach((row) => {
+            res.rows.forEach((row) => {
                 let actualIndex = res.rows.indexOf(row) + 2; 
                 html += `<tr>`;
                 row.forEach(cell => html += `<td>${cell || '-'}</td>`);
@@ -188,48 +184,42 @@
         }).catch(() => { container.innerHTML = "Gagal memuat data."; toggleLoading(false); });
     }
 
-    // 3. QUICK SAVE SANTRI (FORM DEPAN)
-    function quickSaveSantri() {
-        const formData = new URLSearchParams();
-        formData.append("targetSheet", "Santri");
-        formData.append("nama", document.getElementById('q_nama').value);
-        formData.append("nik", document.getElementById('q_nik').value);
-        formData.append("status", document.getElementById('q_status').value);
-
-        if(!document.getElementById('q_nama').value) return alert("Nama wajib diisi!");
-        
-        toggleLoading(true);
-        fetch(SCRIPT_URL, { method: 'POST', body: formData }).then(r => r.text()).then(res => {
-            alert(res);
-            location.reload();
-        });
+    // FUNGSI PENCARIAN GLOBAL
+    function filterTabel(type, inputId) {
+        let input = document.getElementById(inputId);
+        let filter = input.value.toUpperCase();
+        let table = document.getElementById('out-' + type).getElementsByTagName("table")[0];
+        if (!table) return;
+        let tr = table.getElementsByTagName("tr");
+        for (let i = 1; i < tr.length; i++) {
+            let text = tr[i].textContent || tr[i].innerText;
+            tr[i].style.display = text.toUpperCase().indexOf(filter) > -1 ? "" : "none";
+        }
     }
 
-    // 4. MODAL UNTUK PEGAWAI & JADWAL
+    // MODAL UNTUK SEMUA DATA
     function openModal(type, rowData = null, rowIndex = "") {
         document.getElementById('modalTitle').innerText = (rowData ? "EDIT " : "TAMBAH ") + type.toUpperCase();
         let body = `<input type="hidden" name="targetSheet" value="${type}"><input type="hidden" name="rowIndex" value="${rowIndex}">`;
 
-        if (type === 'Pegawai') {
+        if (type === 'Santri') {
+            body += `<div class="row g-3">
+                <div class="col-12"><label class="small fw-bold">Nama Lengkap</label><input type="text" name="nama" class="form-control" required value="${rowData?.[1]||''}"></div>
+                <div class="col-md-6"><label class="small fw-bold">NIK</label><input type="number" name="nik" class="form-control" value="${rowData?.[6]||''}"></div>
+                <div class="col-md-6"><label class="small fw-bold">Status</label><select name="status" class="form-select"><option>Umum</option><option>Yatim</option><option>Duafa</option></select></div>
+                <div class="col-12"><label class="small fw-bold">Alamat</label><textarea name="alamat" class="form-control">${rowData?.[3]||''}</textarea></div>
+            </div>`;
+        } else if (type === 'Pegawai') {
             body += `<div class="row g-3">
                 <div class="col-12"><label class="small fw-bold">Nama</label><input type="text" name="nama" class="form-control" required value="${rowData?.[1]||''}"></div>
-                <div class="col-md-6"><label class="small fw-bold">Tgl Lahir</label><input type="date" name="tgl_lahir" class="form-control" value="${rowData?.[2]||''}"></div>
-                <div class="col-md-6"><label class="small fw-bold">No HP</label><input type="text" name="hp" class="form-control" value="${rowData?.[5]||''}"></div>
                 <div class="col-12"><label class="small fw-bold">Jabatan</label><input type="text" name="jabatan" class="form-control" value="${rowData?.[4]||''}"></div>
-                <div class="col-12"><label class="small fw-bold">Alamat</label><textarea name="alamat" class="form-control" rows="2">${rowData?.[3]||''}</textarea></div>
             </div>`;
         } else if (type === 'Jadwal') {
             body += `<div class="row g-2">
-                <div class="col-md-6"><label class="small fw-bold">Bulan ke-</label><input type="number" name="bulan" class="form-control" value="${rowData?.[1]||''}"></div>
-                <div class="col-md-6"><label class="small fw-bold">Semester</label><select name="semester" class="form-select"><option>Ganjil</option><option>Genap</option></select></div>
-                <div class="col-md-4"><label class="small fw-bold">Hari</label><input type="text" name="hari" class="form-control" value="${rowData?.[2]||''}"></div>
-                <div class="col-md-4"><label class="small fw-bold">Waktu</label><input type="text" name="waktu" class="form-control" value="${rowData?.[3]||''}"></div>
-                <div class="col-md-4"><label class="small fw-bold">SKS</label><input type="number" name="sks" class="form-control" value="${rowData?.[4]||''}"></div>
-                <div class="col-md-6"><label class="small fw-bold">Materi</label><input type="text" name="materi" class="form-control" required value="${rowData?.[8]||''}"></div>
-                <div class="col-md-6"><label class="small fw-bold">Guru</label><input type="text" name="guru" class="form-control" value="${rowData?.[9]||''}"></div>
-                <div class="col-md-4"><label class="small fw-bold">Ruang</label><input type="text" name="ruang" class="form-control" value="${rowData?.[5]||''}"></div>
-                <div class="col-md-4"><label class="small fw-bold">Kelompok</label><input type="text" name="kelompok" class="form-control" value="${rowData?.[6]||''}"></div>
-                <div class="col-md-4"><label class="small fw-bold">Klaster</label><input type="text" name="klaster" class="form-control" value="${rowData?.[7]||''}"></div>
+                <div class="col-md-6"><label class="small fw-bold">Hari</label><input type="text" name="hari" class="form-control" value="${rowData?.[2]||''}"></div>
+                <div class="col-md-6"><label class="small fw-bold">Waktu</label><input type="text" name="waktu" class="form-control" value="${rowData?.[3]||''}"></div>
+                <div class="col-md-12"><label class="small fw-bold">Materi</label><input type="text" name="materi" class="form-control" value="${rowData?.[8]||''}"></div>
+                <div class="col-md-12"><label class="small fw-bold">Guru</label><input type="text" name="guru" class="form-control" value="${rowData?.[9]||''}"></div>
             </div>`;
         }
 
@@ -237,16 +227,18 @@
         new bootstrap.Modal(document.getElementById('mainModal')).show();
     }
 
-    // 5. SUBMIT & DELETE
     document.getElementById('mainForm').onsubmit = function(e) {
         e.preventDefault();
         toggleLoading(true);
         fetch(SCRIPT_URL, { method: 'POST', body: new URLSearchParams(new FormData(this))})
-        .then(r => r.text()).then(res => { alert(res); location.reload(); });
+        .then(r => r.text()).then(res => { alert(res); loadData(new FormData(this).get('targetSheet')); bootstrap.Modal.getInstance(document.getElementById('mainModal')).hide(); toggleLoading(false); });
     };
 
     function handleEdit(t, d, i) { openModal(t, d, i); }
-    function deleteRow(t, i) { if(confirm("Hapus data?")) { toggleLoading(true); fetch(`${SCRIPT_URL}?action=delete&targetSheet=${t}&rowIndex=${i}`, {method: 'POST'}).then(() => location.reload()); } }
+    function deleteRow(t, i) { if(confirm("Hapus data?")) { toggleLoading(true); fetch(`${SCRIPT_URL}?action=delete&targetSheet=${t}&rowIndex=${i}`, {method: 'POST'}).then(() => loadData(t)); } }
+
+    // Load data santri saat pertama buka
+    window.onload = () => loadData('Santri');
 </script>
 </body>
 </html>
