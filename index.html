@@ -19,6 +19,7 @@
             min-width: 260px; max-width: 260px;
             background: var(--sidebar-bg); color: #fff;
             position: fixed; height: 100%; transition: 0.3s;
+            z-index: 1000;
         }
         .sidebar-header { padding: 30px 20px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); }
         #sidebar ul li a {
@@ -28,8 +29,6 @@
         #sidebar ul li a.active { background: var(--sidebar-active); color: white; }
         #content { width: 100%; padding: 30px; margin-left: 260px; }
         .card { border-radius: 12px; border: none; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
-        
-        /* Gaya Nama Clickable */
         .clickable-name { color: var(--sidebar-active); font-weight: bold; cursor: pointer; text-decoration: underline; }
         
         #loading { 
@@ -38,6 +37,7 @@
         }
         .detail-row { display: flex; padding: 8px 0; border-bottom: 1px solid #eee; }
         .detail-label { width: 40%; font-weight: bold; color: #555; }
+        .section-title { background: #f8f9fa; padding: 8px; font-weight: bold; border-left: 4px solid var(--sidebar-active); margin-bottom: 15px; font-size: 0.9rem; }
     </style>
 </head>
 <body>
@@ -61,6 +61,7 @@
 
     <div id="content">
         <div class="tab-content">
+            
             <div class="tab-pane fade show active" id="tab-santri">
                 <div class="card p-4">
                     <div class="d-flex justify-content-between align-items-center mb-3">
@@ -91,10 +92,14 @@
 
             <div class="tab-pane fade" id="tab-jadwal">
                 <div class="card p-4">
-                    <h5 class="fw-bold mb-3">Jadwal Pelajaran</h5>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="fw-bold m-0">Jadwal Pelajaran</h5>
+                        <button class="btn btn-primary btn-sm" onclick="openModal('Jadwal')"><i class="fa fa-plus me-2"></i>Tambah Jadwal</button>
+                    </div>
                     <div id="out-Jadwal"></div>
                 </div>
             </div>
+
         </div>
     </div>
 </div>
@@ -137,7 +142,6 @@
 
     function toggleLoading(s) { document.getElementById('loading').style.display = s ? 'flex' : 'none'; }
 
-    // FUNGSI LOAD DATA
     function loadData(type) {
         toggleLoading(true);
         const container = document.getElementById('out-' + type);
@@ -146,7 +150,7 @@
         fetch(`${SCRIPT_URL}?targetSheet=${type}`)
         .then(r => r.json())
         .then(res => {
-            if (res.rows.length === 0) {
+            if (!res.rows || res.rows.length === 0) {
                 container.innerHTML = "<div class='alert alert-info'>Data tidak ditemukan.</div>";
                 toggleLoading(false);
                 return;
@@ -154,24 +158,19 @@
 
             let html = `<div class="table-responsive"><table class="table table-hover table-bordered table-sm align-middle bg-white small">`;
             html += `<thead class="table-dark"><tr>`;
-            
-            // Header Tabel
             res.header.forEach(h => html += `<th>${h}</th>`);
             html += `<th class="text-center">AKSI</th></tr></thead><tbody>`;
             
             res.rows.forEach((row, idx) => {
                 let actualIndex = idx + 2; 
                 html += `<tr>`;
-                
                 row.forEach((cell, cellIdx) => {
-                    // Jika sel adalah kolom NAMA (indeks 1), buat bisa diklik
                     if(cellIdx === 1) {
                         html += `<td><span class="clickable-name" onclick='viewDetail(${JSON.stringify(res.header)}, ${JSON.stringify(row)})'>${cell || '-'}</span></td>`;
                     } else {
                         html += `<td>${cell || '-'}</td>`;
                     }
                 });
-
                 html += `<td class="text-center text-nowrap">
                             <button class="btn btn-sm btn-warning text-white" onclick='handleEdit("${type}", ${JSON.stringify(row)}, ${actualIndex})'><i class="fa fa-edit"></i></button>
                             <button class="btn btn-sm btn-danger" onclick="deleteRow('${type}', ${actualIndex})"><i class="fa fa-trash"></i></button>
@@ -180,59 +179,90 @@
             container.innerHTML = html + `</tbody></table></div>`;
             toggleLoading(false);
         }).catch(err => { 
-            console.error(err);
             container.innerHTML = "Gagal memuat data."; 
             toggleLoading(false); 
         });
     }
 
-    // FUNGSI DETAIL (POP UP SEMUA DATA)
     function viewDetail(headers, row) {
         let body = "";
         headers.forEach((h, i) => {
-            body += `<div class="detail-row">
-                        <div class="detail-label">${h}</div>
-                        <div class="detail-value">${row[i] || '-'}</div>
-                     </div>`;
+            body += `<div class="detail-row"><div class="detail-label">${h}</div><div class="detail-value">${row[i] || '-'}</div></div>`;
         });
         document.getElementById('detailBody').innerHTML = body;
         new bootstrap.Modal(document.getElementById('detailModal')).show();
     }
 
-    // FUNGSI MODAL FORM
     function openModal(type, rowData = null, rowIndex = "") {
         document.getElementById('modalTitle').innerText = (rowData ? "EDIT " : "TAMBAH ") + type.toUpperCase();
         let body = `<input type="hidden" name="targetSheet" value="${type}"><input type="hidden" name="rowIndex" value="${rowIndex}">`;
 
         if (type === 'Santri') {
-            body += `<div class="row g-3">
-                <div class="col-12"><label class="small fw-bold">Nama Lengkap</label><input type="text" name="nama" class="form-control" required value="${rowData?.[1]||''}"></div>
-                <div class="col-md-6"><label class="small fw-bold">NIK</label><input type="text" name="nik" class="form-control" value="${rowData?.[6]||''}"></div>
-                <div class="col-md-6"><label class="small fw-bold">Status</label>
-                    <select name="status" class="form-select">
-                        <option value="Umum" ${rowData?.[18] === 'Umum' ? 'selected' : ''}>Umum</option>
-                        <option value="Yatim" ${rowData?.[18] === 'Yatim' ? 'selected' : ''}>Yatim</option>
-			<option value="Yatim" ${rowData?.[18] === 'Piatu' ? 'selected' : ''}>Piatu</option>
-                        <option value="Duafa" ${rowData?.[18] === 'Duafa' ? 'selected' : ''}>Duafa</option>
-                    </select>
+            body += `
+            <div class="row">
+                <div class="col-md-6 border-end">
+                    <div class="section-title text-primary">DATA DIRI SANTRI</div>
+                    <div class="row g-2">
+                        <div class="col-12"><label class="small fw-bold">Nama Lengkap</label><input type="text" name="nama" class="form-control form-control-sm" required value="${rowData?.[1]||''}"></div>
+                        <div class="col-md-6"><label class="small fw-bold">Tgl Lahir</label><input type="date" name="tgl_lahir" class="form-control form-control-sm" value="${rowData?.[2]||''}"></div>
+                        <div class="col-md-6"><label class="small fw-bold">Jenis Kelamin</label>
+                            <select name="gender" class="form-select form-select-sm">
+                                <option value="Laki-laki" ${rowData?.[9] === 'Laki-laki' ? 'selected' : ''}>Laki-laki</option>
+                                <option value="Perempuan" ${rowData?.[9] === 'Perempuan' ? 'selected' : ''}>Perempuan</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6"><label class="small fw-bold">NIK</label><input type="text" name="nik" class="form-control form-control-sm" value="${rowData?.[6]||''}"></div>
+                        <div class="col-md-6"><label class="small fw-bold">No. KK</label><input type="text" name="no_kk" class="form-control form-control-sm" value="${rowData?.[7]||''}"></div>
+                        <div class="col-12"><label class="small fw-bold">Tempat Lahir</label><input type="text" name="tempat_lahir" class="form-control form-control-sm" value="${rowData?.[8]||''}"></div>
+                        <div class="col-md-6"><label class="small fw-bold">Jabatan</label><input type="text" name="jabatan" class="form-control form-control-sm" value="${rowData?.[4]||''}"></div>
+                        <div class="col-md-6"><label class="small fw-bold">Musyrif</label><input type="text" name="musyrif" class="form-control form-control-sm" value="${rowData?.[5]||''}"></div>
+                        <div class="col-12"><label class="small fw-bold">Alamat</label><textarea name="alamat" class="form-control form-control-sm" rows="2">${rowData?.[3]||''}</textarea></div>
+                    </div>
                 </div>
-                <div class="col-12"><label class="small fw-bold">Alamat</label><textarea name="alamat" class="form-control">${rowData?.[3]||''}</textarea></div>
+                <div class="col-md-6">
+                    <div class="section-title text-success">DATA KELUARGA & STATUS</div>
+                    <div class="row g-2">
+                        <div class="col-12"><label class="small fw-bold">Nama Ayah</label><input type="text" name="nama_ayah" class="form-control form-control-sm" value="${rowData?.[10]||''}"></div>
+                        <div class="col-12"><label class="small fw-bold">Nama Ibu</label><input type="text" name="nama_ibu" class="form-control form-control-sm" value="${rowData?.[11]||''}"></div>
+                        <div class="col-md-6"><label class="small fw-bold">Anak Ke-</label><input type="number" name="anak_ke" class="form-control form-control-sm" value="${rowData?.[12]||''}"></div>
+                        <div class="col-md-6"><label class="small fw-bold">Jml Saudara</label><input type="number" name="jml_saudara" class="form-control form-control-sm" value="${rowData?.[13]||''}"></div>
+                        <div class="col-md-6"><label class="small fw-bold">Tgl Masuk</label><input type="date" name="tgl_masuk" class="form-control form-control-sm" value="${rowData?.[15]||''}"></div>
+                        <div class="col-md-6"><label class="small fw-bold">Status</label>
+                            <select name="status" class="form-select form-select-sm">
+                                <option value="Umum" ${rowData?.[18] === 'Umum' ? 'selected' : ''}>Umum</option>
+                                <option value="Yatim" ${rowData?.[18] === 'Yatim' ? 'selected' : ''}>Yatim</option>
+                                <option value="Piatu" ${rowData?.[18] === 'Piatu' ? 'selected' : ''}>Piatu</option>
+                                <option value="Duafa" ${rowData?.[18] === 'Duafa' ? 'selected' : ''}>Duafa</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
             </div>`;
         } else if (type === 'Pegawai') {
-            // Urutan input disesuaikan dengan kolom Spreadsheet Anda agar tidak bergeser
             body += `<div class="row g-3">
                 <div class="col-12"><label class="small fw-bold">Nama Pegawai</label><input type="text" name="nama" class="form-control" required value="${rowData?.[1]||''}"></div>
-                <div class="col-md-6"><label class="small fw-bold">Tanggal Lahir</label><input type="date" name="tgl_lahir" class="form-control" value="${rowData?.[2]||''}"></div>
-               
-<div class="col-12"><label class="small fw-bold">Alamat</label><textarea name="alamat" class="form-control">${rowData?.[3]||''}</textarea></div> 
-             <div class="col-12"><label class="small fw-bold">Jabatan</label><input type="text" name="jabatan" class="form-control" value="${rowData?.[4]||''}"></div>
-                <div class="col-md-12"><label class="small fw-bold">No HP / WhatsApp</label><input type="number" name="no_hp" class="form-control" value="${rowData?.[5]||''}"></div>                   
- <div class="col-md-6"><label class="small fw-bold">Jenis Kelamin</label><select name="jenis_kelamin" class="form-select">
-                        <option value="Laki-laki" ${rowData?.[6] === 'Laki-laki' ? 'selected' : ''}>Laki-laki</option>
-                        <option value="Perempuan" ${rowData?.[6] === 'Perempuan' ? 'selected' : ''}>Perempuan</option>
+                <div class="col-md-6"><label class="small fw-bold">Tgl Lahir</label><input type="date" name="tgl_lahir" class="form-control" value="${rowData?.[2]||''}"></div>
+                <div class="col-md-6"><label class="small fw-bold">Gender</label><select name="jenis_kelamin" class="form-select"><option value="Laki-laki">Laki-laki</option><option value="Perempuan">Perempuan</option></select></div>
+                <div class="col-12"><label class="small fw-bold">Alamat</label><textarea name="alamat" class="form-control">${rowData?.[3]||''}</textarea></div>
+                <div class="col-md-6"><label class="small fw-bold">Jabatan</label><input type="text" name="jabatan" class="form-control" value="${rowData?.[4]||''}"></div>
+                <div class="col-md-6"><label class="small fw-bold">No HP</label><input type="text" name="no_hp" class="form-control" value="${rowData?.[5]||''}"></div>
+            </div>`;
+        } else if (type === 'Jadwal') {
+            body += `<div class="row g-3">
+                <div class="col-md-6"><label class="small fw-bold">Hari</label>
+                    <select name="hari" class="form-select" required>
+                        <option value="Senin" ${rowData?.[1] === 'Senin' ? 'selected' : ''}>Senin</option>
+                        <option value="Selasa" ${rowData?.[1] === 'Selasa' ? 'selected' : ''}>Selasa</option>
+                        <option value="Rabu" ${rowData?.[1] === 'Rabu' ? 'selected' : ''}>Rabu</option>
+                        <option value="Kamis" ${rowData?.[1] === 'Kamis' ? 'selected' : ''}>Kamis</option>
+                        <option value="Jumat" ${rowData?.[1] === 'Jumat' ? 'selected' : ''}>Jumat</option>
+                        <option value="Sabtu" ${rowData?.[1] === 'Sabtu' ? 'selected' : ''}>Sabtu</option>
+                        <option value="Minggu" ${rowData?.[1] === 'Minggu' ? 'selected' : ''}>Minggu</option>
                     </select>
                 </div>
-                
+                <div class="col-md-6"><label class="small fw-bold">Waktu</label><input type="text" name="waktu" class="form-control" placeholder="08:00 - 10:00" value="${rowData?.[2]||''}"></div>
+                <div class="col-12"><label class="small fw-bold">Mata Pelajaran</label><input type="text" name="mapel" class="form-control" value="${rowData?.[3]||''}"></div>
+                <div class="col-12"><label class="small fw-bold">Pengajar</label><input type="text" name="pengajar" class="form-control" value="${rowData?.[4]||''}"></div>
             </div>`;
         }
 
@@ -240,7 +270,6 @@
         new bootstrap.Modal(document.getElementById('mainModal')).show();
     }
 
-    // Submit Form
     document.getElementById('mainForm').onsubmit = function(e) {
         e.preventDefault();
         toggleLoading(true);
