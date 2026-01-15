@@ -21,25 +21,23 @@
             position: fixed; height: 100%; transition: 0.3s;
         }
         .sidebar-header { padding: 30px 20px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); }
-        .sidebar-header h5 { font-size: 0.9rem; font-weight: bold; line-height: 1.5; }
-        #sidebar ul li { padding: 5px 15px; }
         #sidebar ul li a {
             padding: 12px 15px; display: block; color: rgba(255,255,255,0.7);
-            text-decoration: none; border-radius: 8px; font-weight: 500;
+            text-decoration: none; border-radius: 8px; font-weight: 500; margin: 5px 15px;
         }
-        #sidebar ul li a i { margin-right: 12px; width: 20px; text-align: center; }
         #sidebar ul li a.active { background: var(--sidebar-active); color: white; }
         #content { width: 100%; padding: 30px; margin-left: 260px; }
         .card { border-radius: 12px; border: none; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
-        .section-title { background: #e9ecef; padding: 10px; font-weight: bold; color: #1a2c3d; border-left: 5px solid var(--sidebar-active); margin: 15px 0; border-radius: 4px; }
+        
+        /* Gaya Nama Clickable */
+        .clickable-name { color: var(--sidebar-active); font-weight: bold; cursor: pointer; text-decoration: underline; }
+        
         #loading { 
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
             background: rgba(255,255,255,0.8); z-index: 9999; justify-content: center; align-items: center; flex-direction: column;
         }
-        /* Style Tambahan untuk Search Box */
-        .search-box { position: relative; }
-        .search-box i { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #6c757d; }
-        .search-box input { padding-left: 45px; border-radius: 10px; }
+        .detail-row { display: flex; padding: 8px 0; border-bottom: 1px solid #eee; }
+        .detail-label { width: 40%; font-weight: bold; color: #555; }
     </style>
 </head>
 <body>
@@ -55,66 +53,48 @@
             <h5>YAYASAN MARKAZ<br>YATIM DUAFA QURANI</h5>
         </div>
         <ul class="list-unstyled mt-3 nav nav-pills flex-column">
-            <li><a href="#tab-santri" class="nav-link active" data-bs-toggle="tab"><i class="fas fa-user-graduate"></i> Santri</a></li>
-            <li><a href="#tab-pegawai" class="nav-link" data-bs-toggle="tab"><i class="fas fa-user-tie"></i> Pegawai</a></li>
-            <li><a href="#tab-jadwal" class="nav-link" data-bs-toggle="tab"><i class="fas fa-calendar-alt"></i> Jadwal</a></li>
+            <li><a href="#tab-santri" class="nav-link active" data-bs-toggle="tab"><i class="fas fa-user-graduate me-2"></i> Santri</a></li>
+            <li><a href="#tab-pegawai" class="nav-link" data-bs-toggle="tab"><i class="fas fa-user-tie me-2"></i> Pegawai</a></li>
+            <li><a href="#tab-jadwal" class="nav-link" data-bs-toggle="tab"><i class="fas fa-calendar-alt me-2"></i> Jadwal</a></li>
         </ul>
     </nav>
 
     <div id="content">
         <div class="tab-content">
-            
             <div class="tab-pane fade show active" id="tab-santri">
                 <div class="card p-4">
-                    <h5 class="fw-bold mb-4">Data Santri</h5>
-                    <div class="row g-2 mb-3">
-                        <div class="col-md-9 search-box">
-                            <i class="fas fa-search"></i>
-                            <input type="text" id="cariSantri" class="form-control" placeholder="Cari Nama, NIK, atau Status Santri..." onkeyup="filterTabel('Santri', 'cariSantri')">
-                        </div>
-                        <div class="col-md-3">
-                            <button class="btn btn-primary w-100" onclick="openModal('Santri')"><i class="fa fa-plus me-2"></i>Tambah Santri</button>
-                        </div>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="fw-bold m-0">Data Santri</h5>
+                        <button class="btn btn-primary btn-sm" onclick="openModal('Santri')"><i class="fa fa-plus me-2"></i>Tambah Santri</button>
                     </div>
-                    <button class="btn btn-outline-dark btn-sm mb-3" onclick="loadData('Santri')"><i class="fas fa-sync"></i> Refresh</button>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text bg-white"><i class="fa fa-search"></i></span>
+                        <input type="text" id="cariSantri" class="form-control" placeholder="Cari Santri..." onkeyup="filterTabel('Santri', 'cariSantri')">
+                    </div>
                     <div id="out-Santri"></div>
                 </div>
             </div>
 
             <div class="tab-pane fade" id="tab-pegawai">
                 <div class="card p-4">
-                    <h5 class="fw-bold mb-4">Data Pegawai</h5>
-                    <div class="row g-2 mb-3">
-                        <div class="col-md-9 search-box">
-                            <i class="fas fa-search"></i>
-                            <input type="text" id="cariPegawai" class="form-control" placeholder="Cari Nama atau Jabatan Pegawai..." onkeyup="filterTabel('Pegawai', 'cariPegawai')">
-                        </div>
-                        <div class="col-md-3">
-                            <button class="btn btn-primary w-100" onclick="openModal('Pegawai')"><i class="fa fa-plus me-2"></i>Tambah Pegawai</button>
-                        </div>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="fw-bold m-0">Data Pegawai</h5>
+                        <button class="btn btn-primary btn-sm" onclick="openModal('Pegawai')"><i class="fa fa-plus me-2"></i>Tambah Pegawai</button>
                     </div>
-                    <button class="btn btn-outline-dark btn-sm mb-3" onclick="loadData('Pegawai')"><i class="fas fa-sync"></i> Refresh</button>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text bg-white"><i class="fa fa-search"></i></span>
+                        <input type="text" id="cariPegawai" class="form-control" placeholder="Cari Pegawai..." onkeyup="filterTabel('Pegawai', 'cariPegawai')">
+                    </div>
                     <div id="out-Pegawai"></div>
                 </div>
             </div>
 
             <div class="tab-pane fade" id="tab-jadwal">
                 <div class="card p-4">
-                    <h5 class="fw-bold mb-4">Jadwal Pelajaran</h5>
-                    <div class="row g-2 mb-3">
-                        <div class="col-md-9 search-box">
-                            <i class="fas fa-search"></i>
-                            <input type="text" id="cariJadwal" class="form-control" placeholder="Cari Hari, Materi, atau Guru..." onkeyup="filterTabel('Jadwal', 'cariJadwal')">
-                        </div>
-                        <div class="col-md-3">
-                            <button class="btn btn-primary w-100" onclick="openModal('Jadwal')"><i class="fa fa-plus me-2"></i>Tambah Jadwal</button>
-                        </div>
-                    </div>
-                    <button class="btn btn-outline-dark btn-sm mb-3" onclick="loadData('Jadwal')"><i class="fas fa-sync"></i> Refresh Jadwal</button>
+                    <h5 class="fw-bold mb-3">Jadwal Pelajaran</h5>
                     <div id="out-Jadwal"></div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>
@@ -136,22 +116,28 @@
     </div>
 </div>
 
+<div class="modal fade" id="detailModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title"><i class="fas fa-info-circle me-2"></i>Detail Lengkap</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="detailBody"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwy1f9x5BSjlW9dCYad2qyv3IEkLAhyTTyXcsPIGAUIMfCVPnPYtwT_QfBQ95FxukDV/exec"; // Ganti dengan URL script Anda
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxZxTcnPSFAQKmVAUtsAd1rCOO9lh3FER79nnCFPo2Q1bMnnIWdxb5K7_V6-jFzzxaF/exec";
 
     function toggleLoading(s) { document.getElementById('loading').style.display = s ? 'flex' : 'none'; }
 
-    // OTOMATIS LOAD DATA SAAT PINDAH TAB
-    document.querySelectorAll('a[data-bs-toggle="tab"]').forEach(tab => {
-        tab.addEventListener('shown.bs.tab', (e) => {
-            const target = e.target.getAttribute("href").replace("#tab-", "");
-            const type = target.charAt(0).toUpperCase() + target.slice(1);
-            loadData(type);
-        });
-    });
-
-    // FUNGSI LOAD DATA (Jadwal muncul tanpa filter paksaan)
+    // FUNGSI LOAD DATA
     function loadData(type) {
         toggleLoading(true);
         const container = document.getElementById('out-' + type);
@@ -161,19 +147,31 @@
         .then(r => r.json())
         .then(res => {
             if (res.rows.length === 0) {
-                container.innerHTML = "<div class='alert alert-info'>Data kosong.</div>";
+                container.innerHTML = "<div class='alert alert-info'>Data tidak ditemukan.</div>";
                 toggleLoading(false);
                 return;
             }
+
             let html = `<div class="table-responsive"><table class="table table-hover table-bordered table-sm align-middle bg-white small">`;
-            html += `<thead class="table-dark text-nowrap"><tr>`;
+            html += `<thead class="table-dark"><tr>`;
+            
+            // Header Tabel
             res.header.forEach(h => html += `<th>${h}</th>`);
             html += `<th class="text-center">AKSI</th></tr></thead><tbody>`;
             
-            res.rows.forEach((row) => {
-                let actualIndex = res.rows.indexOf(row) + 2; 
+            res.rows.forEach((row, idx) => {
+                let actualIndex = idx + 2; 
                 html += `<tr>`;
-                row.forEach(cell => html += `<td>${cell || '-'}</td>`);
+                
+                row.forEach((cell, cellIdx) => {
+                    // Jika sel adalah kolom NAMA (indeks 1), buat bisa diklik
+                    if(cellIdx === 1) {
+                        html += `<td><span class="clickable-name" onclick='viewDetail(${JSON.stringify(res.header)}, ${JSON.stringify(row)})'>${cell || '-'}</span></td>`;
+                    } else {
+                        html += `<td>${cell || '-'}</td>`;
+                    }
+                });
+
                 html += `<td class="text-center text-nowrap">
                             <button class="btn btn-sm btn-warning text-white" onclick='handleEdit("${type}", ${JSON.stringify(row)}, ${actualIndex})'><i class="fa fa-edit"></i></button>
                             <button class="btn btn-sm btn-danger" onclick="deleteRow('${type}', ${actualIndex})"><i class="fa fa-trash"></i></button>
@@ -181,23 +179,27 @@
             });
             container.innerHTML = html + `</tbody></table></div>`;
             toggleLoading(false);
-        }).catch(() => { container.innerHTML = "Gagal memuat data."; toggleLoading(false); });
+        }).catch(err => { 
+            console.error(err);
+            container.innerHTML = "Gagal memuat data."; 
+            toggleLoading(false); 
+        });
     }
 
-    // FUNGSI PENCARIAN GLOBAL
-    function filterTabel(type, inputId) {
-        let input = document.getElementById(inputId);
-        let filter = input.value.toUpperCase();
-        let table = document.getElementById('out-' + type).getElementsByTagName("table")[0];
-        if (!table) return;
-        let tr = table.getElementsByTagName("tr");
-        for (let i = 1; i < tr.length; i++) {
-            let text = tr[i].textContent || tr[i].innerText;
-            tr[i].style.display = text.toUpperCase().indexOf(filter) > -1 ? "" : "none";
-        }
+    // FUNGSI DETAIL (POP UP SEMUA DATA)
+    function viewDetail(headers, row) {
+        let body = "";
+        headers.forEach((h, i) => {
+            body += `<div class="detail-row">
+                        <div class="detail-label">${h}</div>
+                        <div class="detail-value">${row[i] || '-'}</div>
+                     </div>`;
+        });
+        document.getElementById('detailBody').innerHTML = body;
+        new bootstrap.Modal(document.getElementById('detailModal')).show();
     }
 
-    // MODAL UNTUK SEMUA DATA
+    // FUNGSI MODAL FORM
     function openModal(type, rowData = null, rowIndex = "") {
         document.getElementById('modalTitle').innerText = (rowData ? "EDIT " : "TAMBAH ") + type.toUpperCase();
         let body = `<input type="hidden" name="targetSheet" value="${type}"><input type="hidden" name="rowIndex" value="${rowIndex}">`;
@@ -205,21 +207,32 @@
         if (type === 'Santri') {
             body += `<div class="row g-3">
                 <div class="col-12"><label class="small fw-bold">Nama Lengkap</label><input type="text" name="nama" class="form-control" required value="${rowData?.[1]||''}"></div>
-                <div class="col-md-6"><label class="small fw-bold">NIK</label><input type="number" name="nik" class="form-control" value="${rowData?.[6]||''}"></div>
-                <div class="col-md-6"><label class="small fw-bold">Status</label><select name="status" class="form-select"><option>Umum</option><option>Yatim</option><option>Duafa</option></select></div>
+                <div class="col-md-6"><label class="small fw-bold">NIK</label><input type="text" name="nik" class="form-control" value="${rowData?.[6]||''}"></div>
+                <div class="col-md-6"><label class="small fw-bold">Status</label>
+                    <select name="status" class="form-select">
+                        <option value="Umum" ${rowData?.[18] === 'Umum' ? 'selected' : ''}>Umum</option>
+                        <option value="Yatim" ${rowData?.[18] === 'Yatim' ? 'selected' : ''}>Yatim</option>
+			<option value="Yatim" ${rowData?.[18] === 'Piatu' ? 'selected' : ''}>Piatu</option>
+                        <option value="Duafa" ${rowData?.[18] === 'Duafa' ? 'selected' : ''}>Duafa</option>
+                    </select>
+                </div>
                 <div class="col-12"><label class="small fw-bold">Alamat</label><textarea name="alamat" class="form-control">${rowData?.[3]||''}</textarea></div>
             </div>`;
         } else if (type === 'Pegawai') {
+            // Urutan input disesuaikan dengan kolom Spreadsheet Anda agar tidak bergeser
             body += `<div class="row g-3">
-                <div class="col-12"><label class="small fw-bold">Nama</label><input type="text" name="nama" class="form-control" required value="${rowData?.[1]||''}"></div>
-                <div class="col-12"><label class="small fw-bold">Jabatan</label><input type="text" name="jabatan" class="form-control" value="${rowData?.[4]||''}"></div>
-            </div>`;
-        } else if (type === 'Jadwal') {
-            body += `<div class="row g-2">
-                <div class="col-md-6"><label class="small fw-bold">Hari</label><input type="text" name="hari" class="form-control" value="${rowData?.[2]||''}"></div>
-                <div class="col-md-6"><label class="small fw-bold">Waktu</label><input type="text" name="waktu" class="form-control" value="${rowData?.[3]||''}"></div>
-                <div class="col-md-12"><label class="small fw-bold">Materi</label><input type="text" name="materi" class="form-control" value="${rowData?.[8]||''}"></div>
-                <div class="col-md-12"><label class="small fw-bold">Guru</label><input type="text" name="guru" class="form-control" value="${rowData?.[9]||''}"></div>
+                <div class="col-12"><label class="small fw-bold">Nama Pegawai</label><input type="text" name="nama" class="form-control" required value="${rowData?.[1]||''}"></div>
+                <div class="col-md-6"><label class="small fw-bold">Tanggal Lahir</label><input type="date" name="tgl_lahir" class="form-control" value="${rowData?.[2]||''}"></div>
+               
+<div class="col-12"><label class="small fw-bold">Alamat</label><textarea name="alamat" class="form-control">${rowData?.[3]||''}</textarea></div> 
+             <div class="col-12"><label class="small fw-bold">Jabatan</label><input type="text" name="jabatan" class="form-control" value="${rowData?.[4]||''}"></div>
+                <div class="col-md-12"><label class="small fw-bold">No HP / WhatsApp</label><input type="number" name="no_hp" class="form-control" value="${rowData?.[5]||''}"></div>                   
+ <div class="col-md-6"><label class="small fw-bold">Jenis Kelamin</label><select name="jenis_kelamin" class="form-select">
+                        <option value="Laki-laki" ${rowData?.[6] === 'Laki-laki' ? 'selected' : ''}>Laki-laki</option>
+                        <option value="Perempuan" ${rowData?.[6] === 'Perempuan' ? 'selected' : ''}>Perempuan</option>
+                    </select>
+                </div>
+                
             </div>`;
         }
 
@@ -227,17 +240,38 @@
         new bootstrap.Modal(document.getElementById('mainModal')).show();
     }
 
+    // Submit Form
     document.getElementById('mainForm').onsubmit = function(e) {
         e.preventDefault();
         toggleLoading(true);
         fetch(SCRIPT_URL, { method: 'POST', body: new URLSearchParams(new FormData(this))})
-        .then(r => r.text()).then(res => { alert(res); loadData(new FormData(this).get('targetSheet')); bootstrap.Modal.getInstance(document.getElementById('mainModal')).hide(); toggleLoading(false); });
+        .then(r => r.text()).then(res => { 
+            alert(res); 
+            loadData(new FormData(this).get('targetSheet')); 
+            bootstrap.Modal.getInstance(document.getElementById('mainModal')).hide(); 
+        })
+        .catch(err => alert("Terjadi kesalahan: " + err))
+        .finally(() => toggleLoading(false));
     };
 
     function handleEdit(t, d, i) { openModal(t, d, i); }
-    function deleteRow(t, i) { if(confirm("Hapus data?")) { toggleLoading(true); fetch(`${SCRIPT_URL}?action=delete&targetSheet=${t}&rowIndex=${i}`, {method: 'POST'}).then(() => loadData(t)); } }
+    function deleteRow(t, i) { if(confirm("Hapus data permanen?")) { toggleLoading(true); fetch(`${SCRIPT_URL}?action=delete&targetSheet=${t}&rowIndex=${i}`, {method: 'POST'}).then(() => loadData(t)); } }
 
-    // Load data santri saat pertama buka
+    function filterTabel(type, inputId) {
+        let filter = document.getElementById(inputId).value.toUpperCase();
+        let tr = document.getElementById('out-' + type).getElementsByTagName("tr");
+        for (let i = 1; i < tr.length; i++) {
+            tr[i].style.display = tr[i].innerText.toUpperCase().indexOf(filter) > -1 ? "" : "none";
+        }
+    }
+
+    document.querySelectorAll('a[data-bs-toggle="tab"]').forEach(tab => {
+        tab.addEventListener('shown.bs.tab', (e) => {
+            const type = e.target.getAttribute("href").replace("#tab-", "").replace(/^\w/, c => c.toUpperCase());
+            loadData(type);
+        });
+    });
+
     window.onload = () => loadData('Santri');
 </script>
 </body>
