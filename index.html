@@ -13,13 +13,21 @@
             --sidebar-active: #0099ff; 
             --content-bg: #f4f7f9;
         }
-        body { background-color: var(--content-bg); font-family: 'Segoe UI', sans-serif; }
-        .wrapper { display: flex; align-items: stretch; min-height: 100vh; }
-        #sidebar {
-            min-width: 260px; max-width: 260px;
-            background: var(--sidebar-bg); color: #fff;
-            position: fixed; height: 100%; transition: 0.3s; z-index: 100;
+       body { 
+            background-color: var(--bg-light); 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            font-size: 0.82rem; color: #1e293b;
         }
+
+        /* SIDEBAR LAYOUT */
+        #sidebar {
+            min-width: 250px; max-width: 250px;
+            background: var(--primary-dark); color: #fff;
+            position: fixed; height: 100vh; transition: 0.3s; z-index: 1000;
+        }
+        .sidebar-brand { padding: 30px 20px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .sidebar-brand h6 { font-weight: 800; letter-spacing: 1px; margin: 0; }
+        
         .sidebar-header { padding: 30px 20px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); }
         #sidebar ul li a {
             padding: 12px 15px; display: block; color: rgba(255,255,255,0.7);
@@ -315,4 +323,5 @@
 </script>
 </body>
 </html>
+
 
