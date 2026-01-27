@@ -3,357 +3,346 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistem Manajemen Markaz Qurani</title>
+    <title>Dashboard Markaz MYDQ</title>
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     
     <style>
         :root { 
-            --primary: #0d9488; 
-            --primary-dark: #0f172a;
-            --sidebar-bg: #1e293b;
-            --bg-light: #f8fafc;
+            --sidebar-width: 260px; 
+            --primary-bg: #1e293b; 
+            --active-color: #3b82f6; 
+            --body-bg: #f3f4f6;
+            --text-color: #334155;
         }
-
-        body { 
-            background-color: var(--bg-light); 
-            font-family: 'Plus Jakarta Sans', sans-serif; 
-            font-size: 0.85rem; color: #334155;
-        }
-
-        /* SIDEBAR STYLES */
-        #sidebar {
-            min-width: 260px; max-width: 260px;
-            background: var(--sidebar-bg); color: #fff;
-            position: fixed; height: 100vh; z-index: 1000;
-        }
-        .sidebar-header { 
-            padding: 30px 20px; text-align: center; 
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-            background: rgba(0,0,0,0.2);
-        }
-        .sidebar-header h6 { font-weight: 800; letter-spacing: 1px; color: #2dd4bf; }
         
-        #sidebar .nav-link {
-            padding: 12px 20px; color: rgba(255,255,255,0.6);
-            margin: 5px 15px; border-radius: 10px; transition: 0.3s;
-            display: flex; align-items: center; font-weight: 500;
-        }
-        #sidebar .nav-link i { width: 25px; font-size: 1rem; }
-        #sidebar .nav-link:hover { background: rgba(255,255,255,0.05); color: #fff; }
-        #sidebar .nav-link.active { background: var(--primary); color: #fff; box-shadow: 0 4px 12px rgba(13, 148, 136, 0.4); }
+        body { font-family: 'Poppins', sans-serif; background-color: var(--body-bg); color: var(--text-color); overflow-x: hidden; }
+        
+        /* Sidebar */
+        #sidebar { width: var(--sidebar-width); height: 100vh; position: fixed; top: 0; left: 0; background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%); color: #fff; transition: all 0.3s; z-index: 1000; box-shadow: 4px 0 10px rgba(0,0,0,0.1); }
+        #sidebar .brand { padding: 25px 20px; font-size: 1.3rem; font-weight: 600; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; }
+        #sidebar .nav-link { color: #94a3b8; padding: 14px 25px; margin: 8px 15px; border-radius: 10px; cursor: pointer; transition: 0.2s; }
+        #sidebar .nav-link:hover, #sidebar .nav-link.active { background-color: var(--active-color); color: #fff; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3); }
+        
+        /* Content & Cards */
+        #content { margin-left: var(--sidebar-width); padding: 30px; width: calc(100% - var(--sidebar-width)); min-height: 100vh; transition: 0.3s; }
+        .page-section { display: none; animation: slideUp 0.5s ease; }
+        .page-section.active { display: block; }
+        .card { border: none; border-radius: 16px; background: #fff; box-shadow: 0 4px 20px rgba(0,0,0,0.03); overflow: hidden; margin-bottom: 20px; }
+        
+        /* Tables */
+        .table thead th { background-color: #f8fafc; border-bottom: 2px solid #e2e8f0; color: #64748b; font-weight: 600; text-transform: uppercase; font-size: 0.85rem; padding: 15px; }
+        .table tbody td { padding: 15px; vertical-align: middle; border-bottom: 1px solid #f1f5f9; }
+        
+        /* Modal & Forms */
+        .modal-content { border-radius: 16px; border: none; }
+        .form-control, .form-select { border-radius: 8px; padding: 10px; border: 1px solid #e2e8f0; }
+        .form-control:focus { border-color: var(--active-color); box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
 
-        /* CONTENT AREA */
-        #content { margin-left: 260px; padding: 40px; width: calc(100% - 260px); }
-
-        /* ACTION BAR (CARI & TAMBAH) */
-        .action-card {
-            background: #fff; padding: 20px; border-radius: 15px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.03); border: 1px solid #edf2f7;
-            margin-bottom: 25px; display: flex; align-items: center; gap: 15px;
+        @media (max-width: 768px) {
+            #sidebar { margin-left: calc(-1 * var(--sidebar-width)); }
+            #sidebar.active { margin-left: 0; }
+            #content { margin-left: 0; width: 100%; padding: 20px; }
         }
-        .search-box {
-            position: relative; flex-grow: 1;
-        }
-        .search-box i { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #94a3b8; }
-        .search-box input {
-            padding: 10px 15px 10px 45px; border-radius: 10px; border: 1px solid #e2e8f0;
-            width: 100%; outline: none; transition: 0.3s;
-        }
-        .search-box input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.1); }
-
-        .btn-add {
-            background: var(--primary); color: #fff; border: none; padding: 10px 20px;
-            border-radius: 10px; font-weight: 700; white-space: nowrap; transition: 0.3s;
-        }
-        .btn-add:hover { background: #0b7a6f; transform: translateY(-2px); }
-
-        /* TABLE CUSTOMIZATION */
-        .data-card {
-            background: #fff; border-radius: 15px; border: 1px solid #edf2f7;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.02); overflow: hidden;
-        }
-        .table thead { background: #f8fafc; border-bottom: 2px solid #f1f5f9; }
-        .table thead th { 
-            padding: 15px 20px; font-size: 0.75rem; text-transform: uppercase; 
-            letter-spacing: 0.5px; color: #64748b; font-weight: 700;
-        }
-        .table tbody td { padding: 15px 20px; vertical-align: middle; border-bottom: 1px solid #f1f5f9; }
-        .clickable-name { color: var(--primary); font-weight: 700; cursor: pointer; }
-        .clickable-name:hover { text-decoration: underline; }
-
-        /* FORM SECTIONING */
-        .form-section {
-            background: #f8fafc; padding: 15px; border-radius: 10px;
-            border-left: 4px solid var(--primary); margin-bottom: 20px;
-        }
-        .form-section-title { font-weight: 800; font-size: 0.75rem; color: var(--primary); margin-bottom: 15px; text-transform: uppercase; }
-
-        /* LOADING INDICATOR */
-        #loading {
-            position: fixed; inset: 0; background: rgba(255,255,255,0.85);
-            z-index: 9999; display: none; justify-content: center; align-items: center; flex-direction: column;
-            backdrop-filter: blur(5px);
-        }
-
-        /* DETAIL VIEW STYLES */
-        .detail-item { display: flex; padding: 10px 0; border-bottom: 1px dotted #e2e8f0; }
-        .detail-label { width: 35%; font-weight: 600; color: #64748b; font-size: 0.8rem; }
-        .detail-value { width: 65%; color: #1e293b; font-weight: 500; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
-<div id="loading">
-    <div class="spinner-grow text-primary" role="status"></div>
-    <span class="mt-3 fw-bold">Memperbarui Data...</span>
-</div>
-
-<div class="d-flex">
     <nav id="sidebar">
-        <div class="sidebar-header">
-            <h6 class="m-0 text-uppercase">Markaz Qurani</h6>
-            <small class="opacity-50" style="font-size: 0.65rem;">Sistem Database Yayasan</small>
-        </div>
+        <div class="brand"><i class="fas fa-mosque me-3 text-info"></i><span>Markaz Admin</span></div>
         <ul class="nav flex-column mt-4">
-            <li><a href="#tab-santri" class="nav-link active" data-bs-toggle="tab"><i class="fas fa-user-graduate"></i> Santri</a></li>
-            <li><a href="#tab-pegawai" class="nav-link" data-bs-toggle="tab"><i class="fas fa-user-tie"></i> Pegawai</a></li>
-            <li><a href="#tab-jadwal" class="nav-link" data-bs-toggle="tab"><i class="fas fa-calendar-alt"></i> Jadwal</a></li>
+            <li class="nav-item"><a class="nav-link active" onclick="showPage('santri')"><i class="fas fa-user-graduate me-3"></i>Data Santri</a></li>
+            <li class="nav-item"><a class="nav-link" onclick="showPage('pegawai')"><i class="fas fa-chalkboard-teacher me-3"></i>Data Pegawai</a></li>
+            <li class="nav-item"><a class="nav-link" onclick="showPage('jadwal')"><i class="fas fa-calendar-alt me-3"></i>Jadwal</a></li>
+            <li class="nav-item"><a class="nav-link" onclick="showPage('modul')"><i class="fas fa-book-open me-3"></i>Modul</a></li>
         </ul>
     </nav>
 
-    <main id="content">
-        <div class="tab-content">
-            
-            <div class="tab-pane fade show active" id="tab-santri">
-                <div class="mb-4">
-                    <h4 class="fw-extrabold m-0">Database Santri</h4>
-                    <p class="text-muted small">Manajemen biodata, wali, dan status santri Markaz Qurani.</p>
-                </div>
-                
-                <div class="action-card">
-                    <div class="search-box">
-                        <i class="fa fa-search"></i>
-                        <input type="text" id="cariSantri" placeholder="Cari Nama Santri, NIK, atau Nama Orang Tua..." onkeyup="filterTabel('Santri', 'cariSantri')">
-                    </div>
-                    <button class="btn-add" onclick="openModal('Santri')">
-                        <i class="fa fa-plus-circle me-2"></i>Tambah Santri
-                    </button>
-                </div>
+    <div id="content">
+        <button class="btn btn-light shadow-sm d-md-none mb-4" onclick="document.getElementById('sidebar').classList.toggle('active')"><i class="fas fa-bars"></i></button>
 
-                <div class="data-card">
-                    <div id="out-Santri"></div>
+        <div id="santri" class="page-section active">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h3 class="fw-bold text-dark">Data Santri</h3>
+                <button class="btn btn-primary" onclick="openModal('Santri')"><i class="fas fa-plus me-2"></i>Tambah Santri</button>
+            </div>
+            <div class="card">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead><tr><th>Nama & NIK</th><th>Alamat</th><th>Musyrif</th><th>Status</th><th class="text-end">Detail</th></tr></thead>
+                        <tbody id="bodySantri"><tr><td colspan="5" class="text-center p-5">Memuat data...</td></tr></tbody>
+                    </table>
                 </div>
             </div>
-
-            <div class="tab-pane fade" id="tab-pegawai">
-                <h4 class="fw-bold mb-4">Data Pegawai</h4>
-                <div class="action-card">
-                    <div class="search-box">
-                        <i class="fa fa-search"></i>
-                        <input type="text" id="cariPegawai" placeholder="Cari Nama atau Jabatan..." onkeyup="filterTabel('Pegawai', 'cariPegawai')">
-                    </div>
-                    <button class="btn-add" onclick="openModal('Pegawai')"><i class="fa fa-plus me-2"></i>Pegawai</button>
-                </div>
-                <div class="data-card"><div id="out-Pegawai"></div></div>
-            </div>
-
-            <div class="tab-pane fade" id="tab-jadwal">
-                <h4 class="fw-bold mb-4">Jadwal Harian</h4>
-                <div class="action-card">
-                    <div class="search-box">
-                        <i class="fa fa-search"></i>
-                        <input type="text" id="cariJadwal" placeholder="Cari Hari atau Materi..." onkeyup="filterTabel('Jadwal', 'cariJadwal')">
-                    </div>
-                    <button class="btn-add" onclick="openModal('Jadwal')"><i class="fa fa-calendar-plus me-2"></i>Jadwal</button>
-                </div>
-                <div class="data-card"><div id="out-Jadwal"></div></div>
-            </div>
-
         </div>
-    </main>
-</div>
 
-<div class="modal fade" id="mainModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-centered">
-        <div class="modal-content border-0 shadow-lg" style="border-radius: 20px;">
-            <form id="mainForm">
-                <div class="modal-header border-0 p-4 bg-light" style="border-radius: 20px 20px 0 0;">
-                    <h5 class="modal-title fw-bold" id="modalTitle">Form Data</h5>
+        <div id="pegawai" class="page-section">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h3 class="fw-bold text-dark">Data Pegawai</h3>
+                <button class="btn btn-primary" onclick="openModal('Pegawai')"><i class="fas fa-plus me-2"></i>Tambah Pegawai</button>
+            </div>
+            <div class="card">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead><tr><th>Nama</th><th>Jabatan</th><th>No HP</th><th>Alamat</th></tr></thead>
+                        <tbody id="bodyPegawai"><tr><td colspan="4" class="text-center p-5">Memuat data...</td></tr></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div id="jadwal" class="page-section">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h3 class="fw-bold text-dark">Jadwal Kegiatan</h3>
+                <button class="btn btn-success text-white" onclick="openModal('Jadwal')"><i class="fas fa-plus me-2"></i>Buat Jadwal</button>
+            </div>
+            <div class="card">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead><tr><th>Hari</th><th>Waktu</th><th>Materi</th><th>Guru</th></tr></thead>
+                        <tbody id="bodyJadwal"><tr><td colspan="4" class="text-center p-5">Memuat data...</td></tr></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div id="modul" class="page-section">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h3 class="fw-bold text-dark">Modul & Materi</h3>
+                <button class="btn btn-info text-white" onclick="openModal('Modul')"><i class="fas fa-upload me-2"></i>Upload Modul</button>
+            </div>
+            <div class="row g-3" id="containerModul"></div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalForm" tabindex="-1" data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="modalTitle">Tambah Data</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <form id="mainForm">
+                        <input type="hidden" id="kategoriInput" name="kategori">
+                        <div id="formContainer"></div> <div class="d-grid mt-4">
+                            <button type="submit" class="btn btn-primary btn-lg" id="btnSubmit">
+                                <i class="fas fa-save me-2"></i>Simpan Data
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalDetailSantri" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-light">
+                    <h5 class="modal-title fw-bold"><i class="fas fa-id-card me-2"></i>Biodata Santri Lengkap</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-                <div class="modal-body p-4" id="modalBody"></div>
-                <div class="modal-footer border-0 p-4">
-                    <button type="button" class="btn btn-light px-4" data-bs-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-add px-5">Simpan ke Database</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+                <div class="modal-body p-4">
+                    <h6 class="text-primary fw-bold border-bottom pb-2 mb-3">1. Data Pribadi</h6>
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-4"><small class="text-muted">Nama Lengkap</small><div class="fw-bold" id="d-nama"></div></div>
+                        <div class="col-md-4"><small class="text-muted">NIK</small><div class="fw-bold" id="d-nik"></div></div>
+                        <div class="col-md-4"><small class="text-muted">No. KK</small><div class="fw-bold" id="d-kk"></div></div>
+                        <div class="col-md-4"><small class="text-muted">Tempat, Tgl Lahir</small><div class="fw-bold" id="d-ttl"></div></div>
+                        <div class="col-md-4"><small class="text-muted">Jenis Kelamin</small><div class="fw-bold" id="d-jk"></div></div>
+                        <div class="col-md-4"><small class="text-muted">Anak ke / Sdr</small><div class="fw-bold" id="d-anak"></div></div>
+                        <div class="col-12"><small class="text-muted">Alamat Domisili</small><div class="fw-bold" id="d-alamat"></div></div>
+                    </div>
 
-<div class="modal fade" id="detailModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content border-0 shadow-lg" style="border-radius: 20px;">
-            <div class="modal-header border-0 p-4 bg-primary text-white" style="border-radius: 20px 20px 0 0;">
-                <h6 class="modal-title fw-bold"><i class="fas fa-info-circle me-2"></i>Profil Lengkap</h6>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    <h6 class="text-primary fw-bold border-bottom pb-2 mb-3">2. Data Orang Tua</h6>
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-6"><small class="text-muted">Nama Ayah</small><div class="fw-bold" id="d-ayah"></div></div>
+                        <div class="col-md-6"><small class="text-muted">No. HP Ayah</small><div class="fw-bold" id="d-hpayah"></div></div>
+                        <div class="col-md-6"><small class="text-muted">Nama Ibu</small><div class="fw-bold" id="d-ibu"></div></div>
+                        <div class="col-md-6"><small class="text-muted">No. HP Ibu</small><div class="fw-bold" id="d-hpibu"></div></div>
+                        <div class="col-12"><small class="text-muted">Pekerjaan</small><div class="fw-bold" id="d-job"></div></div>
+                    </div>
+
+                    <h6 class="text-primary fw-bold border-bottom pb-2 mb-3">3. Data Pondok</h6>
+                    <div class="row g-3">
+                        <div class="col-md-4"><small class="text-muted">Tanggal Masuk</small><div class="fw-bold" id="d-masuk"></div></div>
+                        <div class="col-md-4"><small class="text-muted">Musyrif</small><div class="fw-bold" id="d-musyrif"></div></div>
+                        <div class="col-md-4"><small class="text-muted">Status</small><div class="fw-bold" id="d-status"></div></div>
+                    </div>
+                </div>
             </div>
-            <div class="modal-body p-4" id="detailBody"></div>
         </div>
     </div>
-</div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-<script>
-    // URL SCRIPT GOOGLE (Pastikan ini benar)
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxZxTcnPSFAQKmVAUtsAd1rCOO9lh3FER79nnCFPo2Q1bMnnIWdxb5K7_V6-jFzzxaF/exec";
+    <script>
+        // =========================================================
+        // PENTING: GANTI URL DI BAWAH INI DENGAN URL DEPLOY ANDA
+        // =========================================================
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyDsY8m5T4xUmbLBPbEJn304gky3hb-uDmeovN__ja1SA9lFubdvsqb0YIEKdtDbUTk/exec"; 
 
-    function toggleLoading(s) { document.getElementById('loading').style.display = s ? 'flex' : 'none'; }
+        // Variabel Global Data Santri
+        let globalSantriData = [];
 
-    // RENDER TABEL
-    function loadData(type) {
-        toggleLoading(true);
-        const container = document.getElementById('out-' + type);
-        
-        fetch(`${SCRIPT_URL}?targetSheet=${type}`)
-        .then(r => r.json())
-        .then(res => {
-            if (res.rows.length === 0) {
-                container.innerHTML = "<div class='p-5 text-center text-muted'>Data tidak tersedia.</div>";
-                return;
-            }
+        document.addEventListener("DOMContentLoaded", () => { loadData(); });
 
-            let html = `<div class='table-responsive'><table class='table align-middle'><thead><tr>`;
-            res.header.forEach(h => html += `<th>${h}</th>`);
-            html += `<th class='text-center'>AKSI</th></tr></thead><tbody>`;
+        // A. NAVIGASI
+        function showPage(pageId) {
+            document.querySelectorAll('.page-section').forEach(el => el.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            document.querySelectorAll('#sidebar .nav-link').forEach(el => el.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+            if(window.innerWidth < 768) document.getElementById('sidebar').classList.remove('active');
+        }
 
-            res.rows.forEach((row, idx) => {
-                let actualIdx = idx + 2;
-                html += `<tr>`;
-                row.forEach((cell, cIdx) => {
-                    if(cIdx === 1) { // Kolom Nama jadi clickable
-                        html += `<td><span class="clickable-name" onclick='viewDetail(${JSON.stringify(res.header)}, ${JSON.stringify(row)})'>${cell || '-'}</span></td>`;
-                    } else {
-                        html += `<td>${cell || '-'}</td>`;
-                    }
+        // B. LOAD DATA
+        function loadData() {
+            fetch(SCRIPT_URL + "?action=read")
+                .then(res => res.json())
+                .then(data => {
+                    renderSantri(data.santri);
+                    renderPegawai(data.pegawai);
+                    renderJadwal(data.jadwal);
+                    renderModul(data.modul);
+                })
+                .catch(err => {
+                    console.error(err);
+                    if(SCRIPT_URL.includes("URL_APPS")) alert("Harap ganti URL Script di index.html!");
                 });
-                html += `<td class='text-center text-nowrap'>
-                    <button class='btn btn-sm btn-outline-warning border-0 me-1' onclick='handleEdit("${type}", ${JSON.stringify(row)}, ${actualIdx})'><i class='fa fa-edit'></i></button>
-                    <button class='btn btn-sm btn-outline-danger border-0' onclick='deleteRow("${type}", ${actualIdx})'><i class='fa fa-trash'></i></button>
-                </td></tr>`;
+        }
+
+        // C. RENDER SANTRI (TABEL RINGKAS)
+        function renderSantri(rows) {
+            globalSantriData = rows;
+            let html = '';
+            rows.forEach((row, index) => {
+                if(!row[0]) return;
+                html += `<tr>
+                    <td>
+                        <div class="fw-bold text-dark">${row[0]}</div>
+                        <div class="small text-muted"><i class="fas fa-id-card me-1"></i>${row[5] || '-'}</div>
+                    </td>
+                    <td>${row[2] || '-'}</td>
+                    <td>${row[4] || '-'}</td>
+                    <td><span class="badge bg-success bg-opacity-10 text-success rounded-pill">${row[17] || 'Aktif'}</span></td>
+                    <td class="text-end">
+                        <button class="btn btn-sm btn-outline-primary rounded-pill" onclick="showDetailSantri(${index})">
+                            <i class="fas fa-eye"></i> Detail
+                        </button>
+                    </td>
+                </tr>`;
             });
-            container.innerHTML = html + `</tbody></table></div>`;
-        }).finally(() => toggleLoading(false));
-    }
+            document.getElementById('bodySantri').innerHTML = html;
+        }
 
-    // DETAIL VIEW
-    function viewDetail(headers, row) {
-        let body = "<div class='mb-3 text-center'><div class='avatar-placeholder bg-light text-primary rounded-circle d-inline-flex align-items-center justify-content-center' style='width:60px; height:60px; font-size:24px; font-weight:800;'>" + row[1].charAt(0) + "</div><h5 class='mt-2 mb-0 fw-bold'>" + row[1] + "</h5></div>";
-        headers.forEach((h, i) => {
-            body += `<div class="detail-item">
-                        <div class="detail-label">${h}</div>
-                        <div class="detail-value">${row[i] || '-'}</div>
+        // D. RENDER LAINNYA
+        function renderPegawai(r) {
+            let h=''; r.forEach(x=>{if(x[0])h+=`<tr><td><div class="fw-bold">${x[0]}</div></td><td><span class="badge bg-secondary bg-opacity-10 text-secondary">${x[3]}</span></td><td>${x[4]}</td><td>${x[2]}</td></tr>`});
+            document.getElementById('bodyPegawai').innerHTML=h;
+        }
+        function renderJadwal(r) {
+            let h=''; r.forEach(x=>{if(x[1])h+=`<tr><td><span class="fw-bold text-primary">${x[1]}</span></td><td>${x[2]}</td><td class="fw-bold">${x[7]}</td><td>${x[8]}</td></tr>`});
+            document.getElementById('bodyJadwal').innerHTML=h;
+        }
+        function renderModul(r) {
+            let h=''; r.forEach(x=>{if(x[0])h+=`<div class="col-md-4"><div class="card h-100 p-4 text-center border"><i class="fas fa-file-pdf fa-3x text-danger mb-3"></i><h6 class="fw-bold">${x[0]}</h6><p class="small text-muted">${x[2]||''}</p><a href="${x[1]}" target="_blank" class="btn btn-sm btn-outline-primary rounded-pill mt-auto">Download</a></div></div>`});
+            document.getElementById('containerModul').innerHTML=h;
+        }
+
+        // E. SHOW DETAIL SANTRI (POP-UP)
+        function showDetailSantri(index) {
+            const data = globalSantriData[index];
+            const modal = new bootstrap.Modal(document.getElementById('modalDetailSantri'));
+            
+            // Mapping Index Array sesuai Database
+            document.getElementById('d-nama').innerText = data[0];
+            document.getElementById('d-ttl').innerText = (data[7]||'') + ", " + formatDate(data[1]);
+            document.getElementById('d-alamat').innerText = data[2];
+            document.getElementById('d-musyrif').innerText = data[4];
+            document.getElementById('d-nik').innerText = data[5];
+            document.getElementById('d-kk').innerText = data[6];
+            document.getElementById('d-jk').innerText = data[8];
+            document.getElementById('d-ayah').innerText = data[9];
+            document.getElementById('d-ibu').innerText = data[10];
+            document.getElementById('d-job').innerText = data[11];
+            document.getElementById('d-hpayah').innerText = data[12];
+            document.getElementById('d-hpibu').innerText = data[13];
+            document.getElementById('d-masuk').innerText = formatDate(data[14]);
+            document.getElementById('d-anak').innerText = `Anak ke ${data[15]} dari ${data[16]} bersaudara`;
+            
+            const st = document.getElementById('d-status');
+            st.innerText = data[17];
+            st.className = "fw-bold badge " + (data[17]==='Aktif'?'bg-success':'bg-warning');
+
+            modal.show();
+        }
+
+        // F. OPEN MODAL FORM INPUT
+        const formModal = new bootstrap.Modal(document.getElementById('modalForm'));
+        function openModal(type) {
+            document.getElementById('modalTitle').innerText = "Tambah " + type;
+            document.getElementById('kategoriInput').value = type;
+            const container = document.getElementById('formContainer');
+
+            if (type === 'Santri') {
+                container.innerHTML = `
+                    <div class="alert alert-info py-2 small mb-3"><i class="fas fa-info-circle me-2"></i>Lengkapi 18 data santri.</div>
+                    <div class="row g-3">
+                        <div class="col-md-6"><label class="form-label">Nama Lengkap</label><input type="text" class="form-control" name="nama" required></div>
+                        <div class="col-md-6"><label class="form-label">Jenis Kelamin</label><select class="form-select" name="jk"><option>Laki-Laki</option><option>Perempuan</option></select></div>
+                        <div class="col-md-6"><label class="form-label">Tempat Lahir</label><input type="text" class="form-control" name="tempat_lahir"></div>
+                        <div class="col-md-6"><label class="form-label">Tanggal Lahir</label><input type="date" class="form-control" name="tgl_lahir"></div>
+                        <div class="col-md-6"><label class="form-label">NIK</label><input type="number" class="form-control" name="nik"></div>
+                        <div class="col-md-6"><label class="form-label">No. KK</label><input type="number" class="form-control" name="kk"></div>
+                        <div class="col-12"><label class="form-label">Alamat</label><textarea class="form-control" name="alamat" rows="2"></textarea></div>
+                        <div class="col-md-6"><label class="form-label">Anak Ke-</label><input type="number" class="form-control" name="anak_ke"></div>
+                        <div class="col-md-6"><label class="form-label">Jlh Saudara</label><input type="number" class="form-control" name="jlh_saudara"></div>
+                        
+                        <h6 class="text-primary border-bottom pb-1 mt-3">Orang Tua & Pondok</h6>
+                        <div class="col-md-6"><label class="form-label">Nama Ayah</label><input type="text" class="form-control" name="ayah"></div>
+                        <div class="col-md-6"><label class="form-label">Nama Ibu</label><input type="text" class="form-control" name="ibu"></div>
+                        <div class="col-md-6"><label class="form-label">HP Ayah</label><input type="text" class="form-control" name="hp_ayah"></div>
+                        <div class="col-md-6"><label class="form-label">HP Ibu</label><input type="text" class="form-control" name="hp_ibu"></div>
+                        <div class="col-12"><label class="form-label">Pekerjaan</label><input type="text" class="form-control" name="job"></div>
+                        <div class="col-md-4"><label class="form-label">Tgl Masuk</label><input type="date" class="form-control" name="masuk"></div>
+                        <div class="col-md-4"><label class="form-label">Musyrif</label><input type="text" class="form-control" name="musyrif"></div>
+                        <div class="col-md-4"><label class="form-label">Status</label><select class="form-select" name="status"><option>Aktif</option><option>Yatim</option><option>Umum</option></select></div>
                     </div>`;
-        });
-        document.getElementById('detailBody').innerHTML = body;
-        new bootstrap.Modal(document.getElementById('detailModal')).show();
-    }
-
-    // FORM DINAMIS (RE-CONTOURED)
-    function openModal(type, rowData = null, rowIndex = "") {
-        document.getElementById('modalTitle').innerText = (rowData ? "Edit Data " : "Tambah Data ") + type;
-        let body = `<input type="hidden" name="targetSheet" value="${type}"><input type="hidden" name="rowIndex" value="${rowIndex}">`;
-
-        if (type === 'Santri') {
-            body += `
-            <div class="row">
-                <div class="col-md-6 pe-md-4">
-                    <div class="form-section">
-                        <div class="form-section-title">Identitas Santri</div>
-                        <div class="mb-3"><label class="small fw-bold">Nama Lengkap</label><input type="text" name="nama" class="form-control" required value="${rowData?.[1]||''}"></div>
-                        <div class="row g-2 mb-3">
-                            <div class="col-md-6"><label class="small fw-bold">NIK</label><input type="number" name="nik" class="form-control" value="${rowData?.[6]||''}"></div>
-                            <div class="col-md-6"><label class="small fw-bold">Gender</label><select name="gender" class="form-select"><option value="Laki-Laki" ${rowData?.[9]=='Laki-Laki'?'selected':''}>Laki-Laki</option><option value="Perempuan" ${rowData?.[9]=='Perempuan'?'selected':''}>Perempuan</option></select></div>
-                        </div>
-                        <div class="row g-2 mb-3">
-                            <div class="col-md-6"><label class="small fw-bold">Tempat Lahir</label><input type="text" name="tempat_lahir" class="form-control" value="${rowData?.[8]||''}"></div>
-                            <div class="col-md-6"><label class="small fw-bold">Tgl Lahir</label><input type="date" name="tgl_lahir" class="form-control" value="${rowData?.[2]||''}"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 ps-md-4">
-                    <div class="form-section">
-                        <div class="form-section-title">Data Wali & Status</div>
-                        <div class="mb-3"><label class="small fw-bold">Nama Ayah / Wali</label><input type="text" name="ayah" class="form-control" value="${rowData?.[10]||''}"></div>
-                        <div class="mb-3"><label class="small fw-bold">WhatsApp Wali</label><input type="number" name="hpayah" class="form-control" value="${rowData?.[13]||''}"></div>
-                        <div class="mb-3"><label class="small fw-bold">Status Sosial</label>
-                            <select name="status" class="form-select">
-                                <option value="Yatim" ${rowData?.[18]=='Yatim'?'selected':''}>Yatim</option>
-                                <option value="Piatu" ${rowData?.[18]=='Piatu'?'selected':''}>Piatu</option>
-                                <option value="Umum" ${rowData?.[18]=='Umum'?'selected':''}>Umum</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-            </div>`;
-        } else if (type === 'Pegawai') {
-            body += `
-            <div class="form-section">
-                <div class="mb-3"><label class="small fw-bold">Nama Pegawai</label><input type="text" name="nama" class="form-control" required value="${rowData?.[1]||''}"></div>
-                <div class="mb-3"><label class="small fw-bold">Jabatan</label><input type="text" name="jabatan" class="form-control" value="${rowData?.[4]||''}"></div>
-                <div class="mb-3"><label class="small fw-bold">WhatsApp</label><input type="number" name="nohp" class="form-control" value="${rowData?.[5]||''}"></div>
-            </div>`;
-        } else {
-            body += `
-            <div class="form-section">
-                <div class="row g-2 mb-3">
-                    <div class="col-md-4"><label class="small fw-bold">Hari</label><input type="text" name="hari" class="form-control" value="${rowData?.[1]||''}"></div>
-                    <div class="col-md-8"><label class="small fw-bold">Waktu</label><input type="text" name="waktu" class="form-control" value="${rowData?.[2]||''}"></div>
-                </div>
-                <div class="mb-3"><label class="small fw-bold">Materi Pelajaran</label><input type="text" name="materi" class="form-control" value="${rowData?.[7]||''}"></div>
-                <div class="mb-3"><label class="small fw-bold">Guru Pengampu</label><input type="text" name="guru" class="form-control" value="${rowData?.[8]||''}"></div>
-            </div>`;
+            } else {
+                let l1, l2, l3, l4;
+                if(type==='Pegawai'){l1="Nama";l2="Jabatan";l3="No HP";l4="Alamat";}
+                else if(type==='Jadwal'){l1="Hari";l2="Waktu";l3="Materi";l4="Guru";}
+                else{l1="Modul";l2="Link";l3="Ket";l4="-";}
+                
+                container.innerHTML = `<div class="mb-3"><label class="fw-bold">${l1}</label><input type="text" class="form-control" name="input1" required></div><div class="mb-3"><label class="fw-bold">${l2}</label><input type="text" class="form-control" name="input2"></div><div class="mb-3"><label class="fw-bold">${l3}</label><input type="text" class="form-control" name="input3"></div>${l4!=='-'?`<div class="mb-3"><label class="fw-bold">${l4}</label><input type="text" class="form-control" name="input4"></div>`:''}`;
+            }
+            formModal.show();
         }
 
-        document.getElementById('modalBody').innerHTML = body;
-        new bootstrap.Modal(document.getElementById('mainModal')).show();
-    }
+        // G. SUBMIT DATA
+        document.getElementById('mainForm').addEventListener('submit', e => {
+            e.preventDefault();
+            const btn = document.getElementById('btnSubmit');
+            const txt = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Menyimpan...'; btn.disabled = true;
 
-    // SEARCH FUNCTION
-    function filterTabel(type, inputId) {
-        let filter = document.getElementById(inputId).value.toUpperCase();
-        let tr = document.getElementById('out-' + type).getElementsByTagName("tr");
-        for (let i = 1; i < tr.length; i++) {
-            tr[i].style.display = tr[i].innerText.toUpperCase().indexOf(filter) > -1 ? "" : "none";
-        }
-    }
-
-    // CRUD ACTIONS
-    document.getElementById('mainForm').onsubmit = function(e) {
-        e.preventDefault();
-        toggleLoading(true);
-        fetch(SCRIPT_URL, { method: 'POST', body: new URLSearchParams(new FormData(this))})
-        .then(r => r.text()).then(res => {
-            loadData(new FormData(this).get('targetSheet'));
-            bootstrap.Modal.getInstance(document.getElementById('mainModal')).hide();
-        }).finally(() => toggleLoading(false));
-    };
-
-    function handleEdit(t, d, i) { openModal(t, d, i); }
-    function deleteRow(t, i) { if(confirm("Hapus data secara permanen?")) { toggleLoading(true); fetch(`${SCRIPT_URL}?action=delete&targetSheet=${t}&rowIndex=${i}`, {method:'POST'}).then(() => loadData(t)); } }
-
-    // INITIAL LOAD
-    document.querySelectorAll('a[data-bs-toggle="tab"]').forEach(tab => {
-        tab.addEventListener('shown.bs.tab', (e) => {
-            const type = e.target.getAttribute("href").replace("#tab-", "").replace(/^\w/, c => c.toUpperCase());
-            loadData(type);
+            fetch(SCRIPT_URL, { method: 'POST', body: new FormData(e.target) })
+                .then(res => { alert('Sukses!'); formModal.hide(); loadData(); })
+                .catch(err => alert('Error: ' + err))
+                .finally(() => { btn.innerHTML = txt; btn.disabled = false; });
         });
-    });
 
-    window.onload = () => loadData('Santri');
-</script>
+        // H. HELPER FORMAT TANGGAL
+        function formatDate(d) {
+            if(!d) return '-';
+            const date = new Date(d);
+            return isNaN(date) ? d : date.toLocaleDateString('id-ID', {day:'numeric', month:'short', year:'numeric'});
+        }
+    </script>
 </body>
 </html>
