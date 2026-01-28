@@ -60,7 +60,7 @@
 <body>
 
     <nav id="sidebar">
-        <div class="brand"><i class="fas fa-mosque me-3 text-info"></i><span>Markaz Admin</span></div>
+        <div class="brand"><i class="fas fa-mosque me-3 text-info"></i><span>Markaz Yatim Duafa Qurani</span></div>
         <ul class="nav flex-column mt-4">
             <li class="nav-item"><a class="nav-link active" onclick="showPage('santri')"><i class="fas fa-user-graduate me-3"></i>Data Santri</a></li>
             <li class="nav-item"><a class="nav-link" onclick="showPage('pegawai')"><i class="fas fa-chalkboard-teacher me-3"></i>Data Pegawai</a></li>
@@ -113,7 +113,7 @@
             <div class="card">
                 <div class="table-responsive">
                     <table class="table table-hover align-middle mb-0">
-                        <thead><tr><th>Nama & Jabatan</th><th>Tanggal Lahir</th><th>Alamat</th><th>Jenis Kelamin</th><th class="text-end">Detail</th></tr></thead>
+                        <thead><tr><th>Nama</th><th>Jabatan</th><th>No HP</th><th>Alamat</th></tr></thead>
                         <tbody id="bodyPegawai"><tr><td colspan="4" class="text-center p-5">Memuat data...</td></tr></tbody>
                     </table>
                 </div>
@@ -382,7 +382,7 @@
                         <div class="col-12"><label class="form-label">Pekerjaan</label><input type="text" class="form-control" name="job"></div>
                         <div class="col-md-4"><label class="form-label">Tgl Masuk</label><input type="date" class="form-control" name="masuk"></div>
                         <div class="col-md-4"><label class="form-label">Musyrif</label><input type="text" class="form-control" name="musyrif"></div>
-                        <div class="col-md-4"><label class="form-label">Status</label><select class="form-select" name="status"><option>Aktif</option><option>Yatim</option><option>Umum</option></select></div>
+                        <div class="col-md-4"><label class="form-label">Status</label><select class="form-select" name="status"><option>Umum</option><option>Yatim</option><option>Piatu</option></select></div>
                     </div>`;
             } else {
                 let l1, l2, l3, l4;
@@ -416,4 +416,3 @@
     </script>
 </body>
 </html>
-
