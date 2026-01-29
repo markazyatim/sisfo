@@ -7,65 +7,139 @@
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
+        /* --- 1. SETTING WARNA (SINGLE THEME) --- */
         :root { 
-            --sidebar-width: 260px; 
-            --primary-bg: #1e293b; 
-            --active-color: #3b82f6; 
-            --body-bg: #f3f4f6;
-            --text-color: #334155;
+            --sidebar-width: 280px; 
+            --primary-gradient: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            
+            /* Warna Permanen */
+            --body-bg: #f8fafc;       /* Abu-abu sangat muda (Slate 50) */
+            --card-bg: #ffffff;       /* Putih */
+            --text-main: #0f172a;     /* Hitam Pekat (Slate 900) */
+            --text-secondary: #475569; /* Abu Tua (Slate 600) */
+            --border-color: #e2e8f0;  /* Garis Halus */
+            --input-bg: #ffffff;
+            --zebra-bg: #f1f5f9;      /* Warna baris selang-seling */
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
         }
         
-        body { font-family: 'Poppins', sans-serif; background-color: var(--body-bg); color: var(--text-color); overflow-x: hidden; }
-        
-        /* Sidebar */
-        #sidebar { width: var(--sidebar-width); height: 100vh; position: fixed; top: 0; left: 0; background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%); color: #fff; transition: all 0.3s; z-index: 1000; box-shadow: 4px 0 10px rgba(0,0,0,0.1); }
-        #sidebar .brand { padding: 25px 20px; font-size: 1.3rem; font-weight: 600; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; }
-        #sidebar .nav-link { color: #94a3b8; padding: 14px 25px; margin: 8px 15px; border-radius: 10px; cursor: pointer; transition: 0.2s; }
-        #sidebar .nav-link:hover, #sidebar .nav-link.active { background-color: var(--active-color); color: #fff; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3); }
-        
-        /* Content & Cards */
-        #content { margin-left: var(--sidebar-width); padding: 30px; width: calc(100% - var(--sidebar-width)); min-height: 100vh; transition: 0.3s; }
-        .page-section { display: none; animation: slideUp 0.5s ease; }
-        .page-section.active { display: block; }
-        .card { border: none; border-radius: 16px; background: #fff; box-shadow: 0 4px 20px rgba(0,0,0,0.03); overflow: hidden; margin-bottom: 20px; }
-        
-        /* Tables */
-        .table thead th { background-color: #f8fafc; border-bottom: 2px solid #e2e8f0; color: #64748b; font-weight: 600; text-transform: uppercase; font-size: 0.85rem; padding: 15px; }
-        .table tbody td { padding: 15px; vertical-align: middle; border-bottom: 1px solid #f1f5f9; }
-        
-        /* Search Bar Style */
-        .search-box { max-width: 300px; }
-        .input-group-text { background: #fff; border-right: none; }
-        .form-control.search-input { border-left: none; }
-        .form-control.search-input:focus { box-shadow: none; border-color: #ced4da; }
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            background-color: var(--body-bg); 
+            color: var(--text-main); 
+            overflow-x: hidden;
+        }
 
-        /* Modal & Forms */
-        .modal-content { border-radius: 16px; border: none; }
-        .form-control, .form-select { border-radius: 8px; padding: 10px; border: 1px solid #e2e8f0; }
-        .form-control:focus { border-color: var(--active-color); box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
+        /* Override Bootstrap Colors */
+        h1, h2, h3, h4, h5, h6 { color: var(--text-main) !important; }
+        .text-muted { color: var(--text-secondary) !important; }
+        .text-dark { color: var(--text-main) !important; }
+
+        /* --- 2. SIDEBAR (TETAP GELAP AGAR ELEGAN) --- */
+        #sidebar { 
+            width: var(--sidebar-width); height: 100vh; position: fixed; top: 0; left: 0; 
+            background-color: #0f172a; /* Slate 900 */
+            color: #fff; border-right: 1px solid rgba(255,255,255,0.1);
+            z-index: 1000; display: flex; flex-direction: column;
+        }
+        #sidebar .brand { 
+            padding: 25px; font-size: 1.3rem; font-weight: 700; color: #fff;
+            border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; gap: 15px; 
+        }
+        #sidebar .nav-link { 
+            color: #94a3b8; padding: 12px 20px; margin: 5px 15px; border-radius: 8px; 
+            transition: 0.2s; font-weight: 500; font-size: 0.95rem; display: flex; align-items: center; gap: 12px;
+        }
+        #sidebar .nav-link:hover { background-color: rgba(255,255,255,0.1); color: #fff; }
+        #sidebar .nav-link.active { background: var(--primary-gradient); color: #fff; box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4); }
+        
+        /* --- 3. CONTENT & CARDS --- */
+        #content { margin-left: var(--sidebar-width); padding: 30px; width: calc(100% - var(--sidebar-width)); min-height: 100vh; }
+        .page-section { display: none; animation: fadeIn 0.4s ease; }
+        .page-section.active { display: block; }
+        
+        .card { 
+            border: 1px solid var(--border-color); border-radius: 12px; 
+            background: var(--card-bg); box-shadow: var(--shadow); 
+            margin-bottom: 20px;
+        }
+
+        /* --- 4. TABLE STYLING --- */
+        .table-responsive { border-radius: 12px; overflow: hidden; }
+        .table { margin-bottom: 0; border-color: var(--border-color); }
+        
+        .table thead th { 
+            background-color: #f1f5f9; /* Sedikit lebih gelap dari body */
+            color: var(--text-secondary); 
+            font-weight: 700; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.5px;
+            padding: 18px 20px; border-bottom: 2px solid var(--border-color);
+        }
+        
+        .table tbody td { 
+            padding: 16px 20px; vertical-align: middle; 
+            border-bottom: 1px solid var(--border-color); 
+            color: var(--text-main); 
+            font-size: 0.95rem;
+        }
+
+        /* Zebra Striping (Khusus Santri & Pegawai) */
+        #bodySantri tr:nth-child(even), #bodyPegawai tr:nth-child(even) { 
+            background-color: var(--zebra-bg); 
+        }
+        /* Hover Effect */
+        .table-hover tbody tr:hover { background-color: rgba(37, 99, 235, 0.05) !important; }
+
+        /* --- 5. FORMS & INPUTS --- */
+        .search-box { width: 300px; }
+        .input-group-text { 
+            background-color: var(--input-bg); border-color: var(--border-color); color: var(--text-secondary);
+        }
+        .form-control, .form-select { 
+            background-color: var(--input-bg); 
+            border-color: var(--border-color); 
+            color: var(--text-main); 
+            padding: 12px; border-radius: 8px;
+        }
+        .form-control:focus, .form-select:focus { 
+            border-color: #3b82f6; 
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15); 
+        }
+
+        /* --- 6. MODALS --- */
+        .modal-content { background-color: var(--card-bg); border-radius: 16px; border: none; box-shadow: var(--shadow); }
+        .modal-header { border-bottom: 1px solid var(--border-color); }
+        .modal-footer { border-top: 1px solid var(--border-color); }
+
+        /* --- 7. BUTTONS --- */
+        .btn-primary { background: var(--primary-gradient); border: none; }
+        .btn-outline-info { color: #0284c7; border-color: #0284c7; }
+        .btn-outline-info:hover { background-color: #0284c7; color: #fff; }
 
         @media (max-width: 768px) {
             #sidebar { margin-left: calc(-1 * var(--sidebar-width)); }
             #sidebar.active { margin-left: 0; }
-            #content { margin-left: 0; width: 100%; padding: 20px; }
-            .search-box { max-width: 100%; margin-top: 10px; }
-            .d-flex.justify-content-between { flex-direction: column; align-items: stretch !important; gap: 10px; }
+            #content { margin-left: 0; width: 100%; padding: 15px; }
+            .d-flex.justify-content-between { flex-direction: column; gap: 15px; }
+            .search-box { width: 100%; }
         }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
     <nav id="sidebar">
-        <div class="brand"><i class="fas fa-mosque me-3 text-info"></i><span>Markaz Yatim Duafa Qurani</span></div>
-        <ul class="nav flex-column mt-4">
-            <li class="nav-item"><a class="nav-link active" onclick="showPage('santri')"><i class="fas fa-user-graduate me-3"></i>Data Santri</a></li>
-            <li class="nav-item"><a class="nav-link" onclick="showPage('pegawai')"><i class="fas fa-chalkboard-teacher me-3"></i>Data Pegawai</a></li>
-            <li class="nav-item"><a class="nav-link" onclick="showPage('jadwal')"><i class="fas fa-calendar-alt me-3"></i>Jadwal</a></li>
-            <li class="nav-item"><a class="nav-link" onclick="showPage('modul')"><i class="fas fa-book-open me-3"></i>Modul</a></li>
+        <div class="brand">
+            <i class="fas fa-mosque text-primary fa-lg"></i>
+            <span>Markaz MYDQ</span>
+        </div>
+        <ul class="nav flex-column mt-3">
+            <li class="nav-item"><a class="nav-link active" onclick="showPage('santri')"><i class="fas fa-user-graduate"></i>Data Santri</a></li>
+            <li class="nav-item"><a class="nav-link" onclick="showPage('pegawai')"><i class="fas fa-chalkboard-teacher"></i>Data Pegawai</a></li>
+            <li class="nav-item"><a class="nav-link" onclick="showPage('jadwal')"><i class="fas fa-calendar-alt"></i>Jadwal</a></li>
+            <li class="nav-item"><a class="nav-link" onclick="showPage('modul')"><i class="fas fa-book-open"></i>Modul</a></li>
         </ul>
     </nav>
 
@@ -75,22 +149,22 @@
         <div id="santri" class="page-section active">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <div>
-                    <h3 class="fw-bold text-dark m-0">Data Santri</h3>
-                    <small class="text-muted">Kelola data santri aktif</small>
+                    <h3 class="fw-bold m-0">Data Santri</h3>
+                    <p class="text-muted small mb-0">Kelola data santri aktif</p>
                 </div>
-                <div class="d-flex gap-2">
-                    <div class="input-group search-box">
-                        <span class="input-group-text text-muted"><i class="fas fa-search"></i></span>
+                <div class="d-flex gap-3 align-items-center">
+                    <div class="input-group search-box shadow-sm rounded-3">
+                        <span class="input-group-text"><i class="fas fa-search"></i></span>
                         <input type="text" class="form-control search-input" placeholder="Cari santri..." onkeyup="filterTable('bodySantri', this.value)">
                     </div>
-                    <button class="btn btn-primary" onclick="openModal('Santri')"><i class="fas fa-plus d-md-none"></i><span class="d-none d-md-inline"><i class="fas fa-plus me-2"></i>Tambah</span></button>
+                    <button class="btn btn-primary rounded-3 px-4" onclick="openModal('Santri')"><i class="fas fa-plus me-2"></i>Tambah</button>
                 </div>
             </div>
             <div class="card">
                 <div class="table-responsive">
                     <table class="table table-hover align-middle mb-0">
-                        <thead><tr><th>Nama & NIK</th><th>Alamat</th><th>Musyrif</th><th>Status</th><th class="text-end">Detail</th></tr></thead>
-                        <tbody id="bodySantri"><tr><td colspan="5" class="text-center p-5">Memuat data...</td></tr></tbody>
+                        <thead><tr><th>Nama & NIK</th><th>Alamat</th><th>Musyrif</th><th>Status</th><th class="text-end">Aksi</th></tr></thead>
+                        <tbody id="bodySantri"><tr><td colspan="5" class="text-center p-5 text-muted">Memuat data...</td></tr></tbody>
                     </table>
                 </div>
             </div>
@@ -99,22 +173,34 @@
         <div id="pegawai" class="page-section">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <div>
-                    <h3 class="fw-bold text-dark m-0">Data Pegawai</h3>
-                    <small class="text-muted">Data Guru & Staff Yayasan</small>
+                    <h3 class="fw-bold m-0">Data Pegawai</h3>
+                    <p class="text-muted small mb-0">Manajemen guru & staff yayasan</p>
                 </div>
-                <div class="d-flex gap-2">
-                    <div class="input-group search-box">
-                        <span class="input-group-text text-muted"><i class="fas fa-search"></i></span>
+                <div class="d-flex gap-3 align-items-center">
+                    <div class="input-group search-box shadow-sm rounded-3">
+                        <span class="input-group-text"><i class="fas fa-search"></i></span>
                         <input type="text" class="form-control search-input" placeholder="Cari pegawai..." onkeyup="filterTable('bodyPegawai', this.value)">
                     </div>
-                    <button class="btn btn-primary" onclick="openModal('Pegawai')"><i class="fas fa-plus d-md-none"></i><span class="d-none d-md-inline"><i class="fas fa-plus me-2"></i>Tambah</span></button>
+                    <button class="btn btn-primary rounded-3 px-4" onclick="openModal('Pegawai')"><i class="fas fa-plus me-2"></i>Tambah</button>
                 </div>
             </div>
             <div class="card">
                 <div class="table-responsive">
                     <table class="table table-hover align-middle mb-0">
-                        <thead><tr><th>Nama Lengkap</th><th>Jabatan</th><th>No HP</th><th>JK</th><th class="text-end">Aksi</th></tr></thead>
-                        <tbody id="bodyPegawai"><tr><td colspan="5" class="text-center p-5">Memuat data...</td></tr></tbody>
+                        <thead>
+                            <tr>
+                                <th>Nama Lengkap</th>
+                                <th>Jabatan</th>
+                                <th>Tgl Lahir</th>
+                                <th>Alamat</th>
+                                <th>No HP</th>
+                                <th>JK</th>
+                                <th class="text-end">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bodyPegawai">
+                            <tr><td colspan="7" class="text-center p-5 text-muted">Memuat data...</td></tr>
+                        </tbody>
                     </table>
                 </div>
             </div>
@@ -123,22 +209,34 @@
         <div id="jadwal" class="page-section">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <div>
-                    <h3 class="fw-bold text-dark m-0">Jadwal Kegiatan</h3>
-                    <small class="text-muted">Jadwal pelajaran & harian</small>
+                    <h3 class="fw-bold m-0">Jadwal Kegiatan</h3>
+                    <p class="text-muted small mb-0">Jadwal pelajaran (Color Coded)</p>
                 </div>
-                <div class="d-flex gap-2">
-                    <div class="input-group search-box">
-                        <span class="input-group-text text-muted"><i class="fas fa-search"></i></span>
-                        <input type="text" class="form-control search-input" placeholder="Cari jadwal/guru..." onkeyup="filterTable('bodyJadwal', this.value)">
+                <div class="d-flex gap-3 align-items-center">
+                    <div class="input-group search-box shadow-sm rounded-3">
+                        <span class="input-group-text"><i class="fas fa-search"></i></span>
+                        <input type="text" class="form-control search-input" placeholder="Cari jadwal..." onkeyup="filterTable('bodyJadwal', this.value)">
                     </div>
-                    <button class="btn btn-success text-white" onclick="openModal('Jadwal')"><i class="fas fa-plus d-md-none"></i><span class="d-none d-md-inline"><i class="fas fa-plus me-2"></i>Buat Jadwal</span></button>
+                    <button class="btn btn-success rounded-3 px-4" onclick="openModal('Jadwal')"><i class="fas fa-plus me-2"></i>Jadwal</button>
                 </div>
             </div>
             <div class="card">
                 <div class="table-responsive">
                     <table class="table table-hover align-middle mb-0">
-                        <thead><tr><th>Hari</th><th>Waktu</th><th>Materi</th><th>Guru</th></tr></thead>
-                        <tbody id="bodyJadwal"><tr><td colspan="4" class="text-center p-5">Memuat data...</td></tr></tbody>
+                        <thead>
+                            <tr>
+                                <th width="10%">Hari</th>
+                                <th width="12%">Waktu</th>
+                                <th width="10%">Kelas</th>
+                                <th>Mata Pelajaran</th>
+                                <th>Detail (SKS/Ruang)</th>
+                                <th>Pengajar</th>
+                                <th class="text-end">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bodyJadwal">
+                            <tr><td colspan="7" class="text-center p-5 text-muted">Memuat data...</td></tr>
+                        </tbody>
                     </table>
                 </div>
             </div>
@@ -147,15 +245,15 @@
         <div id="modul" class="page-section">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <div>
-                    <h3 class="fw-bold text-dark m-0">Modul & Materi</h3>
-                    <small class="text-muted">Bank data modul pembelajaran</small>
+                    <h3 class="fw-bold m-0">Modul & Materi</h3>
+                    <p class="text-muted small mb-0">Bank data modul pembelajaran</p>
                 </div>
-                <div class="d-flex gap-2">
-                    <div class="input-group search-box">
-                        <span class="input-group-text text-muted"><i class="fas fa-search"></i></span>
+                <div class="d-flex gap-3 align-items-center">
+                    <div class="input-group search-box shadow-sm rounded-3">
+                        <span class="input-group-text"><i class="fas fa-search"></i></span>
                         <input type="text" class="form-control search-input" placeholder="Cari modul..." onkeyup="filterGrid('containerModul', this.value)">
                     </div>
-                    <button class="btn btn-info text-white" onclick="openModal('Modul')"><i class="fas fa-upload d-md-none"></i><span class="d-none d-md-inline"><i class="fas fa-upload me-2"></i>Upload</span></button>
+                    <button class="btn btn-info text-white rounded-3 px-4" onclick="openModal('Modul')"><i class="fas fa-upload me-2"></i>Upload</button>
                 </div>
             </div>
             <div class="row g-3" id="containerModul"></div>
@@ -165,17 +263,19 @@
     <div class="modal fade" id="modalForm" tabindex="-1" data-bs-backdrop="static">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
-                <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title" id="modalTitle">Tambah Data</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold" id="modalTitle">Tambah Data</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body p-4">
                     <form id="mainForm">
                         <input type="hidden" id="kategoriInput" name="kategori">
+                        <input type="hidden" id="actionInput" name="action" value="insert">
+                        <input type="hidden" id="rowIdInput" name="rowId">
                         <div id="formContainer"></div> 
                         <div class="d-grid mt-4">
                             <button type="submit" class="btn btn-primary btn-lg" id="btnSubmit">
-                                <i class="fas fa-save me-2"></i>Simpan Data
+                                <i class="fas fa-save me-2"></i> Simpan Data
                             </button>
                         </div>
                     </form>
@@ -188,34 +288,16 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header bg-light">
-                    <h5 class="modal-title fw-bold"><i class="fas fa-id-card me-2"></i>Biodata Santri Lengkap</h5>
+                    <h5 class="modal-title fw-bold">Biodata Santri</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body p-4">
                     <h6 class="text-primary fw-bold border-bottom pb-2 mb-3">1. Data Pribadi</h6>
-                    <div class="row g-3 mb-4">
-                        <div class="col-md-4"><small class="text-muted">Nama Lengkap</small><div class="fw-bold" id="d-nama"></div></div>
-                        <div class="col-md-4"><small class="text-muted">NIK</small><div class="fw-bold" id="d-nik"></div></div>
-                        <div class="col-md-4"><small class="text-muted">No. KK</small><div class="fw-bold" id="d-kk"></div></div>
-                        <div class="col-md-4"><small class="text-muted">Tempat, Tgl Lahir</small><div class="fw-bold" id="d-ttl"></div></div>
-                        <div class="col-md-4"><small class="text-muted">Jenis Kelamin</small><div class="fw-bold" id="d-jk"></div></div>
-                        <div class="col-md-4"><small class="text-muted">Anak ke / Sdr</small><div class="fw-bold" id="d-anak"></div></div>
-                        <div class="col-12"><small class="text-muted">Alamat Domisili</small><div class="fw-bold" id="d-alamat"></div></div>
-                    </div>
+                    <div class="row g-3 mb-4"><div class="col-md-4"><small class="text-muted">Nama</small><div class="fw-bold" id="d-nama"></div></div><div class="col-md-4"><small class="text-muted">NIK</small><div class="fw-bold" id="d-nik"></div></div><div class="col-md-4"><small class="text-muted">KK</small><div class="fw-bold" id="d-kk"></div></div><div class="col-md-4"><small class="text-muted">TTL</small><div class="fw-bold" id="d-ttl"></div></div><div class="col-md-4"><small class="text-muted">JK</small><div class="fw-bold" id="d-jk"></div></div><div class="col-md-4"><small class="text-muted">Anak ke</small><div class="fw-bold" id="d-anak"></div></div><div class="col-12"><small class="text-muted">Alamat</small><div class="fw-bold" id="d-alamat"></div></div></div>
                     <h6 class="text-primary fw-bold border-bottom pb-2 mb-3">2. Data Orang Tua</h6>
-                    <div class="row g-3 mb-4">
-                        <div class="col-md-6"><small class="text-muted">Nama Ayah</small><div class="fw-bold" id="d-ayah"></div></div>
-                        <div class="col-md-6"><small class="text-muted">No. HP Ayah</small><div class="fw-bold" id="d-hpayah"></div></div>
-                        <div class="col-md-6"><small class="text-muted">Nama Ibu</small><div class="fw-bold" id="d-ibu"></div></div>
-                        <div class="col-md-6"><small class="text-muted">No. HP Ibu</small><div class="fw-bold" id="d-hpibu"></div></div>
-                        <div class="col-12"><small class="text-muted">Pekerjaan</small><div class="fw-bold" id="d-job"></div></div>
-                    </div>
+                    <div class="row g-3 mb-4"><div class="col-md-6"><small class="text-muted">Ayah</small><div class="fw-bold" id="d-ayah"></div></div><div class="col-md-6"><small class="text-muted">HP Ayah</small><div class="fw-bold" id="d-hpayah"></div></div><div class="col-md-6"><small class="text-muted">Ibu</small><div class="fw-bold" id="d-ibu"></div></div><div class="col-md-6"><small class="text-muted">HP Ibu</small><div class="fw-bold" id="d-hpibu"></div></div></div>
                     <h6 class="text-primary fw-bold border-bottom pb-2 mb-3">3. Data Pondok</h6>
-                    <div class="row g-3">
-                        <div class="col-md-4"><small class="text-muted">Tanggal Masuk</small><div class="fw-bold" id="d-masuk"></div></div>
-                        <div class="col-md-4"><small class="text-muted">Musyrif</small><div class="fw-bold" id="d-musyrif"></div></div>
-                        <div class="col-md-4"><small class="text-muted">Status</small><div class="fw-bold" id="d-status"></div></div>
-                    </div>
+                    <div class="row g-3"><div class="col-md-4"><small class="text-muted">Masuk</small><div class="fw-bold" id="d-masuk"></div></div><div class="col-md-4"><small class="text-muted">Musyrif</small><div class="fw-bold" id="d-musyrif"></div></div><div class="col-md-4"><small class="text-muted">Status</small><div class="fw-bold" id="d-status"></div></div></div>
                 </div>
             </div>
         </div>
@@ -225,25 +307,17 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header bg-light">
-                    <h5 class="modal-title fw-bold"><i class="fas fa-user-tie me-2"></i>Detail Pegawai</h5>
+                    <h5 class="modal-title fw-bold">Detail Pegawai</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-                <div class="modal-body p-4">
-                    <div class="text-center mb-4">
-                        <div class="avatar-placeholder bg-primary text-white rounded-circle d-flex align-items-center justify-content-center mx-auto" style="width: 80px; height: 80px; font-size: 2rem;">
-                            <i class="fas fa-user"></i>
-                        </div>
-                        <h5 class="fw-bold mt-3 mb-0" id="dp-nama">Nama Pegawai</h5>
-                        <p class="text-muted small" id="dp-jabatan">Jabatan</p>
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item d-flex justify-content-between"><span><i class="fas fa-venus-mars text-muted me-2"></i>Jenis Kelamin</span><span class="fw-bold" id="dp-jk">-</span></li>
-                        <li class="list-group-item d-flex justify-content-between"><span><i class="fas fa-birthday-cake text-muted me-2"></i>Tgl Lahir</span><span class="fw-bold" id="dp-tgl">-</span></li>
-                        <li class="list-group-item d-flex justify-content-between"><span><i class="fas fa-phone text-muted me-2"></i>No. HP</span><span class="fw-bold" id="dp-hp">-</span></li>
-                        <li class="list-group-item">
-                            <div class="mb-1"><i class="fas fa-map-marker-alt text-muted me-2"></i>Alamat</div>
-                            <div class="fw-bold small ps-4" id="dp-alamat">-</div>
-                        </li>
+                <div class="modal-body p-4 text-center">
+                    <div class="avatar-placeholder bg-primary text-white rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3 shadow" style="width: 80px; height: 80px; font-size: 2rem;"><i class="fas fa-user"></i></div>
+                    <h5 class="fw-bold" id="dp-nama"></h5><p class="text-muted" id="dp-jabatan"></p>
+                    <ul class="list-group list-group-flush text-start">
+                        <li class="list-group-item d-flex justify-content-between bg-transparent border-secondary border-opacity-10"><span>JK</span><span class="fw-bold" id="dp-jk">-</span></li>
+                        <li class="list-group-item d-flex justify-content-between bg-transparent border-secondary border-opacity-10"><span>Tgl Lahir</span><span class="fw-bold" id="dp-tgl">-</span></li>
+                        <li class="list-group-item d-flex justify-content-between bg-transparent border-secondary border-opacity-10"><span>No HP</span><span class="fw-bold" id="dp-hp">-</span></li>
+                        <li class="list-group-item bg-transparent border-secondary border-opacity-10"><small class="text-muted d-block">Alamat</small><span class="fw-bold" id="dp-alamat">-</span></li>
                     </ul>
                 </div>
             </div>
@@ -254,202 +328,156 @@
 
     <script>
         // =========================================================
-        // PENTING: GANTI URL DI BAWAH INI DENGAN URL DEPLOY ANDA
+        // PENTING: UPDATE URL DI BAWAH SETELAH DEPLOY ULANG!
         // =========================================================
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyDsY8m5T4xUmbLBPbEJn304gky3hb-uDmeovN__ja1SA9lFubdvsqb0YIEKdtDbUTk/exec"; 
 
-        let globalSantriData = [];
-        let globalPegawaiData = []; // Variabel global untuk pegawai
+        let globalSantriData = [], globalPegawaiData = [], globalJadwalData = [], globalModulData = [];
 
         document.addEventListener("DOMContentLoaded", () => { loadData(); });
 
-        function showPage(pageId) {
+        // --- NAV ---
+        function showPage(id) {
             document.querySelectorAll('.page-section').forEach(el => el.classList.remove('active'));
-            document.getElementById(pageId).classList.add('active');
+            document.getElementById(id).classList.add('active');
             document.querySelectorAll('#sidebar .nav-link').forEach(el => el.classList.remove('active'));
             event.currentTarget.classList.add('active');
             if(window.innerWidth < 768) document.getElementById('sidebar').classList.remove('active');
         }
 
-        function filterTable(tableBodyId, keyword) {
-            const filter = keyword.toLowerCase();
-            const rows = document.getElementById(tableBodyId).getElementsByTagName("tr");
-            for (let i = 0; i < rows.length; i++) {
-                const text = rows[i].textContent || rows[i].innerText;
-                rows[i].style.display = text.toLowerCase().indexOf(filter) > -1 ? "" : "none";
-            }
+        function filterTable(id, key) {
+            const rows = document.getElementById(id).getElementsByTagName("tr");
+            for (let i=0; i<rows.length; i++) rows[i].style.display = rows[i].textContent.toLowerCase().indexOf(key.toLowerCase()) > -1 ? "" : "none";
         }
-        
-        function filterGrid(containerId, keyword) {
-            const filter = keyword.toLowerCase();
-            const cards = document.getElementById(containerId).getElementsByClassName("col-md-4");
-            for (let i = 0; i < cards.length; i++) {
-                const text = cards[i].textContent || cards[i].innerText;
-                cards[i].style.display = text.toLowerCase().indexOf(filter) > -1 ? "" : "none";
-            }
+        function filterGrid(id, key) {
+            const cards = document.getElementById(id).getElementsByClassName("col-md-4");
+            for (let i=0; i<cards.length; i++) cards[i].style.display = cards[i].textContent.toLowerCase().indexOf(key.toLowerCase()) > -1 ? "" : "none";
         }
 
         function loadData() {
-            fetch(SCRIPT_URL + "?action=read")
-                .then(res => res.json())
-                .then(data => {
-                    renderSantri(data.santri);
-                    renderPegawai(data.pegawai);
-                    renderJadwal(data.jadwal);
-                    renderModul(data.modul);
-                })
-                .catch(err => console.error(err));
+            fetch(SCRIPT_URL + "?action=read").then(res => res.json()).then(data => {
+                renderSantri(data.santri);
+                renderPegawai(data.pegawai);
+                renderJadwal(data.jadwal);
+                renderModul(data.modul);
+            });
         }
 
+        // --- RENDER SANTRI ---
         function renderSantri(rows) {
             globalSantriData = rows;
             let html = '';
-            rows.forEach((row, index) => {
-                if(!row[0]) return;
-                html += `<tr>
-                    <td><div class="fw-bold text-dark">${row[0]}</div><div class="small text-muted"><i class="fas fa-id-card me-1"></i>${row[5] || '-'}</div></td>
-                    <td>${row[2] || '-'}</td>
-                    <td>${row[4] || '-'}</td>
-                    <td><span class="badge bg-success bg-opacity-10 text-success rounded-pill">${row[17] || 'Aktif'}</span></td>
-                    <td class="text-end"><button class="btn btn-sm btn-outline-primary rounded-pill" onclick="showDetailSantri(${index})"><i class="fas fa-eye"></i> Detail</button></td>
-                </tr>`;
+            rows.forEach((r, i) => { if(!r[0]) return;
+                html += `<tr><td><div class="fw-bold">${r[0]}</div><small class="text-muted">${r[5]||''}</small></td><td>${r[2]||''}</td><td>${r[4]||''}</td><td><span class="badge bg-success bg-opacity-10 text-success border border-success">${r[17]||'Aktif'}</span></td><td class="text-end"><div class="btn-group"><button class="btn btn-sm btn-outline-info" onclick="showDetailSantri(${i})"><i class="fas fa-eye"></i></button><button class="btn btn-sm btn-outline-warning" onclick="editData('Santri',${i})"><i class="fas fa-pen"></i></button><button class="btn btn-sm btn-outline-danger" onclick="deleteData('Santri',${i})"><i class="fas fa-trash"></i></button></div></td></tr>`;
             });
             document.getElementById('bodySantri').innerHTML = html;
         }
 
-        // --- RENDER PEGAWAI (DIPERBAIKI) ---
+        // --- RENDER PEGAWAI ---
         function renderPegawai(rows) {
             globalPegawaiData = rows;
             let html = '';
-            rows.forEach((row, index) => {
-                if(!row[0]) return;
-                // Mapping: 0:Nama, 1:Jabatan, 2:TglLahir, 3:Alamat, 4:NoHp, 5:JK
+            rows.forEach((r, i) => { if(!r[0]) return;
                 html += `<tr>
-                    <td><div class="fw-bold">${row[0]}</div></td>
-                    <td><span class="badge bg-secondary bg-opacity-10 text-secondary">${row[1] || '-'}</span></td>
-                    <td>${row[4] || '-'}</td>
-                    <td>${row[5] || '-'}</td>
-                    <td class="text-end">
-                        <button class="btn btn-sm btn-outline-primary rounded-pill" onclick="showDetailPegawai(${index})">
-                            <i class="fas fa-eye"></i> Detail
-                        </button>
-                    </td>
+                    <td><div class="fw-bold">${r[0]}</div></td>
+                    <td><span class="badge bg-secondary text-white">${r[1]||'-'}</span></td>
+                    <td>${formatDate(r[2])}</td>
+                    <td><div class="text-truncate" style="max-width: 150px;" title="${r[3]}">${r[3]||'-'}</div></td>
+                    <td>${r[4]||'-'}</td>
+                    <td>${r[5]||'-'}</td>
+                    <td class="text-end"><div class="btn-group"><button class="btn btn-sm btn-outline-info" onclick="showDetailPegawai(${i})"><i class="fas fa-eye"></i></button><button class="btn btn-sm btn-outline-warning" onclick="editData('Pegawai',${i})"><i class="fas fa-pen"></i></button><button class="btn btn-sm btn-outline-danger" onclick="deleteData('Pegawai',${i})"><i class="fas fa-trash"></i></button></div></td>
                 </tr>`;
             });
             document.getElementById('bodyPegawai').innerHTML = html;
         }
 
-        function renderJadwal(r) {
-            let h=''; r.forEach(x=>{if(x[1])h+=`<tr><td><span class="fw-bold text-primary">${x[1]}</span></td><td>${x[2]}</td><td class="fw-bold">${x[7]}</td><td>${x[8]}</td></tr>`});
-            document.getElementById('bodyJadwal').innerHTML=h;
-        }
-        function renderModul(r) {
-            let h=''; r.forEach(x=>{if(x[0])h+=`<div class="col-md-4"><div class="card h-100 p-4 text-center border"><i class="fas fa-file-pdf fa-3x text-danger mb-3"></i><h6 class="fw-bold">${x[0]}</h6><p class="small text-muted">${x[2]||''}</p><a href="${x[1]}" target="_blank" class="btn btn-sm btn-outline-primary rounded-pill mt-auto">Download</a></div></div>`});
-            document.getElementById('containerModul').innerHTML=h;
+        // --- RENDER JADWAL (WARNA TEKS SESUAI HARI) ---
+        function renderJadwal(rows) {
+            const dayMap = {"Senin":1, "Selasa":2, "Rabu":3, "Kamis":4, "Jumat":5, "Sabtu":6, "Ahad":7, "Minggu":7};
+            const colorMap = {"Senin":"primary", "Selasa":"success", "Rabu":"danger", "Kamis":"warning", "Jumat":"info", "Sabtu":"secondary", "Ahad":"dark", "Minggu":"dark"};
+            
+            let data = rows.map((r, i) => ({r, i})).sort((a,b) => {
+                let dA = dayMap[a.r[1]]||99, dB = dayMap[b.r[1]]||99;
+                if(dA !== dB) return dA - dB;
+                return (a.r[2]||"").localeCompare(b.r[2]||"");
+            });
+            globalJadwalData = rows;
+
+            let html = '';
+            data.forEach(item => {
+                let x = item.r, i = item.i, hari = x[1];
+                if(hari) {
+                    let c = colorMap[hari] || 'dark';
+                    let txtC = `text-${c}`;
+                    // Special fix for visibility
+                    if(c==='warning') txtC = 'text-warning'; 
+                    if(c==='info') txtC = 'text-info'; 
+                    
+                    html += `<tr>
+                        <td class="${txtC} fw-bold">${hari}</td>
+                        <td class="${txtC} fw-bold"><i class="far fa-clock me-1"></i>${x[2]}</td>
+                        <td><span class="badge rounded-pill bg-${c} ${c==='warning'?'text-dark':'text-white'}">${x[3]||'-'}</span></td>
+                        <td class="${txtC} fw-bold">${x[7]}</td>
+                        <td class="${txtC} small">${x[3] ? x[3]+' SKS' : ''} ${x[4] ? '| R.'+x[4] : ''}</td>
+                        <td class="${txtC} fw-bold fst-italic">${x[8]}</td>
+                        <td class="text-end"><div class="btn-group"><button class="btn btn-sm btn-outline-warning" onclick="editData('Jadwal',${i})"><i class="fas fa-pen"></i></button><button class="btn btn-sm btn-outline-danger" onclick="deleteData('Jadwal',${i})"><i class="fas fa-trash"></i></button></div></td>
+                    </tr>`;
+                }
+            });
+            document.getElementById('bodyJadwal').innerHTML = html;
         }
 
-        function showDetailSantri(index) {
-            const data = globalSantriData[index];
-            const modal = new bootstrap.Modal(document.getElementById('modalDetailSantri'));
-            document.getElementById('d-nama').innerText = data[0];
-            document.getElementById('d-ttl').innerText = (data[7]||'') + ", " + formatDate(data[1]);
-            document.getElementById('d-alamat').innerText = data[2];
-            document.getElementById('d-musyrif').innerText = data[4];
-            document.getElementById('d-nik').innerText = data[5];
-            document.getElementById('d-kk').innerText = data[6];
-            document.getElementById('d-jk').innerText = data[8];
-            document.getElementById('d-ayah').innerText = data[9];
-            document.getElementById('d-ibu').innerText = data[10];
-            document.getElementById('d-job').innerText = data[11];
-            document.getElementById('d-hpayah').innerText = data[12];
-            document.getElementById('d-hpibu').innerText = data[13];
-            document.getElementById('d-masuk').innerText = formatDate(data[14]);
-            document.getElementById('d-anak').innerText = `Anak ke ${data[15]} dari ${data[16]} bersaudara`;
-            const st = document.getElementById('d-status');
-            st.innerText = data[17];
-            st.className = "fw-bold badge " + (data[17]==='Aktif'?'bg-success':'bg-warning');
-            modal.show();
+        function renderModul(rows) {
+            globalModulData = rows;
+            let h=''; rows.forEach((x,i)=>{ if(x[0]) h+=`<div class="col-md-4"><div class="card h-100 p-4 text-center border-0 shadow-sm"><i class="fas fa-file-pdf fa-3x text-danger mb-3"></i><h6 class="fw-bold">${x[0]}</h6><p class="small text-muted">${x[2]||''}</p><div class="d-flex justify-content-center gap-2 mt-auto"><a href="${x[1]}" target="_blank" class="btn btn-sm btn-outline-primary rounded-pill px-3">Download</a><button class="btn btn-sm btn-warning rounded-pill" onclick="editData('Modul',${i})"><i class="fas fa-pen"></i></button><button class="btn btn-sm btn-danger rounded-pill" onclick="deleteData('Modul',${i})"><i class="fas fa-trash"></i></button></div></div></div>`});
+            document.getElementById('containerModul').innerHTML = h;
         }
 
-        // --- DETAIL PEGAWAI (BARU) ---
-        function showDetailPegawai(index) {
-            const data = globalPegawaiData[index];
-            const modal = new bootstrap.Modal(document.getElementById('modalDetailPegawai'));
-            document.getElementById('dp-nama').innerText = data[0];
-            document.getElementById('dp-jabatan').innerText = data[1] || '-';
-            document.getElementById('dp-tgl').innerText = formatDate(data[2]);
-            document.getElementById('dp-alamat').innerText = data[3] || '-';
-            document.getElementById('dp-hp').innerText = data[4] || '-';
-            document.getElementById('dp-jk').innerText = data[5] || '-';
-            modal.show();
-        }
-
+        // --- FORMS & CRUD ---
         const formModal = new bootstrap.Modal(document.getElementById('modalForm'));
         function openModal(type) {
             document.getElementById('modalTitle').innerText = "Tambah " + type;
             document.getElementById('kategoriInput').value = type;
-            const container = document.getElementById('formContainer');
-
-            if (type === 'Santri') {
-                container.innerHTML = `
-                    <div class="alert alert-info py-2 small mb-3"><i class="fas fa-info-circle me-2"></i>Lengkapi 18 data santri.</div>
-                    <div class="row g-3">
-                        <div class="col-md-6"><label class="form-label">Nama Lengkap</label><input type="text" class="form-control" name="nama" required></div>
-                        <div class="col-md-6"><label class="form-label">Jenis Kelamin</label><select class="form-select" name="jk"><option>Laki-Laki</option><option>Perempuan</option></select></div>
-                        <div class="col-md-6"><label class="form-label">Tempat Lahir</label><input type="text" class="form-control" name="tempat_lahir"></div>
-                        <div class="col-md-6"><label class="form-label">Tanggal Lahir</label><input type="date" class="form-control" name="tgl_lahir"></div>
-                        <div class="col-md-6"><label class="form-label">NIK</label><input type="number" class="form-control" name="nik"></div>
-                        <div class="col-md-6"><label class="form-label">No. KK</label><input type="number" class="form-control" name="kk"></div>
-                        <div class="col-12"><label class="form-label">Alamat</label><textarea class="form-control" name="alamat" rows="2"></textarea></div>
-                        <div class="col-md-6"><label class="form-label">Anak Ke-</label><input type="number" class="form-control" name="anak_ke"></div>
-                        <div class="col-md-6"><label class="form-label">Jlh Saudara</label><input type="number" class="form-control" name="jlh_saudara"></div>
-                        <h6 class="text-primary border-bottom pb-1 mt-3">Orang Tua & Pondok</h6>
-                        <div class="col-md-6"><label class="form-label">Nama Ayah</label><input type="text" class="form-control" name="ayah"></div>
-                        <div class="col-md-6"><label class="form-label">Nama Ibu</label><input type="text" class="form-control" name="ibu"></div>
-                        <div class="col-md-6"><label class="form-label">HP Ayah</label><input type="text" class="form-control" name="hp_ayah"></div>
-                        <div class="col-md-6"><label class="form-label">HP Ibu</label><input type="text" class="form-control" name="hp_ibu"></div>
-                        <div class="col-12"><label class="form-label">Pekerjaan</label><input type="text" class="form-control" name="job"></div>
-                        <div class="col-md-4"><label class="form-label">Tgl Masuk</label><input type="date" class="form-control" name="masuk"></div>
-                        <div class="col-md-4"><label class="form-label">Musyrif</label><input type="text" class="form-control" name="musyrif"></div>
-                        <div class="col-md-4"><label class="form-label">Status</label><select class="form-select" name="status"><option>Umum</option><option>Yatim</option><option>Piatu</option></select></div>
-                    </div>`;
-            } else if (type === 'Pegawai') {
-                // --- FORM INPUT PEGAWAI (DIPERBAIKI) ---
-                container.innerHTML = `
-                    <div class="row g-3">
-                        <div class="col-md-6"><label class="form-label fw-bold">Nama Lengkap</label><input type="text" class="form-control" name="nama" required></div>
-                        <div class="col-md-6"><label class="form-label fw-bold">Jabatan</label><input type="text" class="form-control" name="jabatan" placeholder="Contoh: Guru Tahfidz"></div>
-                        <div class="col-md-6"><label class="form-label fw-bold">Tanggal Lahir</label><input type="date" class="form-control" name="tgl_lahir"></div>
-                        <div class="col-md-6"><label class="form-label fw-bold">Jenis Kelamin</label><select class="form-select" name="jk"><option>Laki-Laki</option><option>Perempuan</option></select></div>
-                        <div class="col-md-6"><label class="form-label fw-bold">No. HP</label><input type="text" class="form-control" name="nohp" placeholder="08..."></div>
-                        <div class="col-12"><label class="form-label fw-bold">Alamat</label><textarea class="form-control" name="alamat" rows="2"></textarea></div>
-                    </div>`;
-            } else {
-                let l1, l2, l3, l4;
-                if(type==='Jadwal'){l1="Hari";l2="Waktu";l3="Materi";l4="Guru";}
-                else{l1="Modul";l2="Link";l3="Ket";l4="-";}
-                container.innerHTML = `<div class="mb-3"><label class="fw-bold">${l1}</label><input type="text" class="form-control" name="input1" required></div><div class="mb-3"><label class="fw-bold">${l2}</label><input type="text" class="form-control" name="input2"></div><div class="mb-3"><label class="fw-bold">${l3}</label><input type="text" class="form-control" name="input3"></div>${l4!=='-'?`<div class="mb-3"><label class="fw-bold">${l4}</label><input type="text" class="form-control" name="input4"></div>`:''}`;
-            }
+            document.getElementById('actionInput').value = "insert";
+            document.getElementById('rowIdInput').value = "";
+            document.getElementById('btnSubmit').innerHTML = '<i class="fas fa-save me-2"></i>Simpan';
+            setupForm(type); formModal.show();
+        }
+        function editData(type, index) {
+            document.getElementById('modalTitle').innerText = "Edit " + type;
+            document.getElementById('kategoriInput').value = type;
+            document.getElementById('actionInput').value = "edit";
+            document.getElementById('rowIdInput').value = index;
+            document.getElementById('btnSubmit').innerHTML = '<i class="fas fa-sync me-2"></i>Update';
+            setupForm(type);
+            setTimeout(() => {
+                if(type==='Santri') { let d=globalSantriData[index]; fill({nama:d[0], tgl_lahir:fmtInp(d[1]), alamat:d[2], musyrif:d[4], nik:d[5], kk:d[6], tempat_lahir:d[7], jk:d[8], ayah:d[9], ibu:d[10], job:d[11], hp_ayah:d[12], hp_ibu:d[13], masuk:fmtInp(d[14]), anak_ke:d[15], jlh_saudara:d[16], status:d[17]}); }
+                else if(type==='Pegawai') { let d=globalPegawaiData[index]; fill({nama:d[0], jabatan:d[1], tgl_lahir:fmtInp(d[2]), alamat:d[3], nohp:d[4], jk:d[5]}); }
+                else if(type==='Jadwal') { let d=globalJadwalData[index]; fill({bulan:d[0], hari:d[1], waktu:d[2], sks:d[3], ruang:d[4], kelompok:d[5], klaster:d[6], materi:d[7], guru:d[8]}); }
+                else if(type==='Modul') { let d=globalModulData[index]; fill({input1:d[0], input2:d[1], input3:d[2]}); }
+            }, 50);
             formModal.show();
         }
-
-        document.getElementById('mainForm').addEventListener('submit', e => {
-            e.preventDefault();
-            const btn = document.getElementById('btnSubmit');
-            const txt = btn.innerHTML;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Menyimpan...'; btn.disabled = true;
-
-            fetch(SCRIPT_URL, { method: 'POST', body: new FormData(e.target) })
-                .then(res => { alert('Sukses!'); formModal.hide(); loadData(); })
-                .catch(err => alert('Error: ' + err))
-                .finally(() => { btn.innerHTML = txt; btn.disabled = false; });
-        });
-
-        function formatDate(d) {
-            if(!d) return '-';
-            const date = new Date(d);
-            return isNaN(date) ? d : date.toLocaleDateString('id-ID', {day:'numeric', month:'short', year:'numeric'});
+        function deleteData(t, i) {
+            if(confirm("Hapus data ini?")) {
+                const fd = new FormData(); fd.append('action','delete'); fd.append('kategori',t); fd.append('rowId',i);
+                fetch(SCRIPT_URL, {method:'POST', body:fd}).then(()=>{alert('Dihapus'); loadData();});
+            }
         }
+        function setupForm(type) {
+            let h = '';
+            if(type==='Santri') h=`<div class="row g-3"><div class="col-md-6"><label>Nama</label><input class="form-control" name="nama" required></div><div class="col-md-6"><label>JK</label><select class="form-select" name="jk"><option>Laki-Laki</option><option>Perempuan</option></select></div><div class="col-md-6"><label>Tempat Lahir</label><input class="form-control" name="tempat_lahir"></div><div class="col-md-6"><label>Tgl Lahir</label><input type="date" class="form-control" name="tgl_lahir"></div><div class="col-md-6"><label>NIK</label><input type="number" class="form-control" name="nik"></div><div class="col-md-6"><label>KK</label><input type="number" class="form-control" name="kk"></div><div class="col-12"><label>Alamat</label><textarea class="form-control" name="alamat"></textarea></div><div class="col-md-6"><label>Anak Ke</label><input type="number" class="form-control" name="anak_ke"></div><div class="col-md-6"><label>Jlh Sdr</label><input type="number" class="form-control" name="jlh_saudara"></div><h6 class="text-primary mt-3">Wali & Pondok</h6><div class="col-md-6"><label>Ayah</label><input class="form-control" name="ayah"></div><div class="col-md-6"><label>Ibu</label><input class="form-control" name="ibu"></div><div class="col-md-6"><label>HP Ayah</label><input class="form-control" name="hp_ayah"></div><div class="col-md-6"><label>HP Ibu</label><input class="form-control" name="hp_ibu"></div><div class="col-12"><label>Pekerjaan</label><input class="form-control" name="job"></div><div class="col-md-4"><label>Tgl Masuk</label><input type="date" class="form-control" name="masuk"></div><div class="col-md-4"><label>Musyrif</label><input class="form-control" name="musyrif"></div><div class="col-md-4"><label>Status</label><select class="form-select" name="status"><option>Umum</option><option>Yatim</option><option>Piatu</option></select></div></div>`;
+            else if(type==='Pegawai') h=`<div class="row g-3"><div class="col-md-6"><label>Nama</label><input class="form-control" name="nama" required></div><div class="col-md-6"><label>Jabatan</label><input class="form-control" name="jabatan"></div><div class="col-md-6"><label>Tgl Lahir</label><input type="date" class="form-control" name="tgl_lahir"></div><div class="col-md-6"><label>JK</label><select class="form-select" name="jk"><option>Laki-Laki</option><option>Perempuan</option></select></div><div class="col-md-6"><label>No HP</label><input class="form-control" name="nohp"></div><div class="col-12"><label>Alamat</label><textarea class="form-control" name="alamat"></textarea></div></div>`;
+            else if(type==='Jadwal') h=`<div class="row g-3"><div class="col-md-4"><label>Bulan</label><input class="form-control" name="bulan"></div><div class="col-md-4"><label>Hari</label><select class="form-select" name="hari"><option>Senin</option><option>Selasa</option><option>Rabu</option><option>Kamis</option><option>Jumat</option><option>Sabtu</option><option>Ahad</option></select></div><div class="col-md-4"><label>Waktu</label><input class="form-control" name="waktu"></div><div class="col-md-4"><label>SKS</label><input class="form-control" name="sks"></div><div class="col-md-4"><label>Ruang</label><input class="form-control" name="ruang"></div><div class="col-md-4"><label>Kelompok (Kelas)</label><input class="form-control" name="kelompok"></div><div class="col-md-4"><label>Klaster</label><input class="form-control" name="klaster"></div><div class="col-md-8"><label>Materi</label><input class="form-control" name="materi"></div><div class="col-12"><label>Guru</label><input class="form-control" name="guru"></div></div>`;
+            else h=`<div class="mb-3"><label>Modul</label><input class="form-control" name="input1"></div><div class="mb-3"><label>Link</label><input class="form-control" name="input2"></div><div class="mb-3"><label>Ket</label><input class="form-control" name="input3"></div>`;
+            document.getElementById('formContainer').innerHTML = h;
+        }
+        function fill(d) { for(let k in d) if(document.querySelector(`[name="${k}"]`)) document.querySelector(`[name="${k}"]`).value = d[k]; }
+        document.getElementById('mainForm').addEventListener('submit', e=>{ e.preventDefault(); let b=document.getElementById('btnSubmit'); b.innerHTML='Memproses...'; b.disabled=true; fetch(SCRIPT_URL,{method:'POST',body:new FormData(e.target)}).then(()=>{alert('Sukses'); formModal.hide(); loadData();}).catch(e=>alert('Err')).finally(()=>{b.innerHTML='Simpan'; b.disabled=false;}) });
+        function formatDate(d) { if(!d) return '-'; let date=new Date(d); return isNaN(date)?d:date.toLocaleDateString('id-ID'); }
+        function fmtInp(d) { if(!d) return ''; let date=new Date(d); return isNaN(date)?'':date.toISOString().split('T')[0]; }
+        function showDetailSantri(i){ let d=globalSantriData[i]; document.getElementById('d-nama').innerText=d[0]; document.getElementById('d-nik').innerText=d[5]; document.getElementById('d-kk').innerText=d[6]; document.getElementById('d-ttl').innerText=d[7]+', '+formatDate(d[1]); document.getElementById('d-jk').innerText=d[8]; document.getElementById('d-anak').innerText=d[15]; document.getElementById('d-alamat').innerText=d[2]; document.getElementById('d-ayah').innerText=d[9]; document.getElementById('d-ibu').innerText=d[10]; document.getElementById('d-hpayah').innerText=d[12]; document.getElementById('d-hpibu').innerText=d[13]; document.getElementById('d-job').innerText=d[11]; document.getElementById('d-masuk').innerText=formatDate(d[14]); document.getElementById('d-musyrif').innerText=d[4]; document.getElementById('d-status').innerText=d[17]; new bootstrap.Modal(document.getElementById('modalDetailSantri')).show(); }
+        function showDetailPegawai(i){ let d=globalPegawaiData[i]; document.getElementById('dp-nama').innerText=d[0]; document.getElementById('dp-jabatan').innerText=d[1]; document.getElementById('dp-tgl').innerText=formatDate(d[2]); document.getElementById('dp-alamat').innerText=d[3]; document.getElementById('dp-hp').innerText=d[4]; document.getElementById('dp-jk').innerText=d[5]; new bootstrap.Modal(document.getElementById('modalDetailPegawai')).show(); }
     </script>
 </body>
 </html>
