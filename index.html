@@ -190,7 +190,27 @@
             });
         }
 
-        /* --- SETUP FORM (DISEMPURNAKAN) --- */
+        /* --- PERBAIKAN TANGGAL: Format tampilan tabel (Indo) --- */
+        function formatDate(d) {
+            if (!d) return '-';
+            let date = new Date(d);
+            if (isNaN(date.getTime())) return d;
+            return date.toLocaleDateString('id-ID', { day: '2-digit', month: '2-digit', year: 'numeric' });
+        }
+
+        /* --- PERBAIKAN TANGGAL: Format input form edit (YYYY-MM-DD) --- */
+        function fmtInp(d) {
+            if (!d) return '';
+            let date = new Date(d);
+            if (isNaN(date.getTime())) return '';
+            let month = '' + (date.getMonth() + 1),
+                day = '' + date.getDate(),
+                year = date.getFullYear();
+            if (month.length < 2) month = '0' + month;
+            if (day.length < 2) day = '0' + day;
+            return [year, month, day].join('-');
+        }
+
         function setupForm(type) {
             let h = '';
             if(type==='Santri') {
@@ -228,7 +248,7 @@
                     <div class="col-md-4"><label class="small">Hari</label><select class="form-select" name="hari"><option>Senin</option><option>Selasa</option><option>Rabu</option><option>Kamis</option><option>Jumat</option><option>Sabtu</option></select></div>
                     <div class="col-md-4"><label class="small">Waktu</label><select class="form-select" name="waktu"><option>08.00-09.30</option><option>10:00-11:30</option><option>13:00-14:30</option></select></div>
                     <div class="col-md-3"><label class="small">SKS</label><input class="form-control" name="sks"></div>
-                    <div class="col-md-3"><label class="small">Ruang</label><select class="form-select" name="ruang"><option>Kelas Mekah</option><option><Kelas Madinah</option></select></div>
+                    <div class="col-md-3"><label class="small">Ruang</label><select class="form-select" name="ruang"><option>Kelas Mekah</option><option>Kelas Madinah</option></select></div>
                     <div class="col-md-3"><label class="small">Kelompok</label><select class="form-select" name="kelompok"><option>KF</option><option>KG</option></select></div>
                     <div class="col-md-3"><label class="small">Klaster</label><select class="form-select" name="klaster"><option>Wajib</option><option>STT</option><option>LKS</option></select></div>
                     <div class="col-12"><label class="small">Materi</label><input class="form-control" name="materi" required></div>
@@ -242,7 +262,6 @@
             document.getElementById('formContainer').innerHTML = h;
         }
 
-        /* --- RENDER SANTRI --- */
         function renderSantri(rows) {
             let html = '';
             rows.forEach((r, i) => { if(!r[0]) return;
@@ -251,30 +270,26 @@
             document.getElementById('bodySantri').innerHTML = html;
         }
 
-        /* --- RENDER PEGAWAI --- */
         function renderPegawai(rows) {
             let html = '';
             rows.forEach((r, i) => { if(!r[0]) return;
-                html += `<tr><td><div class="fw-bold text-dark">${r[0]}</div></td><td>${r[1]||'-'}</td><td>${r[2]||'-'}</td><td>${r[4]||'-'}</td><td>${r[5]||'-'}</td><td class="text-end"><button class="btn btn-sm btn-link text-info p-0 me-2" onclick="showDetailPegawai(${i})"><i class="fas fa-eye"></i></button><button class="btn btn-sm btn-link text-warning p-0 me-2" onclick="editData('Pegawai',${i})"><i class="fas fa-pen"></i></button><button class="btn btn-sm btn-link text-danger p-0" onclick="deleteData('Pegawai',${i})"><i class="fas fa-trash"></i></button></td></tr>`;
+                html += `<tr><td><div class="fw-bold text-dark">${r[0]}</div></td><td>${r[1]||'-'}</td><td>${formatDate(r[2])}</td><td>${r[4]||'-'}</td><td>${r[5]||'-'}</td><td class="text-end"><button class="btn btn-sm btn-link text-info p-0 me-2" onclick="showDetailPegawai(${i})"><i class="fas fa-eye"></i></button><button class="btn btn-sm btn-link text-warning p-0 me-2" onclick="editData('Pegawai',${i})"><i class="fas fa-pen"></i></button><button class="btn btn-sm btn-link text-danger p-0" onclick="deleteData('Pegawai',${i})"><i class="fas fa-trash"></i></button></td></tr>`;
             });
             document.getElementById('bodyPegawai').innerHTML = html;
         }
 
-        /* --- DETAIL SANTRI --- */
         function showDetailSantri(i){ 
             let d=globalSantriData[i]; 
-            document.getElementById('d-nama').innerText=d[0]; document.getElementById('d-nik').innerText=d[5]; document.getElementById('d-kk').innerText=d[6]; document.getElementById('d-ttl').innerText=(d[7]||'')+', '+(d[1]||''); document.getElementById('d-jk').innerText=d[8]; document.getElementById('d-status').innerText=d[17]; document.getElementById('d-anak').innerText=d[15] + ' dari ' + d[16]; document.getElementById('d-alamat').innerText=d[2]; document.getElementById('d-ayah').innerText=d[9]; document.getElementById('d-hpayah').innerText=d[12]; document.getElementById('d-ibu').innerText=d[10]; document.getElementById('d-hpibu').innerText=d[13]; document.getElementById('d-job').innerText=d[11]; document.getElementById('d-masuk').innerText=d[14]; document.getElementById('d-musyrif').innerText=d[4];
+            document.getElementById('d-nama').innerText=d[0]; document.getElementById('d-nik').innerText=d[5]; document.getElementById('d-kk').innerText=d[6]; document.getElementById('d-ttl').innerText=(d[7]||'')+', '+formatDate(d[1]); document.getElementById('d-jk').innerText=d[8]; document.getElementById('d-status').innerText=d[17]; document.getElementById('d-anak').innerText=d[15] + ' dari ' + d[16]; document.getElementById('d-alamat').innerText=d[2]; document.getElementById('d-ayah').innerText=d[9]; document.getElementById('d-hpayah').innerText=d[12]; document.getElementById('d-ibu').innerText=d[10]; document.getElementById('d-hpibu').innerText=d[13]; document.getElementById('d-job').innerText=d[11]; document.getElementById('d-masuk').innerText=formatDate(d[14]); document.getElementById('d-musyrif').innerText=d[4];
             new bootstrap.Modal(document.getElementById('modalDetailSantri')).show(); 
         }
 
-        /* --- DETAIL PEGAWAI --- */
         function showDetailPegawai(i){ 
             let d=globalPegawaiData[i]; 
-            document.getElementById('dp-nama').innerText=d[0]; document.getElementById('dp-jabatan').innerText=d[1]; document.getElementById('dp-nama-val').innerText=d[0]; document.getElementById('dp-jabatan-val').innerText=d[1]; document.getElementById('dp-tgl').innerText=d[2]; document.getElementById('dp-hp').innerText=d[4]; document.getElementById('dp-jk').innerText=d[5]; document.getElementById('dp-alamat').innerText=d[3];
+            document.getElementById('dp-nama').innerText=d[0]; document.getElementById('dp-jabatan').innerText=d[1]; document.getElementById('dp-nama-val').innerText=d[0]; document.getElementById('dp-jabatan-val').innerText=d[1]; document.getElementById('dp-tgl').innerText=formatDate(d[2]); document.getElementById('dp-hp').innerText=d[4]; document.getElementById('dp-jk').innerText=d[5]; document.getElementById('dp-alamat').innerText=d[3];
             new bootstrap.Modal(document.getElementById('modalDetailPegawai')).show(); 
         }
 
-        /* --- RENDER JADWAL & MODUL (TETAP) --- */
         function renderJadwal(rows) {
             const body = document.getElementById('bodyJadwal');
             const filterBulan = document.getElementById('filterBulan');
@@ -318,7 +333,6 @@
             document.getElementById('containerModul').innerHTML = h;
         }
 
-        /* --- ACTIONS & TOOLS --- */
         function openModal(type) { document.getElementById('modalTitle').innerText = "Tambah " + type; document.getElementById('kategoriInput').value = type; document.getElementById('actionInput').value = "insert"; document.getElementById('rowIdInput').value = ""; setupForm(type); formModal.show(); }
         
         function editData(type, index) {
@@ -329,8 +343,8 @@
             setupForm(type);
             setTimeout(() => {
                 let d = (type==='Santri') ? globalSantriData[index] : (type==='Pegawai') ? globalPegawaiData[index] : (type==='Modul') ? globalModulData[index] : globalJadwalData[index];
-                if(type === 'Santri') fill({ nama:d[0], tgl_lahir:d[1], alamat:d[2], musyrif:d[4], nik:d[5], kk:d[6], tempat_lahir:d[7], jk:d[8], ayah:d[9], ibu:d[10], job:d[11], hp_ayah:d[12], hp_ibu:d[13], masuk:d[14], anak_ke:d[15], jlh_saudara:d[16], status:d[17] });
-                else if(type === 'Pegawai') fill({ nama:d[0], jabatan:d[1], tgl_lahir:d[2], alamat:d[3], nohp:d[4], jk:d[5] });
+                if(type === 'Santri') fill({ nama:d[0], tgl_lahir:fmtInp(d[1]), alamat:d[2], musyrif:d[4], nik:d[5], kk:d[6], tempat_lahir:d[7], jk:d[8], ayah:d[9], ibu:d[10], job:d[11], hp_ayah:d[12], hp_ibu:d[13], masuk:fmtInp(d[14]), anak_ke:d[15], jlh_saudara:d[16], status:d[17] });
+                else if(type === 'Pegawai') fill({ nama:d[0], jabatan:d[1], tgl_lahir:fmtInp(d[2]), alamat:d[3], nohp:d[4], jk:d[5] });
                 else if(type === 'Jadwal') fill({ bulan:d[0], hari:d[1], waktu:d[2], sks:d[3], ruang:d[4], kelompok:d[5], klaster:d[6], materi:d[7], guru:d[8] });
                 else if(type === 'Modul') fill({ input1:d[0], input2:d[1], input3:d[2] });
             }, 50);
