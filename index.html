@@ -209,9 +209,9 @@
                     <div class="col-md-12"><label class="small">Pekerjaan Orang Tua</label><input class="form-control" name="job"></div>
                     <div class="col-md-4"><label class="small">Anak Ke</label><input type="number" class="form-control" name="anak_ke"></div>
                     <div class="col-md-4"><label class="small">Jumlah Saudara</label><input type="number" class="form-control" name="jlh_saudara"></div>
-                    <div class="col-md-4"><label class="small">Status</label><select class="form-select" name="status"><option>Umum</option><option>Yatim</option><option>Piatu</option></select></div>
+                    <div class="col-md-4"><label class="small">Status</label><select class="form-select" name="status"><option>Umum</option><option>Duafa</option><option>Yatim</option><option>Piatu</option></select></div>
                     <div class="col-md-6"><label class="small">Tanggal Masuk</label><input type="date" class="form-control" name="masuk"></div>
-                    <div class="col-md-6"><label class="small">Musyrif</label><input class="form-control" name="musyrif"></div>
+                    <div class="col-md-6"><label class="small">Musyrif</label><select class="form-select" name="musyrif"><option>Reza Frananda</option><option>Uswatun Hasanah</option></select></div>
                 </div>`;
             } else if(type==='Pegawai') {
                 h = `<div class="row g-2">
@@ -226,13 +226,13 @@
                 h = `<div class="row g-2">
                     <div class="col-md-4"><label class="small">Bulan</label><input class="form-control" name="bulan" required></div>
                     <div class="col-md-4"><label class="small">Hari</label><select class="form-select" name="hari"><option>Senin</option><option>Selasa</option><option>Rabu</option><option>Kamis</option><option>Jumat</option><option>Sabtu</option></select></div>
-                    <div class="col-md-4"><label class="small">Waktu</label><input class="form-control" name="waktu" required placeholder="07.00 - 08.00"></div>
+                    <div class="col-md-4"><label class="small">Waktu</label><select class="form-select" name="waktu"><option>08.00-09.30</option><option>10:00-11:30</option><option>13:00-14:30</option></select></div>
                     <div class="col-md-3"><label class="small">SKS</label><input class="form-control" name="sks"></div>
-                    <div class="col-md-3"><label class="small">Ruang</label><input class="form-control" name="ruang"></div>
-                    <div class="col-md-3"><label class="small">Kelompok</label><input class="form-control" name="kelompok"></div>
-                    <div class="col-md-3"><label class="small">Klaster</label><input class="form-control" name="klaster"></div>
+                    <div class="col-md-3"><label class="small">Ruang</label><select class="form-select" name="ruang"><option>Kelas Mekah</option><option><Kelas Madinah</option></select></div>
+                    <div class="col-md-3"><label class="small">Kelompok</label><select class="form-select" name="kelompok"><option>KF</option><option>KG</option></select></div>
+                    <div class="col-md-3"><label class="small">Klaster</label><select class="form-select" name="klaster"><option>Wajib</option><option>STT</option><option>LKS</option></select></div>
                     <div class="col-12"><label class="small">Materi</label><input class="form-control" name="materi" required></div>
-                    <div class="col-12"><label class="small">Guru</label><input class="form-control" name="guru"></div>
+                    <div class="col-12"><label class="small">Guru</label><select class="form-select" name="guru"><option>Sulistiawan, S.Kom</option><option>Zhofri F. Majdi, S.Sos</option><option>Erwan SyahPutra, S.Pd</option><option>Ariyanti R. Siregar, S.Kom</option><option>Mia A. Lubis, S.Kom</option><option>Mahadi Sentosa, S.Sos</option><option>SupraSojo, S.Pd.I., M.Pd.</option></select></div>
                 </div>`;
             } else {
                 h = `<div class="mb-3"><label class="small">Nama Modul</label><input class="form-control" name="input1" required></div>
