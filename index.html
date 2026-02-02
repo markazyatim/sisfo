@@ -103,8 +103,11 @@
 
         <div id="modul" class="page-section">
             <div class="d-flex justify-content-between align-items-center mb-4">
-                <h4 class="m-0 fw-bold">Modul</h4>
-                <button class="btn btn-info text-white" onclick="openModal('Modul')"><i class="fas fa-upload"></i> Upload</button>
+                <h4 class="m-0 fw-bold">Modul Belajar</h4>
+                <div class="d-flex gap-2">
+                    <input type="text" class="form-control" id="searchModul" style="width: 250px;" placeholder="Cari nama modul..." onkeyup="renderModul(globalModulData, this.value)">
+                    <button class="btn btn-info text-white" onclick="openModal('Modul')"><i class="fas fa-upload"></i> Upload</button>
+                </div>
             </div>
             <div class="row g-3" id="containerModul"></div>
         </div>
@@ -190,7 +193,6 @@
             });
         }
 
-        /* --- PERBAIKAN TANGGAL: Format tampilan tabel (Indo) --- */
         function formatDate(d) {
             if (!d) return '-';
             let date = new Date(d);
@@ -198,14 +200,11 @@
             return date.toLocaleDateString('id-ID', { day: '2-digit', month: '2-digit', year: 'numeric' });
         }
 
-        /* --- PERBAIKAN TANGGAL: Format input form edit (YYYY-MM-DD) --- */
         function fmtInp(d) {
             if (!d) return '';
             let date = new Date(d);
             if (isNaN(date.getTime())) return '';
-            let month = '' + (date.getMonth() + 1),
-                day = '' + date.getDate(),
-                year = date.getFullYear();
+            let month = '' + (date.getMonth() + 1), day = '' + date.getDate(), year = date.getFullYear();
             if (month.length < 2) month = '0' + month;
             if (day.length < 2) day = '0' + day;
             return [year, month, day].join('-');
@@ -310,15 +309,16 @@
                     scheduleMap[dbWaktu][dbHari] = { materi: r[7], guru: r[8], ruang: r[4], kls: r[5], id: index };
                 }
             });
+            if (!scheduleMap["09:30-10:00"]) {
+                scheduleMap["09:30-10:00"] = "ISTIRAHAT_MARKER";
+            }
             const sortedTimes = Object.keys(scheduleMap).sort();
             let html = '';
             sortedTimes.forEach(time => {
-                let isRest = time.toLowerCase().includes('istirahat') || Object.values(scheduleMap[time]).some(d => d && d.materi && d.materi.toLowerCase().includes('istirahat'));
-                if(isRest) {
+                if(time === "09:30-10:00" || time.toLowerCase().includes('istirahat')) {
                     html += `<tr class="row-istirahat"><td class="col-jam">${time}</td><td colspan="6">I S T I R A H A T</td></tr>`;
                 } else {
-                    html += `<tr><td class="col-jam">${time}</td>`;
-                    ['Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'].forEach(day => {
+                    html += `<tr><td class="col-jam">${time}</td>`;['Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'].forEach(day => {
                         const d = scheduleMap[time][day];
                         html += `<td>${d ? `<span class="mapel">${d.materi}</span><span class="guru">${d.guru || '-'}</span><div class="mt-2"><span class="info-badge">${d.ruang || ''}</span> <span class="info-badge">${d.kls || ''}</span></div><div class="cell-actions"><button class="btn-cell" onclick="editData('Jadwal', ${d.id})"><i class="fas fa-pen"></i></button><button class="btn-cell text-danger" onclick="deleteData('Jadwal', ${d.id})"><i class="fas fa-trash"></i></button></div>` : ''}</td>`;
                     });
@@ -328,9 +328,32 @@
             body.innerHTML = html || '<tr><td colspan="7" class="text-center p-5">Jadwal tidak ditemukan.</td></tr>';
         }
 
-        function renderModul(rows) {
-            let h=''; rows.forEach((x,i)=>{ if(x[0]) h+=`<div class="col-md-4"><div class="card h-100 p-3 shadow-sm border-0"><div class="d-flex align-items-center mb-3"><i class="fas fa-file-pdf fa-2x text-danger me-3"></i><h6 class="mb-0 fw-bold">${x[0]}</h6></div><div class="d-flex justify-content-end gap-2"><a href="${x[1]}" target="_blank" class="btn btn-sm btn-light border"><i class="fas fa-download"></i></a><button class="btn btn-sm btn-light border text-danger" onclick="deleteData('Modul',${i})"><i class="fas fa-trash"></i></button></div></div></div>`; });
-            document.getElementById('containerModul').innerHTML = h;
+        // PERBAIKAN RENDER MODUL DENGAN FITUR SEARCH
+        function renderModul(rows, filterKey = "") {
+            let h = ''; 
+            const key = filterKey.toLowerCase();
+            
+            rows.forEach((x, i) => { 
+                if(!x[0]) return;
+                const namaModul = String(x[0]).toLowerCase();
+                
+                // Cek apakah nama modul mengandung kata kunci pencarian
+                if(namaModul.includes(key)) {
+                    h += `<div class="col-md-4">
+                        <div class="card h-100 p-3 shadow-sm border-0">
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="fas fa-file-pdf fa-2x text-danger me-3"></i>
+                                <h6 class="mb-0 fw-bold">${x[0]}</h6>
+                            </div>
+                            <div class="d-flex justify-content-end gap-2">
+                                <a href="${x[1]}" target="_blank" class="btn btn-sm btn-light border"><i class="fas fa-download"></i></a>
+                                <button class="btn btn-sm btn-light border text-danger" onclick="deleteData('Modul',${i})"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </div>
+                    </div>`; 
+                }
+            }); 
+            document.getElementById('containerModul').innerHTML = h || '<div class="col-12 text-center text-muted p-5">Modul tidak ditemukan.</div>';
         }
 
         function openModal(type) { document.getElementById('modalTitle').innerText = "Tambah " + type; document.getElementById('kategoriInput').value = type; document.getElementById('actionInput').value = "insert"; document.getElementById('rowIdInput').value = ""; setupForm(type); formModal.show(); }
