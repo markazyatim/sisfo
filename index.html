@@ -14,18 +14,9 @@
         #sidebar { width: var(--sidebar-width); height: 100vh; position: fixed; top: 0; left: 0; background-color: #111827; color: #fff; z-index: 1000; display: flex; flex-direction: column; border-right: 1px solid rgba(255,255,255,0.05); }
         #sidebar .brand { padding: 20px; font-size: 1.1rem; font-weight: 700; color: #fff; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; gap: 10px; }
         #sidebar .nav-link { color: #9ca3af; padding: 10px 20px; margin: 4px 10px; border-radius: 6px; transition: 0.2s; font-weight: 500; display: flex; align-items: center; gap: 10px; font-size: 0.9rem; cursor: pointer; }
-/* --- LOGIN STYLES --- */
-        #login-page {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #f3f4f6; display: flex; align-items: center; justify-content: center;
-            z-index: 2000; transition: 0.3s;
-        }
-        .login-card {
-            width: 100%; max-width: 400px; padding: 40px;
-            background: #fff; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-        }
+        #login-page { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #f3f4f6; display: flex; align-items: center; justify-content: center; z-index: 2000; transition: 0.3s; }
+        .login-card { width: 100%; max-width: 400px; padding: 40px; background: #fff; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
         .login-brand { text-align: center; margin-bottom: 30px; }
-        .login-brand i { font-size: 3rem; color: var(--primary); }
         #sidebar .nav-link:hover { background-color: rgba(255,255,255,0.05); color: #fff; }
         #sidebar .nav-link.active { background: var(--primary); color: #fff; }
         #content { margin-left: var(--sidebar-width); padding: 25px; width: calc(100% - var(--sidebar-width)); min-height: 100vh; }
@@ -35,66 +26,53 @@
         .table thead th { background-color: #f9fafb; color: var(--text-muted); font-weight: 600; font-size: 0.75rem; text-transform: uppercase; padding: 12px 15px; border-bottom: 1px solid var(--border-color); }
         .table tbody td { padding: 12px 15px; vertical-align: middle; border-bottom: 1px solid var(--border-color); font-size: 0.85rem; }
         .jadwal-container { background: #ffffff; padding: 20px; border-radius: 12px; border-top: 8px solid #2e7d32; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 20px; }
-        .jadwal-header { text-align: center; margin-bottom: 20px; }
-        .jadwal-header h2 { color: #2e7d32; margin: 0; font-weight: 700; text-transform: uppercase; font-size: 1.4rem; }
-        .table-kurikulum { width: 100%; border-collapse: collapse; min-width: 850px; border: 1px solid #dee2e6; }
-        .table-kurikulum th { background-color: #2e7d32; color: #ffffff; padding: 12px; text-align: center; border: 1px solid #1b5e20; font-size: 0.9rem; }
-        .table-kurikulum td { padding: 12px; text-align: center; border: 1px solid #dee2e6; vertical-align: middle; position: relative; min-height: 80px; }
+        .jadwal-header h2 { color: #2e7d32; margin: 0; font-weight: 700; text-transform: uppercase; font-size: 1.4rem; text-align: center; }
+        .table-kurikulum { width: 100%; border-collapse: collapse; border: 1px solid #dee2e6; }
+        .table-kurikulum th { background-color: #2e7d32; color: #ffffff; padding: 12px; text-align: center; border: 1px solid #1b5e20; }
+        .table-kurikulum td { padding: 12px; text-align: center; border: 1px solid #dee2e6; position: relative; height: 80px; }
         .row-istirahat { background-color: #006666 !important; color: #ffffff; }
-        .row-istirahat td { padding: 4px 8px !important; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; }
         .mapel { display: block; font-weight: 700; color: #1a202c; line-height: 1.2; }
-        .guru { display: block; font-size: 0.75rem; color: #718096; margin-top: 4px; font-style: italic; }
-        .info-badge { font-size: 0.65rem; padding: 1px 4px; background: #f3f4f6; border: 1px solid #e5e7eb; border-radius: 3px; color: #4b5563; display: inline-block; margin-top: 5px; }
+        .guru { display: block; font-size: 0.75rem; color: #718096; font-style: italic; }
         .cell-actions { position: absolute; top: 2px; right: 2px; display: flex; gap: 2px; opacity: 0; transition: 0.2s; background: rgba(255,255,255,0.9); padding: 2px; border-radius: 4px; }
         .table-kurikulum td:hover .cell-actions { opacity: 1; }
         .btn-cell { padding: 0px 4px; font-size: 0.7rem; border: none; background: none; color: #9ca3af; }
-        .btn-cell:hover { color: var(--primary); }
         .detail-group { background: #f9fafb; padding: 8px 12px; border-radius: 6px; border: 1px solid #f3f4f6; height: 100%; }
-        .detail-label { font-size: 0.75rem; color: var(--text-muted); display: block; margin-bottom: 2px; }
+        .detail-label { font-size: 0.75rem; color: var(--text-muted); display: block; }
         .detail-value { font-weight: 600; color: var(--text-main); display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
-    <nav id="sidebar">
-        <div class="brand"><i class="fas fa-mosque text-primary"></i><span>Markaz MYDQ</span></div>
-<body>
-
     <div id="login-page">
         <div class="login-card">
-            <div class="login-brand">
-                <i class="fas fa-mosque"></i>
-                <h4 class="mt-3 fw-bold">Markaz MYDQ</h4>
-                <p class="text-muted small">Sistem Informasi Yayasan</p>
-            </div>
+            <div class="login-brand text-center mb-4"><i class="fas fa-mosque fa-3x text-primary"></i><h4 class="mt-3 fw-bold">Markaz MYDQ</h4><p class="text-muted small">Sistem Informasi Yayasan</p></div>
             <form id="loginForm">
-                <div class="mb-3">
-                    <label class="form-label small fw-bold">Username</label>
-                    <input type="text" id="username" class="form-control" placeholder="admin" required>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label small fw-bold">Password</label>
-                    <input type="password" id="password" class="form-control" placeholder="********" required>
-                </div>
+                <div class="mb-3"><label class="form-label small fw-bold">Username</label><input type="text" id="username" class="form-control" required></div>
+                <div class="mb-3"><label class="form-label small fw-bold">Password</label><input type="password" id="password" class="form-control" required></div>
                 <button type="submit" id="btnLogin" class="btn btn-primary w-100 py-2 fw-bold">MASUK</button>
-                <div id="loginError" class="text-danger small mt-3 text-center" style="display:none;">
-                    <i class="fas fa-exclamation-circle"></i> Username atau password salah!
-                </div>
+                <div id="loginError" class="text-danger small mt-3 text-center" style="display:none;">Username atau password salah!</div>
             </form>
         </div>
     </div>
+
+    <nav id="sidebar">
+        <div class="brand"><i class="fas fa-mosque text-primary"></i><span>Markaz MYDQ</span></div>
+        <div class="px-3 py-2 border-bottom border-secondary mb-2">
+            <small class="text-muted d-block" style="font-size: 0.7rem;">Login Sebagai:</small>
+            <span id="displayUserName" class="fw-bold text-white small">...</span>
+        </div>
         <ul class="nav flex-column mt-3">
             <li class="nav-item"><a class="nav-link active" onclick="showPage('santri')"><i class="fas fa-user-graduate"></i>Data Santri</a></li>
             <li class="nav-item"><a class="nav-link" onclick="showPage('pegawai')"><i class="fas fa-chalkboard-teacher"></i>Data Pegawai</a></li>
- <li class="nav-item"><a class="nav-link" onclick="showPage('absensi', this)"><i class="fas fa-user-check"></i>Absensi Staff</a></li>
+            <li class="nav-item"><a class="nav-link" onclick="showPage('absensi')"><i class="fas fa-user-check"></i>Absensi Staff</a></li>
             <li class="nav-item"><a class="nav-link" onclick="showPage('jadwal')"><i class="fas fa-calendar-alt"></i>Jadwal</a></li>
             <li class="nav-item"><a class="nav-link" onclick="showPage('modul')"><i class="fas fa-book-open"></i>Modul</a></li>
-<li class="nav-item"><a class="nav-link text-danger" onclick="logout()"><i class="fas fa-sign-out-alt"></i>Keluar</a></li>
+            <li class="nav-item"><a class="nav-link text-danger" onclick="logout()"><i class="fas fa-sign-out-alt"></i>Keluar</a></li>
         </ul>
     </nav>
 
-    <div id="content">
+<div id="content">
         <button class="btn btn-light shadow-sm d-md-none mb-4" onclick="document.getElementById('sidebar').classList.toggle('active')"><i class="fas fa-bars"></i></button>
 
         <div id="santri" class="page-section active">
@@ -108,6 +86,8 @@
             <div class="card"><div class="table-responsive"><table class="table table-hover align-middle mb-0"><thead><tr><th>Nama & NIK</th><th>Alamat</th><th>Musyrif</th><th>Status</th><th class="text-end">Aksi</th></tr></thead><tbody id="bodySantri"></tbody></table></div></div>
         </div>
 
+
+
         <div id="pegawai" class="page-section">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h4 class="m-0 fw-bold">Data Pegawai</h4>
@@ -117,6 +97,22 @@
                 </div>
             </div>
             <div class="card"><div class="table-responsive"><table class="table table-hover align-middle mb-0"><thead><tr><th>Nama Lengkap</th><th>Jabatan</th><th>Tgl Lahir</th><th>No HP</th><th>JK</th><th class="text-end">Aksi</th></tr></thead><tbody id="bodyPegawai"></tbody></table></div></div>
+        </div>
+
+
+        <div id="absensi" class="page-section">
+            <div class="card p-4 border-0 shadow-sm mb-4" style="background: linear-gradient(135deg, #008888 0%, #005555 100%); color: white;">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div><h4 class="fw-bold m-0"><i class="fas fa-fingerprint me-2"></i>Absensi Kehadiran</h4><p class="small mb-0 opacity-75">Halo, <span id="absenNameLabel" class="fw-bold">...</span></p></div>
+                    <div class="text-end"><h5 id="liveClock" class="fw-bold m-0">00:00:00</h5><small id="liveDate">Memuat...</small></div>
+                </div>
+                <div class="row g-3 mt-3">
+                    <div class="col-md-4"><button onclick="prosesAbsen('Hadir')" class="btn btn-light w-100 py-3 fw-bold text-success shadow-sm"><i class="fas fa-check-circle fs-4 mb-1"></i><br>HADIR</button></div>
+                    <div class="col-md-4"><button onclick="prosesAbsen('Izin')" class="btn btn-light w-100 py-3 fw-bold text-warning shadow-sm"><i class="fas fa-info-circle fs-4 mb-1"></i><br>IZIN</button></div>
+                    <div class="col-md-4"><button onclick="prosesAbsen('Sakit')" class="btn btn-light w-100 py-3 fw-bold text-danger shadow-sm"><i class="fas fa-medkit fs-4 mb-1"></i><br>SAKIT</button></div>
+                </div>
+            </div>
+            <div class="card"><div class="card-header bg-white fw-bold">Riwayat Absensi Saya</div><div class="table-responsive"><table class="table table-hover mb-0"><thead><tr><th>Tanggal</th><th>Jam</th><th>Status</th></tr></thead><tbody id="bodyAbsensi"></tbody></table></div></div>
         </div>
 
         <div id="jadwal" class="page-section">
@@ -141,7 +137,9 @@
             </div>
         </div>
 
-        <div id="modul" class="page-section">
+
+
+       <div id="modul" class="page-section">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h4 class="m-0 fw-bold">Modul Belajar</h4>
                 <div class="d-flex gap-2">
@@ -153,7 +151,8 @@
         </div>
     </div>
 
-    <div class="modal fade" id="modalForm" tabindex="-1" data-bs-backdrop="static">
+
+ <div class="modal fade" id="modalForm" tabindex="-1" data-bs-backdrop="static">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header border-bottom-0 py-3"><h5 class="modal-title fw-bold" id="modalTitle">Form Data</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
@@ -167,6 +166,7 @@
             </div>
         </div>
     </div>
+
 
     <div class="modal fade" id="modalDetailSantri" tabindex="-1">
         <div class="modal-dialog modal-lg"><div class="modal-content">
@@ -195,6 +195,9 @@
         </div></div>
     </div>
 
+
+    
+
     <div class="modal fade" id="modalDetailPegawai" tabindex="-1">
         <div class="modal-dialog modal-lg"><div class="modal-content">
             <div class="modal-header bg-light"><h5 class="modal-title fw-bold">Detail Pegawai</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
@@ -214,79 +217,188 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzernyZr7Cp9uPJ17zSzji_iwJ8_tz3u8gjlwhFauU27-T7UhV6KFLLADMo8AUN3iGR/exec"; 
+        let globalSantriData = [], globalPegawaiData = [], globalModulData = [], globalJadwalData = [], globalAbsensiData = [];
+        const formModal = new bootstrap.Modal(document.getElementById('modalForm'));
 
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyDsY8m5T4xUmbLBPbEJn304gky3hb-uDmeovN__ja1SA9lFubdvsqb0YIEKdtDbUTk/exec"; 
-        let globalSantriData = [], globalPegawaiData = [], globalModulData = [], globalJadwalData = [];
-
-        document.addEventListener("DOMContentLoaded", () => { loadData(); });
-
-        function showPage(id) {
-            document.querySelectorAll('.page-section').forEach(el => el.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-            document.querySelectorAll('#sidebar .nav-link').forEach(el => el.classList.remove('active'));
-            event.currentTarget.classList.add('active');
-        }
-
-// --- LOGIKA LOGIN ---
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const u = document.getElementById('username').value;
-            const p = document.getElementById('password').value;
-            
-            // Verifikasi Sederhana
-            if(u === "admin" && p === "markaz") {
-                sessionStorage.setItem('isLoggedIn', 'true');
-                document.getElementById('login-page').style.opacity = '0';
-                setTimeout(() => {
-                    document.getElementById('login-page').style.display = 'none';
-                    loadData(); // Load data setelah login berhasil
-                }, 300);
-            } else {
-                document.getElementById('loginError').style.display = 'block';
-            }
-        });
-
-        function logout() {
-            if(confirm("Apakah Anda yakin ingin keluar?")) {
-                sessionStorage.removeItem('isLoggedIn');
-                location.reload();
-            }
-        }
-
-        // Cek Status Login Saat Load
+        // CEK LOGIN SAAT HALAMAN DIBUKA
         document.addEventListener("DOMContentLoaded", () => { 
             if(sessionStorage.getItem('isLoggedIn') === 'true') {
                 document.getElementById('login-page').style.display = 'none';
-                loadData(); 
+                const name = sessionStorage.getItem('userName');
+                document.getElementById('displayUserName').innerText = name;
+                document.getElementById('absenNameLabel').innerText = name;
+                loadData(); startClock();
             }
         });
 
+        // FUNGSI LOGIN
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const btn = document.getElementById('btnLogin');
+            btn.innerHTML = 'Memproses...'; btn.disabled = true;
+            const fd = new FormData();
+            fd.append('action', 'login');
+            fd.append('username', document.getElementById('username').value.trim());
+            fd.append('password', document.getElementById('password').value.trim());
 
+            fetch(SCRIPT_URL, { method: 'POST', body: fd }).then(res => res.json()).then(res => {
+                if (res.status === 'success') {
+                    sessionStorage.setItem('isLoggedIn', 'true');
+                    sessionStorage.setItem('userName', res.nama);
+                    sessionStorage.setItem('userJabatan', res.jabatan);
+                    location.reload();
+                } else { 
+                    document.getElementById('loginError').style.display = 'block'; 
+                    btn.innerHTML = 'MASUK'; btn.disabled = false;
+                }
+            }).catch(() => { alert("Koneksi gagal!"); btn.innerHTML = 'MASUK'; btn.disabled = false; });
+        });
+
+        function logout() { sessionStorage.clear(); location.reload(); }
+
+        // FUNGSI AMBIL DATA UTAMA
         function loadData() {
             fetch(SCRIPT_URL + "?action=read").then(res => res.json()).then(data => {
-                globalSantriData = data.santri; globalPegawaiData = data.pegawai; globalModulData = data.modul; globalJadwalData = data.jadwal;
-                renderSantri(data.santri); renderPegawai(data.pegawai); renderModul(data.modul); renderJadwal(data.jadwal);
+                globalSantriData = data.santri || []; globalPegawaiData = data.pegawai || [];
+                globalModulData = data.modul || []; globalJadwalData = data.jadwal || [];
+                globalAbsensiData = data.absensi || [];
+                
+                renderSantri(globalSantriData); 
+                renderPegawai(globalPegawaiData); 
+                renderModul(globalModulData); 
+                renderJadwal(globalJadwalData); 
+                renderAbsensi(globalAbsensiData);
             });
         }
 
-        function formatDate(d) {
-            if (!d) return '-';
-            let date = new Date(d);
-            if (isNaN(date.getTime())) return d;
-            return date.toLocaleDateString('id-ID', { day: '2-digit', month: '2-digit', year: 'numeric' });
+        // --- RENDER SANTRI ---
+        function renderSantri(rows) {
+            let h = ''; rows.forEach((r, i) => { if(!r[0]) return;
+                h += `<tr><td><div class="fw-bold">${r[0]}</div><small class="text-muted">NIK: ${r[5]||'-'}</small></td><td>${r[2]||''}</td><td>${r[4]||''}</td><td><span class="badge bg-success bg-opacity-10 text-success border border-success">${r[17]||'Aktif'}</span></td><td class="text-end"><button class="btn btn-sm btn-link text-primary p-0 me-2" onclick="showDetailSantri(${i})"><i class="fas fa-eye"></i></button><button class="btn btn-sm btn-link text-warning p-0 me-2" onclick="editData('Santri',${i})"><i class="fas fa-pen"></i></button><button class="btn btn-sm btn-link text-danger p-0" onclick="deleteData('Santri',${i})"><i class="fas fa-trash"></i></button></td></tr>`;
+            }); document.getElementById('bodySantri').innerHTML = h;
         }
 
-        function fmtInp(d) {
-            if (!d) return '';
-            let date = new Date(d);
-            if (isNaN(date.getTime())) return '';
-            let month = '' + (date.getMonth() + 1), day = '' + date.getDate(), year = date.getFullYear();
-            if (month.length < 2) month = '0' + month;
-            if (day.length < 2) day = '0' + day;
-            return [year, month, day].join('-');
+        function showDetailSantri(i){ 
+            let d=globalSantriData[i]; 
+            document.getElementById('d-nama').innerText=d[0]; document.getElementById('d-nik').innerText=d[5]; document.getElementById('d-kk').innerText=d[6]; document.getElementById('d-ttl').innerText=(d[7]||'')+', '+formatDate(d[1]); document.getElementById('d-jk').innerText=d[8]; document.getElementById('d-status').innerText=d[17]; document.getElementById('d-anak').innerText=d[15] + ' dari ' + d[16]; document.getElementById('d-alamat').innerText=d[2]; document.getElementById('d-ayah').innerText=d[9]; document.getElementById('d-hpayah').innerText=d[12]; document.getElementById('d-ibu').innerText=d[10]; document.getElementById('d-hpibu').innerText=d[13]; document.getElementById('d-job').innerText=d[11]; document.getElementById('d-masuk').innerText=formatDate(d[14]); document.getElementById('d-musyrif').innerText=d[4];
+            new bootstrap.Modal(document.getElementById('modalDetailSantri')).show(); 
         }
 
-        function setupForm(type) {
+
+
+        // --- RENDER PEGAWAI ---
+        function renderPegawai(rows) {
+            let h = ''; rows.forEach((r, i) => { if(!r[0]) return;
+                h += `<tr><td><div class="fw-bold">${r[0]}</div></td><td>${r[1]||'-'}</td><td>${formatDate(r[2])}</td><td>${r[4]||'-'}</td><td>${r[5]||'-'}</td><td class="text-end"><button class="btn btn-sm btn-link text-info p-0 me-2" onclick="showDetailPegawai(${i})"><i class="fas fa-eye"></i></button><button class="btn btn-sm btn-link text-warning p-0 me-2" onclick="editData('Pegawai',${i})"><i class="fas fa-pen"></i></button><button class="btn btn-sm btn-link text-danger p-0" onclick="deleteData('Pegawai',${i})"><i class="fas fa-trash"></i></button></td></tr>`;
+            }); document.getElementById('bodyPegawai').innerHTML = h;
+        }
+
+        function showDetailPegawai(i){ 
+            let d=globalPegawaiData[i]; 
+            document.getElementById('dp-nama').innerText=d[0]; document.getElementById('dp-jabatan').innerText=d[1]; document.getElementById('dp-nama-val').innerText=d[0]; document.getElementById('dp-jabatan-val').innerText=d[1]; document.getElementById('dp-tgl').innerText=formatDate(d[2]); document.getElementById('dp-hp').innerText=d[4]; document.getElementById('dp-jk').innerText=d[5]; document.getElementById('dp-alamat').innerText=d[3];
+            new bootstrap.Modal(document.getElementById('modalDetailPegawai')).show(); 
+        }
+
+        // --- RENDER JADWAL ---
+         function renderJadwal(rows) {
+            const body = document.getElementById('bodyJadwal');
+            const filterBulan = document.getElementById('filterBulan');
+            if(filterBulan.options.length === 0) {
+                const bulanUnik = [...new Set(rows.map(r => String(r[0]).trim()))].filter(b => b);
+                filterBulan.innerHTML = bulanUnik.map(b => `<option value="${b}">${b}</option>`).join('');
+            }
+            const currentBulan = String(filterBulan.value).trim().toLowerCase();
+            const scheduleMap = {};
+            rows.forEach((r, index) => {
+                const dbBulan = String(r[0]).trim().toLowerCase();
+                const dbWaktu = String(r[2]).trim();
+                const dbHariRaw = String(r[1]).trim().toLowerCase();
+                if(dbBulan !== currentBulan || dbWaktu === "") return;
+                const dbHari = dbHariRaw.charAt(0).toUpperCase() + dbHariRaw.slice(1);
+                if(!scheduleMap[dbWaktu]) scheduleMap[dbWaktu] = { Senin:null, Selasa:null, Rabu:null, Kamis:null, Jumat:null, Sabtu:null };
+                if(scheduleMap[dbWaktu].hasOwnProperty(dbHari)) {
+                    scheduleMap[dbWaktu][dbHari] = { materi: r[7], guru: r[8], ruang: r[4], kls: r[5], id: index };
+                }
+            });
+            if (!scheduleMap["09:30-10:00"]) {
+                scheduleMap["09:30-10:00"] = "ISTIRAHAT_MARKER";
+            }
+            const sortedTimes = Object.keys(scheduleMap).sort();
+            let html = '';
+            sortedTimes.forEach(time => {
+                if(time === "09:30-10:00" || time.toLowerCase().includes('istirahat')) {
+                    html += `<tr class="row-istirahat"><td class="col-jam">${time}</td><td colspan="6">I S T I R A H A T</td></tr>`;
+                } else {
+                    html += `<tr><td class="col-jam">${time}</td>`;['Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'].forEach(day => {
+                        const d = scheduleMap[time][day];
+                        html += `<td>${d ? `<span class="mapel">${d.materi}</span><span class="guru">${d.guru || '-'}</span><div class="mt-2"><span class="info-badge">${d.ruang || ''}</span> <span class="info-badge">${d.kls || ''}</span></div><div class="cell-actions"><button class="btn-cell" onclick="editData('Jadwal', ${d.id})"><i class="fas fa-pen"></i></button><button class="btn-cell text-danger" onclick="deleteData('Jadwal', ${d.id})"><i class="fas fa-trash"></i></button></div>` : ''}</td>`;
+                    });
+                    html += `</tr>`;
+                }
+            });
+            body.innerHTML = html || '<tr><td colspan="7" class="text-center p-5">Jadwal tidak ditemukan.</td></tr>';
+        }
+
+
+        // --- RENDER MODUL ---
+        function renderModul(rows, filterKey = "") {
+            let h = ''; const key = filterKey.toLowerCase();
+            rows.forEach((x, i) => { if(!x[0]) return;
+                if(String(x[0]).toLowerCase().includes(key)) {
+                    h += `<div class="col-md-4"><div class="card h-100 p-3 shadow-sm border-0"><div class="d-flex align-items-center mb-3"><i class="fas fa-file-pdf fa-2x text-danger me-3"></i><h6 class="mb-0 fw-bold">${x[0]}</h6></div><div class="d-flex justify-content-end gap-2"><a href="${x[1]}" target="_blank" class="btn btn-sm btn-light border"><i class="fas fa-download"></i></a><button class="btn btn-sm btn-light border text-danger" onclick="deleteData('Modul',${i})"><i class="fas fa-trash"></i></button></div></div></div>`;
+                }
+            }); document.getElementById('containerModul').innerHTML = h;
+        }
+
+        // --- RENDER ABSENSI ---
+      function renderAbsensi(rows) {
+    const myName = sessionStorage.getItem('userName'); 
+    let h = '';
+    const displayRows = [...rows].reverse(); 
+
+    displayRows.forEach(r => {
+        if(r[0] === myName) {
+            let b = r[3] === 'Hadir' ? 'success' : (r[3] === 'Izin' ? 'warning' : 'danger');
+            
+            let jamRaw = String(r[2]); 
+            let jamTampil = "";
+
+            // LOGIKA PENYESUAIAN JAM LIVE
+            if (jamRaw.includes("T") && jamRaw.includes("Z")) {
+                // Jika format ISO UTC dari Google (contoh: 1899-12-30T03:00:00Z)
+                // Kita paksa konversi ke waktu lokal (WIB = UTC+7)
+                let dateObj = new Date(jamRaw);
+                jamTampil = dateObj.toLocaleTimeString('en-GB', { 
+                    hour: '2-digit', 
+                    minute: '2-digit', 
+                    second: '2-digit' 
+                });
+            } else if (jamRaw.includes("T")) {
+                // Jika ISO tanpa 'Z'
+                jamTampil = jamRaw.split("T")[1].substring(0, 8);
+            } else if (jamRaw.includes(" ")) {
+                // Jika format string panjang
+                let bagian = jamRaw.split(" ");
+                let waktu = bagian.find(item => item.includes(":"));
+                jamTampil = waktu ? waktu.substring(0, 8) : jamRaw;
+            } else {
+                // Jika format sudah teks bersih
+                jamTampil = jamRaw.substring(0, 8);
+            }
+
+            h += `<tr>
+                    <td>${formatDate(r[1])}</td>
+                    <td><code class="text-dark fw-bold">${jamTampil}</code></td> 
+                    <td><span class="badge bg-${b}">${r[3]}</span></td>
+                  </tr>`;
+        }
+    }); 
+    document.getElementById('bodyAbsensi').innerHTML = h || '<tr><td colspan="3" class="text-center">Belum ada riwayat.</td></tr>';
+}
+
+        // --- SETUP FORM (TAMBAH) ---
+       function setupForm(type) {
             let h = '';
             if(type==='Santri') {
                 h = `<div class="row g-2">
@@ -337,104 +449,56 @@
             document.getElementById('formContainer').innerHTML = h;
         }
 
-        function renderSantri(rows) {
-            let html = '';
-            rows.forEach((r, i) => { if(!r[0]) return;
-                html += `<tr><td><div class="fw-bold text-dark">${r[0]}</div><small class="text-muted">NIK: ${r[5]||'-'}</small></td><td>${r[2]||''}</td><td>${r[4]||''}</td><td><span class="badge bg-success bg-opacity-10 text-success border border-success">${r[17]||'Aktif'}</span></td><td class="text-end"><button class="btn btn-sm btn-link text-primary p-0 me-2" onclick="showDetailSantri(${i})"><i class="fas fa-eye"></i></button><button class="btn btn-sm btn-link text-warning p-0 me-2" onclick="editData('Santri',${i})"><i class="fas fa-pen"></i></button><button class="btn btn-sm btn-link text-danger p-0" onclick="deleteData('Santri',${i})"><i class="fas fa-trash"></i></button></td></tr>`;
-            });
-            document.getElementById('bodySantri').innerHTML = html;
-        }
 
-        function renderPegawai(rows) {
-            let html = '';
-            rows.forEach((r, i) => { if(!r[0]) return;
-                html += `<tr><td><div class="fw-bold text-dark">${r[0]}</div></td><td>${r[1]||'-'}</td><td>${formatDate(r[2])}</td><td>${r[4]||'-'}</td><td>${r[5]||'-'}</td><td class="text-end"><button class="btn btn-sm btn-link text-info p-0 me-2" onclick="showDetailPegawai(${i})"><i class="fas fa-eye"></i></button><button class="btn btn-sm btn-link text-warning p-0 me-2" onclick="editData('Pegawai',${i})"><i class="fas fa-pen"></i></button><button class="btn btn-sm btn-link text-danger p-0" onclick="deleteData('Pegawai',${i})"><i class="fas fa-trash"></i></button></td></tr>`;
-            });
-            document.getElementById('bodyPegawai').innerHTML = html;
-        }
 
-        function showDetailSantri(i){ 
-            let d=globalSantriData[i]; 
-            document.getElementById('d-nama').innerText=d[0]; document.getElementById('d-nik').innerText=d[5]; document.getElementById('d-kk').innerText=d[6]; document.getElementById('d-ttl').innerText=(d[7]||'')+', '+formatDate(d[1]); document.getElementById('d-jk').innerText=d[8]; document.getElementById('d-status').innerText=d[17]; document.getElementById('d-anak').innerText=d[15] + ' dari ' + d[16]; document.getElementById('d-alamat').innerText=d[2]; document.getElementById('d-ayah').innerText=d[9]; document.getElementById('d-hpayah').innerText=d[12]; document.getElementById('d-ibu').innerText=d[10]; document.getElementById('d-hpibu').innerText=d[13]; document.getElementById('d-job').innerText=d[11]; document.getElementById('d-masuk').innerText=formatDate(d[14]); document.getElementById('d-musyrif').innerText=d[4];
-            new bootstrap.Modal(document.getElementById('modalDetailSantri')).show(); 
-        }
+// --- FUNGSI UNTUK MEMBUKA MODAL TAMBAH ---
+function openModal(type) {
+    // Reset form ke mode 'insert'
+    document.getElementById('mainForm').reset();
+    document.getElementById('modalTitle').innerText = "Tambah " + type;
+    document.getElementById('kategoriInput').value = type;
+    document.getElementById('actionInput').value = "insert";
+    document.getElementById('rowIdInput').value = "";
+    
+ 
 
-        function showDetailPegawai(i){ 
-            let d=globalPegawaiData[i]; 
-            document.getElementById('dp-nama').innerText=d[0]; document.getElementById('dp-jabatan').innerText=d[1]; document.getElementById('dp-nama-val').innerText=d[0]; document.getElementById('dp-jabatan-val').innerText=d[1]; document.getElementById('dp-tgl').innerText=formatDate(d[2]); document.getElementById('dp-hp').innerText=d[4]; document.getElementById('dp-jk').innerText=d[5]; document.getElementById('dp-alamat').innerText=d[3];
-            new bootstrap.Modal(document.getElementById('modalDetailPegawai')).show(); 
-        }
+   // Siapkan field form sesuai kategori
+    setupForm(type);
+    
+    // Tampilkan modal
+    formModal.show();
+}
 
-        function renderJadwal(rows) {
-            const body = document.getElementById('bodyJadwal');
-            const filterBulan = document.getElementById('filterBulan');
-            if(filterBulan.options.length === 0) {
-                const bulanUnik = [...new Set(rows.map(r => String(r[0]).trim()))].filter(b => b);
-                filterBulan.innerHTML = bulanUnik.map(b => `<option value="${b}">${b}</option>`).join('');
-            }
-            const currentBulan = String(filterBulan.value).trim().toLowerCase();
-            const scheduleMap = {};
-            rows.forEach((r, index) => {
-                const dbBulan = String(r[0]).trim().toLowerCase();
-                const dbWaktu = String(r[2]).trim();
-                const dbHariRaw = String(r[1]).trim().toLowerCase();
-                if(dbBulan !== currentBulan || dbWaktu === "") return;
-                const dbHari = dbHariRaw.charAt(0).toUpperCase() + dbHariRaw.slice(1);
-                if(!scheduleMap[dbWaktu]) scheduleMap[dbWaktu] = { Senin:null, Selasa:null, Rabu:null, Kamis:null, Jumat:null, Sabtu:null };
-                if(scheduleMap[dbWaktu].hasOwnProperty(dbHari)) {
-                    scheduleMap[dbWaktu][dbHari] = { materi: r[7], guru: r[8], ruang: r[4], kls: r[5], id: index };
-                }
-            });
-            if (!scheduleMap["09:30-10:00"]) {
-                scheduleMap["09:30-10:00"] = "ISTIRAHAT_MARKER";
-            }
-            const sortedTimes = Object.keys(scheduleMap).sort();
-            let html = '';
-            sortedTimes.forEach(time => {
-                if(time === "09:30-10:00" || time.toLowerCase().includes('istirahat')) {
-                    html += `<tr class="row-istirahat"><td class="col-jam">${time}</td><td colspan="6">I S T I R A H A T</td></tr>`;
-                } else {
-                    html += `<tr><td class="col-jam">${time}</td>`;['Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'].forEach(day => {
-                        const d = scheduleMap[time][day];
-                        html += `<td>${d ? `<span class="mapel">${d.materi}</span><span class="guru">${d.guru || '-'}</span><div class="mt-2"><span class="info-badge">${d.ruang || ''}</span> <span class="info-badge">${d.kls || ''}</span></div><div class="cell-actions"><button class="btn-cell" onclick="editData('Jadwal', ${d.id})"><i class="fas fa-pen"></i></button><button class="btn-cell text-danger" onclick="deleteData('Jadwal', ${d.id})"><i class="fas fa-trash"></i></button></div>` : ''}</td>`;
-                    });
-                    html += `</tr>`;
-                }
-            });
-            body.innerHTML = html || '<tr><td colspan="7" class="text-center p-5">Jadwal tidak ditemukan.</td></tr>';
-        }
+        // --- ACTIONS ---
+       function prosesAbsen(s) { 
+    const n = sessionStorage.getItem('userName'); 
+    const now = new Date(); 
+    
+    // Ambil Jam, Menit, Detik secara manual (Local Time)
+    const jam = String(now.getHours()).padStart(2, '0');
+    const menit = String(now.getMinutes()).padStart(2, '0');
+    const detik = String(now.getSeconds()).padStart(2, '0');
+    const jamLengkap = `${jam}:${menit}:${detik}`;
 
-        // PERBAIKAN RENDER MODUL DENGAN FITUR SEARCH
-        function renderModul(rows, filterKey = "") {
-            let h = ''; 
-            const key = filterKey.toLowerCase();
-            
-            rows.forEach((x, i) => { 
-                if(!x[0]) return;
-                const namaModul = String(x[0]).toLowerCase();
-                
-                // Cek apakah nama modul mengandung kata kunci pencarian
-                if(namaModul.includes(key)) {
-                    h += `<div class="col-md-4">
-                        <div class="card h-100 p-3 shadow-sm border-0">
-                            <div class="d-flex align-items-center mb-3">
-                                <i class="fas fa-file-pdf fa-2x text-danger me-3"></i>
-                                <h6 class="mb-0 fw-bold">${x[0]}</h6>
-                            </div>
-                            <div class="d-flex justify-content-end gap-2">
-                                <a href="${x[1]}" target="_blank" class="btn btn-sm btn-light border"><i class="fas fa-download"></i></a>
-                                <button class="btn btn-sm btn-light border text-danger" onclick="deleteData('Modul',${i})"><i class="fas fa-trash"></i></button>
-                            </div>
-                        </div>
-                    </div>`; 
-                }
-            }); 
-            document.getElementById('containerModul').innerHTML = h || '<div class="col-12 text-center text-muted p-5">Modul tidak ditemukan.</div>';
-        }
+    // Format Tanggal Lokal YYYY-MM-DD
+    const tglLokal = now.getFullYear() + "-" + 
+                     String(now.getMonth() + 1).padStart(2, '0') + "-" + 
+                     String(now.getDate()).padStart(2, '0');
 
-        function openModal(type) { document.getElementById('modalTitle').innerText = "Tambah " + type; document.getElementById('kategoriInput').value = type; document.getElementById('actionInput').value = "insert"; document.getElementById('rowIdInput').value = ""; setupForm(type); formModal.show(); }
-        
-        function editData(type, index) {
+    const fd = new FormData(); 
+    fd.append('action', 'insert'); 
+    fd.append('kategori', 'absensi'); 
+    fd.append('nama', n); 
+    fd.append('tanggal', tglLokal); 
+    fd.append('jam', jamLengkap); // Mengirim string murni
+    fd.append('status', s); 
+
+    fetch(SCRIPT_URL, {method:'POST', body:fd}).then(() => { 
+        alert('Berhasil Absen ' + s + ' pada ' + jamLengkap); 
+        loadData(); 
+    }); 
+}
+ function editData(type, index) {
             document.getElementById('modalTitle').innerText = "Edit " + type;
             document.getElementById('kategoriInput').value = type;
             document.getElementById('actionInput').value = "edit";
@@ -450,17 +514,19 @@
             formModal.show();
         }
 
-        const formModal = new bootstrap.Modal(document.getElementById('modalForm'));
+
+
+function deleteData(t, i) { if(confirm("Hapus data ini?")) { const fd = new FormData(); fd.append('action','delete'); fd.append('kategori',t); fd.append('rowId',i); fetch(SCRIPT_URL, {method:'POST', body:fd}).then(() => loadData()); } }
+        
+        // --- UTILITIES ---
+        function showPage(id) { document.querySelectorAll('.page-section').forEach(p => p.classList.remove('active')); document.getElementById(id).classList.add('active'); }
         function fill(d) { for(let k in d) if(document.querySelector(`[name="${k}"]`)) document.querySelector(`[name="${k}"]`).value = d[k]; }
         function filterTable(id, key) { const rows = document.getElementById(id).getElementsByTagName("tr"); for (let i=0; i<rows.length; i++) rows[i].style.display = rows[i].textContent.toLowerCase().indexOf(key.toLowerCase()) > -1 ? "" : "none"; }
-        function deleteData(t, i) { if(confirm("Hapus data ini?")) { const fd = new FormData(); fd.append('action','delete'); fd.append('kategori',t); fd.append('rowId',i); fetch(SCRIPT_URL, {method:'POST', body:fd}).then(() => { alert('Dihapus'); loadData(); }); } }
-        function exportPDF() { const element = document.getElementById('pdfArea'); const actions = document.querySelectorAll('.cell-actions'); actions.forEach(a => a.style.display = 'none'); html2pdf().set({ margin: 10, filename: 'Jadwal.pdf', html2canvas: { scale: 2 }, jsPDF: { orientation: 'landscape' } }).from(element).save().then(() => { actions.forEach(a => a.style.display = ''); }); }
-        
-        document.getElementById('mainForm').addEventListener('submit', e => {
-            e.preventDefault();
-            let b = document.getElementById('btnSubmit'); b.innerHTML = 'Memproses...'; b.disabled = true;
-            fetch(SCRIPT_URL, {method:'POST', body:new FormData(e.target)}).then(() => { alert('Sukses'); formModal.hide(); loadData(); }).finally(() => { b.innerHTML = 'Simpan Data'; b.disabled = false; });
-        });
+        function formatDate(d) { if (!d) return '-'; let date = new Date(d); return isNaN(date.getTime()) ? d : date.toLocaleDateString('id-ID'); }
+        function fmtInp(d) { if (!d) return ''; let date = new Date(d); return isNaN(date.getTime()) ? '' : date.toISOString().split('T')[0]; }
+        function startClock() { setInterval(() => { const now = new Date(); if(document.getElementById('liveClock')) document.getElementById('liveClock').innerText = now.toLocaleTimeString('id-ID'); if(document.getElementById('liveDate')) document.getElementById('liveDate').innerText = now.toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long' }); }, 1000); }
+        function exportPDF() { const element = document.getElementById('pdfArea'); html2pdf().set({ margin: 10, filename: 'Jadwal.pdf', html2canvas: { scale: 2 }, jsPDF: { orientation: 'landscape' } }).from(element).save(); }
+        document.getElementById('mainForm').addEventListener('submit', e => { e.preventDefault(); let b = document.getElementById('btnSubmit'); b.innerHTML = 'Memproses...'; b.disabled = true; fetch(SCRIPT_URL, {method:'POST', body:new FormData(e.target)}).then(() => { formModal.hide(); loadData(); }).finally(() => { b.innerHTML = 'Simpan Data'; b.disabled = false; }); });
     </script>
 </body>
 </html>
