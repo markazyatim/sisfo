@@ -3,216 +3,302 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Markaz MYDQ</title>
+    <title>Dashboard Markaz MYDQ - Premium Emerald Edition</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
-        :root { --sidebar-width: 260px; --primary: #0066ff; --bg-body: #ffffff; --bg-card: #008888; --text-main: #1f2937; --text-muted: #6b7280; --border-color: #e5e7eb; }
-        body { font-family: 'Inter', sans-serif; background-color: var(--bg-body); color: var(--text-main); font-size: 0.9rem; overflow-x: hidden; }
-        #sidebar { width: var(--sidebar-width); height: 100vh; position: fixed; top: 0; left: 0; background-color: #111827; color: #fff; z-index: 1000; display: flex; flex-direction: column; border-right: 1px solid rgba(255,255,255,0.05); }
-        #sidebar .brand { padding: 20px; font-size: 1.1rem; font-weight: 700; color: #fff; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; gap: 10px; }
-        #sidebar .nav-link { color: #9ca3af; padding: 10px 20px; margin: 4px 10px; border-radius: 6px; transition: 0.2s; font-weight: 500; display: flex; align-items: center; gap: 10px; font-size: 0.9rem; cursor: pointer; }
-        #login-page { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #f3f4f6; display: flex; align-items: center; justify-content: center; z-index: 2000; transition: 0.3s; }
-        .login-card { width: 100%; max-width: 400px; padding: 40px; background: #fff; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
-        .login-brand { text-align: center; margin-bottom: 30px; }
-        #sidebar .nav-link:hover { background-color: rgba(255,255,255,0.05); color: #fff; }
-        #sidebar .nav-link.active { background: var(--primary); color: #fff; }
-        #content { margin-left: var(--sidebar-width); padding: 25px; width: calc(100% - var(--sidebar-width)); min-height: 100vh; }
-        .page-section { display: none; animation: fadeIn 0.3s ease; }
-        .page-section.active { display: block; }
-        .card { border: 1px solid var(--border-color); border-radius: 8px; background: var(--bg-card); box-shadow: 0 1px 3px rgba(0,0,0,0.05); margin-bottom: 20px; }
-        .table thead th { background-color: #f9fafb; color: var(--text-muted); font-weight: 600; font-size: 0.75rem; text-transform: uppercase; padding: 12px 15px; border-bottom: 1px solid var(--border-color); }
-        .table tbody td { padding: 12px 15px; vertical-align: middle; border-bottom: 1px solid var(--border-color); font-size: 0.85rem; }
-        .jadwal-container { background: #ffffff; padding: 20px; border-radius: 12px; border-top: 8px solid #2e7d32; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 20px; }
-        .jadwal-header h2 { color: #2e7d32; margin: 0; font-weight: 700; text-transform: uppercase; font-size: 1.4rem; text-align: center; }
-        .table-kurikulum { width: 100%; border-collapse: collapse; border: 1px solid #dee2e6; }
-        .table-kurikulum th { background-color: #2e7d32; color: #ffffff; padding: 12px; text-align: center; border: 1px solid #1b5e20; }
-        .table-kurikulum td { padding: 12px; text-align: center; border: 1px solid #dee2e6; position: relative; height: 80px; }
-        .row-istirahat { background-color: #006666 !important; color: #ffffff; }
-        .mapel { display: block; font-weight: 700; color: #1a202c; line-height: 1.2; }
-        .guru { display: block; font-size: 0.75rem; color: #718096; font-style: italic; }
-        .cell-actions { position: absolute; top: 2px; right: 2px; display: flex; gap: 2px; opacity: 0; transition: 0.2s; background: rgba(255,255,255,0.9); padding: 2px; border-radius: 4px; }
-        .table-kurikulum td:hover .cell-actions { opacity: 1; }
-        .btn-cell { padding: 0px 4px; font-size: 0.7rem; border: none; background: none; color: #9ca3af; }
-        .detail-group { background: #f9fafb; padding: 8px 12px; border-radius: 6px; border: 1px solid #f3f4f6; height: 100%; }
-        .detail-label { font-size: 0.75rem; color: var(--text-muted); display: block; }
-        .detail-value { font-weight: 600; color: var(--text-main); display: block; }
+        :root { 
+            --emerald-dark: #012419;
+            --emerald-mid: #064e3b;
+            --emerald-light: #10b981;
+            --emerald-soft: #d1fae5;
+            --gold-accent: #fbbf24;
+            --sidebar-width: 100px;
+        }
+
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background: linear-gradient(135deg, #064e3b 0%, #012419 100%);
+            color: #ffffff; min-height: 100vh; overflow-x: hidden;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+        }
+
+        /* --- SIDEBAR --- */
+        #sidebar { 
+            width: var(--sidebar-width); height: 100vh; position: fixed; top: 0; left: 0;
+            background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(25px);
+            border-right: 1px solid rgba(255, 255, 255, 0.15);
+            display: flex; flex-direction: column; align-items: center; padding-top: 30px; z-index: 1000;
+        }
+        #sidebar .nav-link { color: rgba(255,255,255,0.7); font-size: 1.5rem; margin-bottom: 35px; transition: 0.3s; cursor: pointer; }
+        #sidebar .nav-link:hover, #sidebar .nav-link.active { color: var(--gold-accent); text-shadow: 0 0 15px var(--gold-accent); }
+
+        /* --- CONTENT & CARDS --- */
+        #content { margin-left: var(--sidebar-width); padding: 40px; width: calc(100% - var(--sidebar-width)); }
+        .glass-card { 
+            background: rgba(0, 0, 0, 0.45); backdrop-filter: blur(35px); 
+            border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 28px; padding: 30px; margin-bottom: 30px; 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+        }
+
+        /* --- STATISTICS --- */
+        .stat-card { background: rgba(255,255,255,0.1); border-radius: 20px; padding: 20px; display: flex; align-items: center; gap: 15px; border: 1px solid rgba(255,255,255,0.1); transition: 0.3s; }
+        .stat-card:hover { transform: translateY(-5px); background: rgba(255,255,255,0.15); }
+        .stat-icon { width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
+
+        /* --- TABLES --- */
+        .table-custom { color: #ffffff; width: 100%; border-collapse: separate; border-spacing: 0 10px; }
+        .table-custom thead th { 
+            color: var(--gold-accent) !important; font-weight: 800; font-size: 0.85rem; 
+            text-transform: uppercase; padding: 18px; border: none; text-align: center; letter-spacing: 1.5px;
+            background: rgba(0,0,0,0.3);
+        }
+        .table-custom tbody td { 
+            padding: 18px; background: rgba(255,255,255,0.1); border: none; 
+            vertical-align: middle; text-align: center; font-weight: 700; color: #ffffff !important;
+        }
+        .table-custom tbody tr td:first-child { border-radius: 18px 0 0 18px; text-align: left; padding-left: 30px; }
+        .table-custom tbody tr td:last-child { border-radius: 0 18px 18px 0; }
+
+        /* --- UI COMPONENTS --- */
+        .btn-absen { background: rgba(255,255,255,0.1); border: 2px solid var(--emerald-light); color: white; padding: 18px; border-radius: 20px; font-weight: 800; transition: 0.3s; width: 100%; }
+        .btn-absen:hover { background: var(--emerald-light); color: var(--emerald-dark); transform: translateY(-3px); }
+        .badge-status { background: var(--gold-accent) !important; color: #000 !important; font-weight: 800; padding: 6px 12px; border-radius: 8px; }
+
+        /* --- MODAL DETAIL --- */
+        .detail-group { background: rgba(0, 0, 0, 0.6); padding: 15px; border-radius: 15px; border: 1px solid var(--emerald-mid); height: 100%; }
+        .detail-label { font-size: 0.75rem; color: var(--gold-accent); font-weight: 800; text-transform: uppercase; margin-bottom: 5px; }
+        .detail-value { font-weight: 700; color: #ffffff; display: block; font-size: 1rem; text-shadow: none; }
+
+        /* --- FORMS --- */
+        .form-control, .form-select { background: rgba(0,0,0,0.5) !important; color: white !important; border: 2px solid var(--emerald-light) !important; font-weight: 600; padding: 12px; }
+        label { color: var(--gold-accent) !important; font-weight: 800; letter-spacing: 1px; display: block; text-align: left; margin-bottom: 5px; }
+
+        /* --- LOGIN --- */
+        #login-page { position: fixed; inset: 0; background: #012419; display: flex; align-items: center; justify-content: center; z-index: 2000; }
+        .login-box { width: 420px; padding: 60px; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(40px); border: 2px solid var(--emerald-light); border-radius: 45px; text-align: center; }
+
+        .page-section { display: none; }
+        .page-section.active { display: block; animation: fadeIn 0.4s ease; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
     <div id="login-page">
-        <div class="login-card">
-            <div class="login-brand text-center mb-4"><i class="fas fa-mosque fa-3x text-primary"></i><h4 class="mt-3 fw-bold">Markaz MYDQ</h4><p class="text-muted small">Sistem Informasi Yayasan</p></div>
+        <div class="login-box text-white shadow-lg">
+            <div class="mx-auto mb-4 d-flex align-items-center justify-content-center" style="width: 80px; height: 80px; background: var(--gold-accent); border-radius: 25px; color: #000; box-shadow: 0 0 30px rgba(251, 191, 36, 0.3);">
+                <i class="fas fa-mosque fa-4x"></i>
+            </div>
+            <h2 class="fw-800 mb-2" style="letter-spacing: 2px;">LOGIN PORTAL</h2>
+            <p class="text-white-50 small mb-5">Markaz Yatim Duafa Qurani</p>
             <form id="loginForm">
-                <div class="mb-3"><label class="form-label small fw-bold">Username</label><input type="text" id="username" class="form-control" required></div>
-                <div class="mb-3"><label class="form-label small fw-bold">Password</label><input type="password" id="password" class="form-control" required></div>
-                <button type="submit" id="btnLogin" class="btn btn-primary w-100 py-2 fw-bold">MASUK</button>
-                <div id="loginError" class="text-danger small mt-3 text-center" style="display:none;">Username atau password salah!</div>
+                <div class="mb-3">
+                    <label>ID PENGGUNA</label>
+                    <input type="text" id="username" class="form-control shadow-none" placeholder="Masukkan Username" required>
+                </div>
+                <div class="mb-5">
+                    <label>KATA SANDI</label>
+                    <input type="password" id="password" class="form-control shadow-none" placeholder="••••••••" required>
+                </div>
+                <button type="submit" id="btnLogin" class="btn w-100 fw-800 py-3" style="background: var(--emerald-light); color: var(--emerald-dark); border-radius: 15px;">MASUK SISTEM</button>
+                <div id="loginError" class="text-danger mt-4 fw-800" style="display:none;">USERNAME ATAU PASSWORD SALAH!</div>
             </form>
         </div>
     </div>
 
     <nav id="sidebar">
-        <div class="brand"><i class="fas fa-mosque text-primary"></i><span>Markaz MYDQ</span></div>
-        <div class="px-3 py-2 border-bottom border-secondary mb-2">
-            <small class="text-muted d-block" style="font-size: 0.7rem;">Login Sebagai:</small>
-            <span id="displayUserName" class="fw-bold text-white small">...</span>
-        </div>
-        <ul class="nav flex-column mt-3">
-            <li class="nav-item"><a class="nav-link active" onclick="showPage('santri')"><i class="fas fa-user-graduate"></i>Data Santri</a></li>
-            <li class="nav-item"><a class="nav-link" onclick="showPage('pegawai')"><i class="fas fa-chalkboard-teacher"></i>Data Pegawai</a></li>
-            <li class="nav-item"><a class="nav-link" onclick="showPage('absensi')"><i class="fas fa-user-check"></i>Absensi Staff</a></li>
-            <li class="nav-item"><a class="nav-link" onclick="showPage('jadwal')"><i class="fas fa-calendar-alt"></i>Jadwal</a></li>
-            <li class="nav-item"><a class="nav-link" onclick="showPage('modul')"><i class="fas fa-book-open"></i>Modul</a></li>
-            <li class="nav-item"><a class="nav-link text-danger" onclick="logout()"><i class="fas fa-sign-out-alt"></i>Keluar</a></li>
-        </ul>
+        <div class="brand-logo" style="width:55px; height:55px; background:var(--gold-accent); border-radius:15px; display:flex; align-items:center; justify-content:center; margin-bottom:50px; color:black;"><i class="fas fa-kaaba"></i></div>
+        <div class="nav-link active" onclick="showPage('dashboard')"><i class="fas fa-chart-pie"></i></div>
+        <div class="nav-link" onclick="showPage('santri')"><i class="fas fa-user-graduate"></i></div>
+        <div class="nav-link" onclick="showPage('pegawai')"><i class="fas fa-chalkboard-teacher"></i></div>
+        <div class="nav-link" onclick="showPage('absensi')"><i class="fas fa-fingerprint"></i></div>
+        <div class="nav-link" onclick="showPage('jadwal')"><i class="fas fa-calendar-alt"></i></div>
+        <div class="nav-link" onclick="showPage('modul')"><i class="fas fa-book"></i></div>
+        <div class="nav-link text-danger mt-auto mb-4" onclick="logout()"><i class="fas fa-power-off"></i></div>
     </nav>
 
-<div id="content">
-        <button class="btn btn-light shadow-sm d-md-none mb-4" onclick="document.getElementById('sidebar').classList.toggle('active')"><i class="fas fa-bars"></i></button>
-
-        <div id="santri" class="page-section active">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <h4 class="m-0 fw-bold">Data Santri</h4>
-                <div class="d-flex gap-2">
-                    <input type="text" class="form-control" style="width: 250px;" placeholder="Cari santri..." onkeyup="filterTable('bodySantri', this.value)">
-                    <button class="btn btn-primary" onclick="openModal('Santri')"><i class="fas fa-plus"></i> Tambah</button>
-                </div>
+    <div id="content">
+        <div class="d-flex justify-content-between align-items-center mb-5">
+            <div>
+                <h1 class="fw-800 m-0" style="font-size: 2.5rem; letter-spacing: -1.5px;">DASHBOARD</h1>
+                <p class="text-white-50 m-0 fw-600">Login Sebagai: <span class="text-gold fw-bold" id="displayUserName" style="color: var(--gold-accent) !important; text-shadow: none;">...</span></p>
             </div>
-            <div class="card"><div class="table-responsive"><table class="table table-hover align-middle mb-0"><thead><tr><th>Nama & NIK</th><th>Alamat</th><th>Musyrif</th><th>Status</th><th class="text-end">Aksi</th></tr></thead><tbody id="bodySantri"></tbody></table></div></div>
+            <div class="text-end">
+                <h2 id="liveClock" class="fw-800 m-0 text-gold" style="color: var(--gold-accent) !important; font-size: 2.5rem; text-shadow: none;">00:00:00</h2>
+                <p id="liveDate" class="m-0 fw-600 small text-white">Memuat Tanggal...</p>
+            </div>
         </div>
 
+        <div id="dashboard" class="page-section active">
+            <div class="row g-4 mb-4">
+                <div class="col-md-3">
+                    <div class="stat-card">
+                        <div class="stat-icon bg-primary text-white"><i class="fas fa-users"></i></div>
+                        <div><small class="text-white-50 d-block">Santri</small><h4 class="fw-800 m-0" id="stat-santri">0</h4></div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-card">
+                        <div class="stat-icon bg-success text-white"><i class="fas fa-user-tie"></i></div>
+                        <div><small class="text-white-50 d-block">Pegawai</small><h4 class="fw-800 m-0" id="stat-pegawai">0</h4></div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-card">
+                        <div class="stat-icon bg-warning text-dark"><i class="fas fa-id-badge"></i></div>
+                        <div><small class="text-white-50 d-block">Hadir</small><h4 class="fw-800 m-0" id="stat-absen">0</h4></div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-card">
+                        <div class="stat-icon bg-info text-white"><i class="fas fa-book"></i></div>
+                        <div><small class="text-white-50 d-block">Modul</small><h4 class="fw-800 m-0" id="stat-modul">0</h4></div>
+                    </div>
+                </div>
+            </div>
+            <div class="glass-card">
+                <h5 class="fw-800 text-gold mb-3">Selamat Datang di MYDQ Hub</h5>
+                <p class="mb-0">Silakan gunakan menu navigasi di samping untuk mengelola data operasional Markaz Anda.</p>
+            </div>
+        </div>
 
+        <div id="santri" class="page-section">
+            <div class="glass-card">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h4 class="fw-800 m-0 text-white"><i class="fas fa-users me-3 text-gold"></i>DATA SANTRI</h4>
+                    <div class="d-flex gap-3">
+                        <input type="text" class="form-control form-control-sm w-auto bg-white bg-opacity-10 border-0 text-white" placeholder="Cari santri..." onkeyup="filterTable('bodySantri', this.value)">
+                        <button class="btn btn-success fw-800 px-4 shadow" onclick="openModal('Santri')">TAMBAH</button>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-custom">
+                        <thead><tr><th>Nama & NIK</th><th>Alamat</th><th>Musyrif</th><th>Status</th><th>Aksi</th></tr></thead>
+                        <tbody id="bodySantri"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
 
         <div id="pegawai" class="page-section">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <h4 class="m-0 fw-bold">Data Pegawai</h4>
-                <div class="d-flex gap-2">
-                    <input type="text" class="form-control" style="width: 250px;" placeholder="Cari pegawai..." onkeyup="filterTable('bodyPegawai', this.value)">
-                    <button class="btn btn-primary" onclick="openModal('Pegawai')"><i class="fas fa-plus"></i> Tambah</button>
+            <div class="glass-card">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h4 class="fw-800 m-0 text-white">DATA PEGAWAI</h4>
+                    <div class="d-flex gap-2">
+                        <input type="text" class="form-control form-control-sm w-auto bg-white bg-opacity-10 border-0 text-white" placeholder="Cari..." onkeyup="filterTable('bodyPegawai', this.value)">
+                        <button class="btn btn-success fw-800 px-4 shadow" onclick="openModal('Pegawai')">TAMBAH</button>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-custom">
+                        <thead><tr><th>Nama Lengkap</th><th>Jabatan</th><th>Tgl Lahir</th><th>No HP</th><th>JK</th><th>Aksi</th></tr></thead>
+                        <tbody id="bodyPegawai"></tbody>
+                    </table>
                 </div>
             </div>
-            <div class="card"><div class="table-responsive"><table class="table table-hover align-middle mb-0"><thead><tr><th>Nama Lengkap</th><th>Jabatan</th><th>Tgl Lahir</th><th>No HP</th><th>JK</th><th class="text-end">Aksi</th></tr></thead><tbody id="bodyPegawai"></tbody></table></div></div>
         </div>
-
 
         <div id="absensi" class="page-section">
-            <div class="card p-4 border-0 shadow-sm mb-4" style="background: linear-gradient(135deg, #008888 0%, #005555 100%); color: white;">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div><h4 class="fw-bold m-0"><i class="fas fa-fingerprint me-2"></i>Absensi Kehadiran</h4><p class="small mb-0 opacity-75">Halo, <span id="absenNameLabel" class="fw-bold">...</span></p></div>
-                    <div class="text-end"><h5 id="liveClock" class="fw-bold m-0">00:00:00</h5><small id="liveDate">Memuat...</small></div>
+            <div class="row g-4">
+                <div class="col-md-5">
+                    <div class="glass-card h-100 text-center">
+                        <h4 class="fw-800 mb-4 text-white">PRESENSI DIGITAL</h4>
+                        <div class="detail-group mb-4" style="background: rgba(0,0,0,0.6);">
+                            <h1 class="display-3 fw-800 text-gold m-0" id="absenClockDisplay" style="color: var(--gold-accent) !important; text-shadow: none;">00:00</h1>
+                            <p class="text-white fw-800 mt-2 mb-0" id="absenNameLabel">Petugas</p>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button onclick="prosesAbsen('Hadir')" class="btn-absen text-success">HADIR</button>
+                            <div class="row g-2">
+                                <div class="col-6"><button onclick="prosesAbsen('Izin')" class="btn-absen text-warning">IZIN</button></div>
+                                <div class="col-6"><button onclick="prosesAbsen('Sakit')" class="btn-absen text-danger">SAKIT</button></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="row g-3 mt-3">
-                    <div class="col-md-4"><button onclick="prosesAbsen('Hadir')" class="btn btn-light w-100 py-3 fw-bold text-success shadow-sm"><i class="fas fa-check-circle fs-4 mb-1"></i><br>HADIR</button></div>
-                    <div class="col-md-4"><button onclick="prosesAbsen('Izin')" class="btn btn-light w-100 py-3 fw-bold text-warning shadow-sm"><i class="fas fa-info-circle fs-4 mb-1"></i><br>IZIN</button></div>
-                    <div class="col-md-4"><button onclick="prosesAbsen('Sakit')" class="btn btn-light w-100 py-3 fw-bold text-danger shadow-sm"><i class="fas fa-medkit fs-4 mb-1"></i><br>SAKIT</button></div>
-                </div>
-            </div>
-            <div class="card"><div class="card-header bg-white fw-bold">Riwayat Absensi Saya</div><div class="table-responsive"><table class="table table-hover mb-0"><thead><tr><th>Tanggal</th><th>Jam</th><th>Status</th></tr></thead><tbody id="bodyAbsensi"></tbody></table></div></div>
-        </div>
-
-        <div id="jadwal" class="page-section">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <h4 class="fw-bold m-0">Pengaturan Jadwal</h4>
-                <div class="d-flex gap-2">
-                    <select id="filterBulan" class="form-select form-select-sm" style="width: 140px;" onchange="renderJadwal(globalJadwalData)"></select>
-                    <button class="btn btn-outline-dark btn-sm" onclick="exportPDF()"><i class="fas fa-file-pdf"></i> Cetak</button>
-                    <button class="btn btn-success btn-sm" onclick="openModal('Jadwal')"><i class="fas fa-plus"></i> Tambah</button>
-                </div>
-            </div>
-            <div id="pdfArea">
-                <div class="jadwal-container">
-                    <div class="jadwal-header"><h2 id="pdfTitle">Jadwal Pelajaran</h2></div>
-                    <div class="table-responsive">
-                        <table class="table-kurikulum">
-                            <thead><tr><th>Waktu</th><th>Senin</th><th>Selasa</th><th>Rabu</th><th>Kamis</th><th>Jumat</th><th>Sabtu</th></tr></thead>
-                            <tbody id="bodyJadwal"></tbody>
-                        </table>
+                <div class="col-md-7">
+                    <div class="glass-card h-100">
+                        <h4 class="fw-800 mb-4 text-white">RIWAYAT KEHADIRAN</h4>
+                        <div class="table-responsive">
+                            <table class="table table-custom">
+                                <thead><tr><th>TANGGAL</th><th>JAM</th><th>STATUS</th></tr></thead>
+                                <tbody id="bodyAbsensi"></tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-
-
-       <div id="modul" class="page-section">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <h4 class="m-0 fw-bold">Modul Belajar</h4>
-                <div class="d-flex gap-2">
-                    <input type="text" class="form-control" id="searchModul" style="width: 250px;" placeholder="Cari nama modul..." onkeyup="renderModul(globalModulData, this.value)">
-                    <button class="btn btn-info text-white" onclick="openModal('Modul')"><i class="fas fa-upload"></i> Upload</button>
+        <div id="jadwal" class="page-section">
+            <div class="glass-card">
+                <div class="d-flex justify-content-between align-items-center mb-4 text-white">
+                    <h4 class="fw-800 m-0">JADWAL PELAJARAN</h4>
+                    <div class="d-flex gap-2">
+                        <select id="filterBulan" class="form-select w-auto bg-dark text-white border-gold shadow-none" onchange="renderJadwal(globalJadwalData)"></select>
+                        <button class="btn btn-outline-light fw-800 px-4 shadow" onclick="exportPDF()">CETAK PDF</button>
+                        <button class="btn btn-success fw-800 shadow" onclick="openModal('Jadwal')">+</button>
+                    </div>
+                </div>
+                <div id="pdfArea">
+                    <table class="table-kurikulum text-center">
+                        <thead><tr><th>WAKTU</th><th>SENIN</th><th>SELASA</th><th>RABU</th><th>KAMIS</th><th>JUMAT</th><th>SABTU</th></tr></thead>
+                        <tbody id="bodyJadwal"></tbody>
+                    </table>
                 </div>
             </div>
-            <div class="row g-3" id="containerModul"></div>
+        </div>
+
+        <div id="modul" class="page-section">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h4 class="fw-800 m-0 text-white">MODUL BELAJAR</h4>
+                <button class="btn btn-success fw-bold px-4 rounded-pill shadow" onclick="openModal('Modul')">UPLOAD</button>
+            </div>
+            <div class="row g-4" id="containerModul"></div>
         </div>
     </div>
 
+    <div class="modal fade" id="modalDetailSantri" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content shadow-lg" style="background: #012419; border-radius: 40px; border: 2px solid var(--emerald-light);">
+                <div class="modal-header border-0 p-4 pb-0 text-center"><h5 class="modal-title fw-800 text-white w-100">BIODATA LENGKAP SANTRI</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div>
+                <div class="modal-body p-4 text-white">
+                    <div class="row g-3" id="santriDetailContent"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 
- <div class="modal fade" id="modalForm" tabindex="-1" data-bs-backdrop="static">
+    <div class="modal fade" id="modalDetailPegawai" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content shadow-lg" style="background: #012419; border-radius: 40px; border: 2px solid var(--emerald-light);">
+                <div class="modal-header border-0 p-4 pb-0 text-center text-white"><h5 class="modal-title fw-800 w-100 text-center">PROFIL PEGAWAI</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div>
+                <div class="modal-body p-4 text-white text-center">
+                    <div class="bg-white bg-opacity-10 rounded-circle mx-auto d-flex align-items-center justify-content-center mb-3" style="width:80px;height:80px"><i class="fas fa-user-tie fs-1 text-emerald-light"></i></div>
+                    <h5 class="fw-bold mb-1" id="dp-nama"></h5>
+                    <small class="badge bg-emerald-light text-dark mb-4 fw-bold" id="dp-jabatan"></small>
+                    <div class="row g-3 text-start" id="pegawaiDetailContent"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalForm" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content">
-                <div class="modal-header border-bottom-0 py-3"><h5 class="modal-title fw-bold" id="modalTitle">Form Data</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
-                <div class="modal-body p-4 pt-0">
+            <div class="modal-content shadow-lg" style="background: #022c22; border-radius: 35px; border: 2px solid var(--emerald-light);">
+                <div class="modal-header border-0 p-4 pb-0 text-white"><h5 class="modal-title fw-800" id="modalTitle">Form Data</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div>
+                <div class="modal-body p-4 pt-2 text-white">
                     <form id="mainForm">
-                        <input type="hidden" id="kategoriInput" name="kategori"><input type="hidden" id="actionInput" name="action" value="insert"><input type="hidden" id="rowIdInput" name="rowId">
-                        <div id="formContainer"></div> 
-                        <div class="d-grid mt-4"><button type="submit" class="btn btn-primary" id="btnSubmit">Simpan Data</button></div>
+                        <input type="hidden" id="kategoriInput" name="kategori"><input type="hidden" id="actionInput" name="action"><input type="hidden" id="rowIdInput" name="rowId">
+                        <div id="formContainer" class="row g-3"></div> 
+                        <button type="submit" class="btn w-100 mt-5 py-3 fw-800 shadow" id="btnSubmit" style="background: var(--gold-accent); color: #000; border-radius: 18px; font-size: 1.1rem;">SIMPAN PERUBAHAN</button>
                     </form>
                 </div>
             </div>
         </div>
-    </div>
-
-
-    <div class="modal fade" id="modalDetailSantri" tabindex="-1">
-        <div class="modal-dialog modal-lg"><div class="modal-content">
-            <div class="modal-header bg-light"><h5 class="modal-title fw-bold">Biodata Santri Lengkap</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
-            <div class="modal-body p-4">
-                <div class="row g-3">
-                    <div class="col-md-6"><div class="detail-group"><span class="detail-label">Nama Lengkap</span><span class="detail-value" id="d-nama"></span></div></div>
-                    <div class="col-md-6"><div class="detail-group"><span class="detail-label">NIK</span><span class="detail-value" id="d-nik"></span></div></div>
-                    <div class="col-md-6"><div class="detail-group"><span class="detail-label">No KK</span><span class="detail-value" id="d-kk"></span></div></div>
-                    <div class="col-md-6"><div class="detail-group"><span class="detail-label">Tempat, Tgl Lahir</span><span class="detail-value" id="d-ttl"></span></div></div>
-                    <div class="col-md-4"><div class="detail-group"><span class="detail-label">Jenis Kelamin</span><span class="detail-value" id="d-jk"></span></div></div>
-                    <div class="col-md-4"><div class="detail-group"><span class="detail-label">Status</span><span class="detail-value badge bg-primary" id="d-status"></span></div></div>
-                    <div class="col-md-4"><div class="detail-group"><span class="detail-label">Anak Ke / Sdr</span><span class="detail-value" id="d-anak"></span></div></div>
-                    <div class="col-12"><div class="detail-group"><span class="detail-label">Alamat Lengkap</span><span class="detail-value" id="d-alamat"></span></div></div>
-                    <div class="col-12"><hr></div>
-                    <div class="col-md-6"><div class="detail-group"><span class="detail-label">Nama Ayah</span><span class="detail-value" id="d-ayah"></span></div></div>
-                    <div class="col-md-6"><div class="detail-group"><span class="detail-label">No HP Ayah</span><span class="detail-value" id="d-hpayah"></span></div></div>
-                    <div class="col-md-6"><div class="detail-group"><span class="detail-label">Nama Ibu</span><span class="detail-value" id="d-ibu"></span></div></div>
-                    <div class="col-md-6"><div class="detail-group"><span class="detail-label">No HP Ibu</span><span class="detail-value" id="d-hpibu"></span></div></div>
-                    <div class="col-md-12"><div class="detail-group"><span class="detail-label">Pekerjaan Wali</span><span class="detail-value" id="d-job"></span></div></div>
-                    <div class="col-12"><hr></div>
-                    <div class="col-md-6"><div class="detail-group"><span class="detail-label">Tanggal Masuk</span><span class="detail-value" id="d-masuk"></span></div></div>
-                    <div class="col-md-6"><div class="detail-group"><span class="detail-label">Musyrif</span><span class="detail-value" id="d-musyrif"></span></div></div>
-                </div>
-            </div>
-        </div></div>
-    </div>
-
-
-    
-
-    <div class="modal fade" id="modalDetailPegawai" tabindex="-1">
-        <div class="modal-dialog modal-lg"><div class="modal-content">
-            <div class="modal-header bg-light"><h5 class="modal-title fw-bold">Detail Pegawai</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
-            <div class="modal-body p-4">
-                <div class="text-center mb-4"><div class="bg-light rounded-circle mx-auto d-flex align-items-center justify-content-center" style="width:70px;height:70px"><i class="fas fa-user fs-2 text-primary"></i></div><h5 class="mt-3 mb-0 fw-bold" id="dp-nama"></h5><small class="text-muted badge bg-secondary text-white mt-1" id="dp-jabatan"></small></div>
-                <div class="row g-3">
-                    <div class="col-md-6"><div class="detail-group"><span class="detail-label">Nama Lengkap</span><span class="detail-value" id="dp-nama-val"></span></div></div>
-                    <div class="col-md-6"><div class="detail-group"><span class="detail-label">Jabatan</span><span class="detail-value" id="dp-jabatan-val"></span></div></div>
-                    <div class="col-md-4"><div class="detail-group"><span class="detail-label">Jenis Kelamin</span><span class="detail-value" id="dp-jk"></span></div></div>
-                    <div class="col-md-4"><div class="detail-group"><span class="detail-label">Tanggal Lahir</span><span class="detail-value" id="dp-tgl"></span></div></div>
-                    <div class="col-md-4"><div class="detail-group"><span class="detail-label">No. HP</span><span class="detail-value" id="dp-hp"></span></div></div>
-                    <div class="col-12"><div class="detail-group"><span class="detail-label">Alamat</span><span class="detail-value" id="dp-alamat"></span></div></div>
-                </div>
-            </div>
-        </div></div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -221,22 +307,10 @@
         let globalSantriData = [], globalPegawaiData = [], globalModulData = [], globalJadwalData = [], globalAbsensiData = [];
         const formModal = new bootstrap.Modal(document.getElementById('modalForm'));
 
-        // CEK LOGIN SAAT HALAMAN DIBUKA
-        document.addEventListener("DOMContentLoaded", () => { 
-            if(sessionStorage.getItem('isLoggedIn') === 'true') {
-                document.getElementById('login-page').style.display = 'none';
-                const name = sessionStorage.getItem('userName');
-                document.getElementById('displayUserName').innerText = name;
-                document.getElementById('absenNameLabel').innerText = name;
-                loadData(); startClock();
-            }
-        });
-
-        // FUNGSI LOGIN
+        // --- AUTH SYSTEM ---
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            const btn = document.getElementById('btnLogin');
-            btn.innerHTML = 'Memproses...'; btn.disabled = true;
+            const btn = document.getElementById('btnLogin'); btn.innerHTML = 'VERIFIKASI...'; btn.disabled = true;
             const fd = new FormData();
             fd.append('action', 'login');
             fd.append('username', document.getElementById('username').value.trim());
@@ -246,61 +320,121 @@
                 if (res.status === 'success') {
                     sessionStorage.setItem('isLoggedIn', 'true');
                     sessionStorage.setItem('userName', res.nama);
-                    sessionStorage.setItem('userJabatan', res.jabatan);
                     location.reload();
                 } else { 
                     document.getElementById('loginError').style.display = 'block'; 
-                    btn.innerHTML = 'MASUK'; btn.disabled = false;
+                    btn.innerHTML = 'MASUK SISTEM'; btn.disabled = false;
                 }
-            }).catch(() => { alert("Koneksi gagal!"); btn.innerHTML = 'MASUK'; btn.disabled = false; });
+            }).catch(err => { alert("Koneksi Gagal!"); btn.disabled = false; btn.innerHTML = 'MASUK SISTEM'; });
         });
 
-        function logout() { sessionStorage.clear(); location.reload(); }
+        document.addEventListener("DOMContentLoaded", () => { 
+            if(sessionStorage.getItem('isLoggedIn') === 'true') {
+                document.getElementById('login-page').style.display = 'none';
+                document.getElementById('displayUserName').innerText = sessionStorage.getItem('userName');
+                document.getElementById('absenNameLabel').innerText = sessionStorage.getItem('userName');
+                loadData(); startClock();
+            }
+        });
 
-        // FUNGSI AMBIL DATA UTAMA
         function loadData() {
             fetch(SCRIPT_URL + "?action=read").then(res => res.json()).then(data => {
                 globalSantriData = data.santri || []; globalPegawaiData = data.pegawai || [];
                 globalModulData = data.modul || []; globalJadwalData = data.jadwal || [];
                 globalAbsensiData = data.absensi || [];
                 
-                renderSantri(globalSantriData); 
-                renderPegawai(globalPegawaiData); 
-                renderModul(globalModulData); 
-                renderJadwal(globalJadwalData); 
+                // Dashboard Statistics
+                document.getElementById('stat-santri').innerText = globalSantriData.length;
+                document.getElementById('stat-pegawai').innerText = globalPegawaiData.length;
+                document.getElementById('stat-modul').innerText = globalModulData.length;
+                const today = new Date().toISOString().split('T')[0];
+                document.getElementById('stat-absen').innerText = globalAbsensiData.filter(a => a[1] == today).length;
+
+                renderSantri(globalSantriData); renderPegawai(globalPegawaiData); 
+                renderModul(globalModulData); renderJadwal(globalJadwalData); 
                 renderAbsensi(globalAbsensiData);
             });
         }
 
-        // --- RENDER SANTRI ---
         function renderSantri(rows) {
             let h = ''; rows.forEach((r, i) => { if(!r[0]) return;
-                h += `<tr><td><div class="fw-bold">${r[0]}</div><small class="text-muted">NIK: ${r[5]||'-'}</small></td><td>${r[2]||''}</td><td>${r[4]||''}</td><td><span class="badge bg-success bg-opacity-10 text-success border border-success">${r[17]||'Aktif'}</span></td><td class="text-end"><button class="btn btn-sm btn-link text-primary p-0 me-2" onclick="showDetailSantri(${i})"><i class="fas fa-eye"></i></button><button class="btn btn-sm btn-link text-warning p-0 me-2" onclick="editData('Santri',${i})"><i class="fas fa-pen"></i></button><button class="btn btn-sm btn-link text-danger p-0" onclick="deleteData('Santri',${i})"><i class="fas fa-trash"></i></button></td></tr>`;
+                h += `<tr>
+                    <td><div class="fw-bold text-white text-start">${r[0]}</div><small class="text-emerald-soft d-block text-start">NIK: ${r[5]||'-'}</small></td>
+                    <td class="text-start"><small>${r[2]||''}</small></td>
+                    <td><span class="badge bg-white bg-opacity-20 text-white">${r[4]||''}</span></td>
+                    <td><span class="badge badge-status">${r[17]||'Aktif'}</span></td>
+                    <td>
+                        <button class="btn btn-sm btn-link text-white" onclick="showDetailSantri(${i})"><i class="fas fa-eye"></i></button>
+                        <button class="btn btn-sm btn-link text-warning" onclick="editData('Santri',${i})"><i class="fas fa-pen"></i></button>
+                        <button class="btn btn-sm btn-link text-danger" onclick="deleteData('Santri',${i})"><i class="fas fa-trash"></i></button>
+                    </td>
+                </tr>`;
             }); document.getElementById('bodySantri').innerHTML = h;
+        }
+
+        function renderPegawai(rows) {
+            let h = ''; rows.forEach((r, i) => { if(!r[0]) return;
+                h += `<tr><td><div class="fw-bold text-white text-start">${r[0]}</div></td><td>${r[1]||'-'}</td><td>${formatDate(r[2])}</td><td>${r[4]||'-'}</td><td>${r[5]||'-'}</td>
+                    <td>
+                        <button class="btn btn-sm btn-link text-white" onclick="showDetailPegawai(${i})"><i class="fas fa-eye"></i></button>
+                        <button class="btn btn-sm btn-link text-warning" onclick="editData('Pegawai',${i})"><i class="fas fa-pen"></i></button>
+                        <button class="btn btn-sm btn-link text-danger" onclick="deleteData('Pegawai',${i})"><i class="fas fa-trash"></i></button>
+                    </td></tr>`;
+            }); document.getElementById('bodyPegawai').innerHTML = h;
         }
 
         function showDetailSantri(i){ 
             let d=globalSantriData[i]; 
-            document.getElementById('d-nama').innerText=d[0]; document.getElementById('d-nik').innerText=d[5]; document.getElementById('d-kk').innerText=d[6]; document.getElementById('d-ttl').innerText=(d[7]||'')+', '+formatDate(d[1]); document.getElementById('d-jk').innerText=d[8]; document.getElementById('d-status').innerText=d[17]; document.getElementById('d-anak').innerText=d[15] + ' dari ' + d[16]; document.getElementById('d-alamat').innerText=d[2]; document.getElementById('d-ayah').innerText=d[9]; document.getElementById('d-hpayah').innerText=d[12]; document.getElementById('d-ibu').innerText=d[10]; document.getElementById('d-hpibu').innerText=d[13]; document.getElementById('d-job').innerText=d[11]; document.getElementById('d-masuk').innerText=formatDate(d[14]); document.getElementById('d-musyrif').innerText=d[4];
+            let content = `
+                <div class="col-md-6"><div class="detail-group"><span class="detail-label">Nama Lengkap</span><span class="detail-value">${d[0]}</span></div></div>
+                <div class="col-md-6"><div class="detail-group"><span class="detail-label">NIK / Identitas</span><span class="detail-value">${d[5]||'-'}</span></div></div>
+                <div class="col-md-6"><div class="detail-group"><span class="detail-label">No KK</span><span class="detail-value">${d[6]||'-'}</span></div></div>
+                <div class="col-md-6"><div class="detail-group"><span class="detail-label">Tempat, Tgl Lahir</span><span class="detail-value">${(d[7]||'')}, ${formatDate(d[1])}</span></div></div>
+                <div class="col-md-4"><div class="detail-group"><span class="detail-label">Jenis Kelamin</span><span class="detail-value">${d[8]}</span></div></div>
+                <div class="col-md-4"><div class="detail-group"><span class="detail-label">Status</span><span class="badge badge-status">${d[17]}</span></div></div>
+                <div class="col-md-4"><div class="detail-group"><span class="detail-label">Anak Ke / Sdr</span><span class="detail-value">${d[15]} dari ${d[16]}</span></div></div>
+                <div class="col-12"><div class="detail-group"><span class="detail-label">Alamat Lengkap</span><span class="detail-value">${d[2]}</span></div></div>
+                <div class="col-12"><hr class="opacity-25"></div>
+                <div class="col-md-6"><div class="detail-group"><span class="detail-label">Nama Ayah</span><span class="detail-value">${d[9]||'-'}</span></div></div>
+                <div class="col-md-6"><div class="detail-group"><span class="detail-label">No HP Ayah</span><span class="detail-value">${d[12]||'-'}</span></div></div>
+                <div class="col-md-6"><div class="detail-group"><span class="detail-label">Nama Ibu</span><span class="detail-value">${d[10]||'-'}</span></div></div>
+                <div class="col-md-6"><div class="detail-group"><span class="detail-label">No HP Ibu</span><span class="detail-value">${d[13]||'-'}</span></div></div>
+                <div class="col-md-12"><div class="detail-group"><span class="detail-label">Pekerjaan Wali</span><span class="detail-value">${d[11]||'-'}</span></div></div>
+                <div class="col-12"><hr class="opacity-25"></div>
+                <div class="col-md-6"><div class="detail-group"><span class="detail-label">Tanggal Masuk</span><span class="detail-value text-gold">${formatDate(d[14])}</span></div></div>
+                <div class="col-md-6"><div class="detail-group"><span class="detail-label">Musyrif Pendamping</span><span class="detail-value text-emerald-light">${d[4]}</span></div></div>`;
+            document.getElementById('santriDetailContent').innerHTML = content;
             new bootstrap.Modal(document.getElementById('modalDetailSantri')).show(); 
-        }
-
-
-
-        // --- RENDER PEGAWAI ---
-        function renderPegawai(rows) {
-            let h = ''; rows.forEach((r, i) => { if(!r[0]) return;
-                h += `<tr><td><div class="fw-bold">${r[0]}</div></td><td>${r[1]||'-'}</td><td>${formatDate(r[2])}</td><td>${r[4]||'-'}</td><td>${r[5]||'-'}</td><td class="text-end"><button class="btn btn-sm btn-link text-info p-0 me-2" onclick="showDetailPegawai(${i})"><i class="fas fa-eye"></i></button><button class="btn btn-sm btn-link text-warning p-0 me-2" onclick="editData('Pegawai',${i})"><i class="fas fa-pen"></i></button><button class="btn btn-sm btn-link text-danger p-0" onclick="deleteData('Pegawai',${i})"><i class="fas fa-trash"></i></button></td></tr>`;
-            }); document.getElementById('bodyPegawai').innerHTML = h;
         }
 
         function showDetailPegawai(i){ 
             let d=globalPegawaiData[i]; 
-            document.getElementById('dp-nama').innerText=d[0]; document.getElementById('dp-jabatan').innerText=d[1]; document.getElementById('dp-nama-val').innerText=d[0]; document.getElementById('dp-jabatan-val').innerText=d[1]; document.getElementById('dp-tgl').innerText=formatDate(d[2]); document.getElementById('dp-hp').innerText=d[4]; document.getElementById('dp-jk').innerText=d[5]; document.getElementById('dp-alamat').innerText=d[3];
+            document.getElementById('dp-nama').innerText=d[0]; document.getElementById('dp-jabatan').innerText=d[1]; 
+            document.getElementById('pegawaiDetailContent').innerHTML = `
+                <div class="col-md-6"><div class="detail-group"><span class="detail-label">Nama Lengkap</span><span class="detail-value">${d[0]}</span></div></div>
+                <div class="col-md-6"><div class="detail-group"><span class="detail-label">Jabatan</span><span class="detail-value">${d[1]}</span></div></div>
+                <div class="col-md-4"><div class="detail-group"><span class="detail-label">Jenis Kelamin</span><span class="detail-value">${d[5]}</span></div></div>
+                <div class="col-md-4"><div class="detail-group"><span class="detail-label">Tanggal Lahir</span><span class="detail-value">${formatDate(d[2])}</span></div></div>
+                <div class="col-md-4"><div class="detail-group"><span class="detail-label">No. HP</span><span class="detail-value">${d[4]}</span></div></div>
+                <div class="col-12"><div class="detail-group"><span class="detail-label">Alamat Domisili</span><span class="detail-value">${d[3]}</span></div></div>`;
             new bootstrap.Modal(document.getElementById('modalDetailPegawai')).show(); 
         }
 
-        // --- RENDER JADWAL ---
+        function renderAbsensi(rows) {
+            const myName = sessionStorage.getItem('userName'); let h = '';
+            const displayRows = [...rows].reverse(); 
+            displayRows.forEach(r => {
+                if(r[0] === myName) {
+                    let b = r[3] === 'Hadir' ? 'emerald-light' : (r[3] === 'Izin' ? 'warning' : 'danger');
+                    let jamRaw = String(r[2]); let jamTampil = "";
+                    if (jamRaw.includes("T")) jamTampil = jamRaw.split("T")[1].substring(0, 8);
+                    else jamTampil = jamRaw.substring(0, 8);
+                    h += `<tr><td>${formatDate(r[1])}</td><td><code class="text-white fw-bold">${jamTampil}</code></td><td><span class="text-${b} fw-bold">${r[3]}</span></td></tr>`;
+                }
+            }); document.getElementById('bodyAbsensi').innerHTML = h || '<tr><td colspan="3" class="text-center">Kosong</td></tr>';
+        }
+
+       // --- RENDER JADWAL ---
          function renderJadwal(rows) {
             const body = document.getElementById('bodyJadwal');
             const filterBulan = document.getElementById('filterBulan');
@@ -341,95 +475,43 @@
         }
 
 
-        // --- RENDER MODUL ---
         function renderModul(rows, filterKey = "") {
             let h = ''; const key = filterKey.toLowerCase();
             rows.forEach((x, i) => { if(!x[0]) return;
                 if(String(x[0]).toLowerCase().includes(key)) {
-                    h += `<div class="col-md-4"><div class="card h-100 p-3 shadow-sm border-0"><div class="d-flex align-items-center mb-3"><i class="fas fa-file-pdf fa-2x text-danger me-3"></i><h6 class="mb-0 fw-bold">${x[0]}</h6></div><div class="d-flex justify-content-end gap-2"><a href="${x[1]}" target="_blank" class="btn btn-sm btn-light border"><i class="fas fa-download"></i></a><button class="btn btn-sm btn-light border text-danger" onclick="deleteData('Modul',${i})"><i class="fas fa-trash"></i></button></div></div></div>`;
+                    h += `<div class="col-md-4"><div class="glass-card text-center h-100 p-4 shadow"><i class="fas fa-file-pdf fa-3x text-emerald-light mb-3"></i><h6 class="fw-bold text-white mb-3">${x[0]}</h6><div class="d-flex justify-content-center gap-2"><a href="${x[1]}" target="_blank" class="btn btn-sm btn-success px-4 rounded-pill shadow">BUKA</a><button class="btn btn-sm btn-outline-danger border-0" onclick="deleteData('Modul',${i})"><i class="fas fa-trash"></i></button></div></div></div>`;
                 }
             }); document.getElementById('containerModul').innerHTML = h;
         }
 
-        // --- RENDER ABSENSI ---
-      function renderAbsensi(rows) {
-    const myName = sessionStorage.getItem('userName'); 
-    let h = '';
-    const displayRows = [...rows].reverse(); 
-
-    displayRows.forEach(r => {
-        if(r[0] === myName) {
-            let b = r[3] === 'Hadir' ? 'success' : (r[3] === 'Izin' ? 'warning' : 'danger');
-            
-            let jamRaw = String(r[2]); 
-            let jamTampil = "";
-
-            // LOGIKA PENYESUAIAN JAM LIVE
-            if (jamRaw.includes("T") && jamRaw.includes("Z")) {
-                // Jika format ISO UTC dari Google (contoh: 1899-12-30T03:00:00Z)
-                // Kita paksa konversi ke waktu lokal (WIB = UTC+7)
-                let dateObj = new Date(jamRaw);
-                jamTampil = dateObj.toLocaleTimeString('en-GB', { 
-                    hour: '2-digit', 
-                    minute: '2-digit', 
-                    second: '2-digit' 
-                });
-            } else if (jamRaw.includes("T")) {
-                // Jika ISO tanpa 'Z'
-                jamTampil = jamRaw.split("T")[1].substring(0, 8);
-            } else if (jamRaw.includes(" ")) {
-                // Jika format string panjang
-                let bagian = jamRaw.split(" ");
-                let waktu = bagian.find(item => item.includes(":"));
-                jamTampil = waktu ? waktu.substring(0, 8) : jamRaw;
-            } else {
-                // Jika format sudah teks bersih
-                jamTampil = jamRaw.substring(0, 8);
-            }
-
-            h += `<tr>
-                    <td>${formatDate(r[1])}</td>
-                    <td><code class="text-dark fw-bold">${jamTampil}</code></td> 
-                    <td><span class="badge bg-${b}">${r[3]}</span></td>
-                  </tr>`;
-        }
-    }); 
-    document.getElementById('bodyAbsensi').innerHTML = h || '<tr><td colspan="3" class="text-center">Belum ada riwayat.</td></tr>';
-}
-
-        // --- SETUP FORM (TAMBAH) ---
-       function setupForm(type) {
+        function setupForm(type) {
             let h = '';
             if(type==='Santri') {
-                h = `<div class="row g-2">
-                    <div class="col-md-6"><label class="small">Nama Lengkap</label><input class="form-control" name="nama" required></div>
-                    <div class="col-md-6"><label class="small">NIK</label><input class="form-control" name="nik" required></div>
-                    <div class="col-md-6"><label class="small">No KK</label><input class="form-control" name="kk"></div>
-                    <div class="col-md-6"><label class="small">Jenis Kelamin</label><select class="form-select" name="jk"><option>Laki-Laki</option><option>Perempuan</option></select></div>
-                    <div class="col-md-6"><label class="small">Tempat Lahir</label><input class="form-control" name="tempat_lahir"></div>
-                    <div class="col-md-6"><label class="small">Tanggal Lahir</label><input type="date" class="form-control" name="tgl_lahir"></div>
-                    <div class="col-md-12"><label class="small">Alamat</label><textarea class="form-control" name="alamat"></textarea></div>
-                    <div class="col-md-6"><label class="small">Ayah</label><input class="form-control" name="ayah"></div>
-                    <div class="col-md-6"><label class="small">HP Ayah</label><input class="form-control" name="hp_ayah"></div>
-                    <div class="col-md-6"><label class="small">Ibu</label><input class="form-control" name="ibu"></div>
-                    <div class="col-md-6"><label class="small">HP Ibu</label><input class="form-control" name="hp_ibu"></div>
-                    <div class="col-md-12"><label class="small">Pekerjaan Orang Tua</label><input class="form-control" name="job"></div>
-                    <div class="col-md-4"><label class="small">Anak Ke</label><input type="number" class="form-control" name="anak_ke"></div>
-                    <div class="col-md-4"><label class="small">Jumlah Saudara</label><input type="number" class="form-control" name="jlh_saudara"></div>
-                    <div class="col-md-4"><label class="small">Status</label><select class="form-select" name="status"><option>Umum</option><option>Duafa</option><option>Yatim</option><option>Piatu</option></select></div>
-                    <div class="col-md-6"><label class="small">Tanggal Masuk</label><input type="date" class="form-control" name="masuk"></div>
-                    <div class="col-md-6"><label class="small">Musyrif</label><select class="form-select" name="musyrif"><option>Reza Frananda</option><option>Uswatun Hasanah</option></select></div>
-                </div>`;
+                h = `<div class="col-md-6"><label>NAMA LENGKAP</label><input class="form-control" name="nama" required></div>
+                    <div class="col-md-6"><label>NIK / KTP</label><input class="form-control" name="nik" required></div>
+                    <div class="col-md-6"><label>NO KARTU KELUARGA</label><input class="form-control" name="kk"></div>
+                    <div class="col-md-6"><label>JENIS KELAMIN</label><select class="form-select" name="jk"><option>Laki-Laki</option><option>Perempuan</option></select></div>
+                    <div class="col-md-6"><label>TEMPAT LAHIR</label><input class="form-control" name="tempat_lahir"></div>
+                    <div class="col-md-6"><label>TANGGAL LAHIR</label><input type="date" class="form-control" name="tgl_lahir"></div>
+                    <div class="col-md-12"><label>ALAMAT DOMISILI</label><textarea class="form-control" name="alamat"></textarea></div>
+                    <div class="col-md-6"><label>NAMA AYAH</label><input class="form-control" name="ayah"></div>
+                    <div class="col-md-6"><label>NO HP AYAH</label><input class="form-control" name="hp_ayah"></div>
+                    <div class="col-md-6"><label>NAMA IBU</label><input class="form-control" name="ibu"></div>
+                    <div class="col-md-6"><label>NO HP IBU</label><input class="form-control" name="hp_ibu"></div>
+                    <div class="col-md-12"><label>PEKERJAAN WALI</label><input class="form-control" name="job"></div>
+                    <div class="col-md-4"><label>ANAK KE</label><input type="number" class="form-control" name="anak_ke"></div>
+                    <div class="col-md-4"><label>JUMLAH SAUDARA</label><input type="number" class="form-control" name="jlh_saudara"></div>
+                    <div class="col-md-4"><label>STATUS SANTRI</label><select class="form-select" name="status"><option>Umum</option><option>Duafa</option><option>Yatim</option><option>Piatu</option></select></div>
+                    <div class="col-md-6"><label>TGL MASUK</label><input type="date" class="form-control" name="masuk"></div>
+                    <div class="col-md-6"><label>MUSYRIF</label><select class="form-select" name="musyrif"><option>Reza Frananda</option><option>Uswatun Hasanah</option></select></div>`;
             } else if(type==='Pegawai') {
-                h = `<div class="row g-2">
-                    <div class="col-md-6"><label class="small">Nama Lengkap</label><input class="form-control" name="nama" required></div>
-                    <div class="col-md-6"><label class="small">Jabatan</label><input class="form-control" name="jabatan"></div>
-                    <div class="col-md-6"><label class="small">Tanggal Lahir</label><input type="date" class="form-control" name="tgl_lahir"></div>
-                    <div class="col-md-6"><label class="small">Jenis Kelamin</label><select class="form-select" name="jk"><option>Laki-Laki</option><option>Perempuan</option></select></div>
-                    <div class="col-md-6"><label class="small">No HP</label><input class="form-control" name="nohp"></div>
-                    <div class="col-md-12"><label class="small">Alamat</label><textarea class="form-control" name="alamat"></textarea></div>
-                </div>`;
-            } else if(type==='Jadwal') {
+                h = `<div class="col-md-6"><label>NAMA PEGAWAI</label><input class="form-control" name="nama" required></div>
+                    <div class="col-md-6"><label>JABATAN</label><input class="form-control" name="jabatan"></div>
+                    <div class="col-md-6"><label>TGL LAHIR</label><input type="date" class="form-control" name="tgl_lahir"></div>
+                    <div class="col-md-6"><label>NO HP</label><input class="form-control" name="nohp"></div>
+                    <div class="col-md-6"><label>JK</label><select class="form-select" name="jk"><option>Laki-Laki</option><option>Perempuan</option></select></div>
+                    <div class="col-md-12"><label>ALAMAT</label><textarea class="form-control" name="alamat"></textarea></div>`;
+             } else if(type==='Jadwal') {
                 h = `<div class="row g-2">
                     <div class="col-md-4"><label class="small">Bulan</label><input class="form-control" name="bulan" required></div>
                     <div class="col-md-4"><label class="small">Hari</label><select class="form-select" name="hari"><option>Senin</option><option>Selasa</option><option>Rabu</option><option>Kamis</option><option>Jumat</option><option>Sabtu</option></select></div>
@@ -441,92 +523,51 @@
                     <div class="col-12"><label class="small">Materi</label><input class="form-control" name="materi" required></div>
                     <div class="col-12"><label class="small">Guru</label><select class="form-select" name="guru"><option>Sulistiawan, S.Kom</option><option>Zhofri F. Majdi, S.Sos</option><option>Erwan SyahPutra, S.Pd</option><option>Ariyanti R. Siregar, S.Kom</option><option>Mia A. Lubis, S.Kom</option><option>Mahadi Sentosa, S.Sos</option><option>SupraSojo, S.Pd.I., M.Pd.</option></select></div>
                 </div>`;
+
             } else {
-                h = `<div class="mb-3"><label class="small">Nama Modul</label><input class="form-control" name="input1" required></div>
-                     <div class="mb-3"><label class="small">Link Download</label><input class="form-control" name="input2" required></div>
-                     <div class="mb-3"><label class="small">Keterangan</label><input class="form-control" name="input3"></div>`;
+                h = `<div class="col-12"><label>NAMA MODUL</label><input class="form-control" name="input1" required></div>
+                     <div class="col-12"><label>LINK DRIVE</label><input class="form-control" name="input2" required></div>
+                     <div class="col-12"><label>KETERANGAN</label><input class="form-control" name="input3"></div>`;
             }
             document.getElementById('formContainer').innerHTML = h;
         }
 
+        function openModal(type) { document.getElementById('mainForm').reset(); document.getElementById('modalTitle').innerText = "INPUT " + type; document.getElementById('kategoriInput').value = type; document.getElementById('actionInput').value = "insert"; setupForm(type); formModal.show(); }
 
-
-// --- FUNGSI UNTUK MEMBUKA MODAL TAMBAH ---
-function openModal(type) {
-    // Reset form ke mode 'insert'
-    document.getElementById('mainForm').reset();
-    document.getElementById('modalTitle').innerText = "Tambah " + type;
-    document.getElementById('kategoriInput').value = type;
-    document.getElementById('actionInput').value = "insert";
-    document.getElementById('rowIdInput').value = "";
-    
- 
-
-   // Siapkan field form sesuai kategori
-    setupForm(type);
-    
-    // Tampilkan modal
-    formModal.show();
-}
-
-        // --- ACTIONS ---
-       function prosesAbsen(s) { 
-    const n = sessionStorage.getItem('userName'); 
-    const now = new Date(); 
-    
-    // Ambil Jam, Menit, Detik secara manual (Local Time)
-    const jam = String(now.getHours()).padStart(2, '0');
-    const menit = String(now.getMinutes()).padStart(2, '0');
-    const detik = String(now.getSeconds()).padStart(2, '0');
-    const jamLengkap = `${jam}:${menit}:${detik}`;
-
-    // Format Tanggal Lokal YYYY-MM-DD
-    const tglLokal = now.getFullYear() + "-" + 
-                     String(now.getMonth() + 1).padStart(2, '0') + "-" + 
-                     String(now.getDate()).padStart(2, '0');
-
-    const fd = new FormData(); 
-    fd.append('action', 'insert'); 
-    fd.append('kategori', 'absensi'); 
-    fd.append('nama', n); 
-    fd.append('tanggal', tglLokal); 
-    fd.append('jam', jamLengkap); // Mengirim string murni
-    fd.append('status', s); 
-
-    fetch(SCRIPT_URL, {method:'POST', body:fd}).then(() => { 
-        alert('Berhasil Absen ' + s + ' pada ' + jamLengkap); 
-        loadData(); 
-    }); 
-}
- function editData(type, index) {
-            document.getElementById('modalTitle').innerText = "Edit " + type;
-            document.getElementById('kategoriInput').value = type;
-            document.getElementById('actionInput').value = "edit";
-            document.getElementById('rowIdInput').value = index;
-            setupForm(type);
+        function editData(type, index) {
+            openModal(type); document.getElementById('actionInput').value = "edit"; document.getElementById('rowIdInput').value = index;
             setTimeout(() => {
                 let d = (type==='Santri') ? globalSantriData[index] : (type==='Pegawai') ? globalPegawaiData[index] : (type==='Modul') ? globalModulData[index] : globalJadwalData[index];
                 if(type === 'Santri') fill({ nama:d[0], tgl_lahir:fmtInp(d[1]), alamat:d[2], musyrif:d[4], nik:d[5], kk:d[6], tempat_lahir:d[7], jk:d[8], ayah:d[9], ibu:d[10], job:d[11], hp_ayah:d[12], hp_ibu:d[13], masuk:fmtInp(d[14]), anak_ke:d[15], jlh_saudara:d[16], status:d[17] });
                 else if(type === 'Pegawai') fill({ nama:d[0], jabatan:d[1], tgl_lahir:fmtInp(d[2]), alamat:d[3], nohp:d[4], jk:d[5] });
                 else if(type === 'Jadwal') fill({ bulan:d[0], hari:d[1], waktu:d[2], sks:d[3], ruang:d[4], kelompok:d[5], klaster:d[6], materi:d[7], guru:d[8] });
                 else if(type === 'Modul') fill({ input1:d[0], input2:d[1], input3:d[2] });
-            }, 50);
-            formModal.show();
+            }, 100);
         }
 
+        function prosesAbsen(s) { 
+            const n = sessionStorage.getItem('userName'); const now = new Date(); 
+            const jam = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            const tgl = now.toISOString().split('T')[0];
+            const fd = new FormData(); fd.append('action', 'insert'); fd.append('kategori', 'absensi'); 
+            fd.append('nama', n); fd.append('tanggal', tgl); fd.append('jam', jam); fd.append('status', s); 
+            fetch(SCRIPT_URL, {method:'POST', body:fd}).then(() => { alert('Absen Sukses!'); loadData(); }); 
+        }
 
-
-function deleteData(t, i) { if(confirm("Hapus data ini?")) { const fd = new FormData(); fd.append('action','delete'); fd.append('kategori',t); fd.append('rowId',i); fetch(SCRIPT_URL, {method:'POST', body:fd}).then(() => loadData()); } }
-        
-        // --- UTILITIES ---
-        function showPage(id) { document.querySelectorAll('.page-section').forEach(p => p.classList.remove('active')); document.getElementById(id).classList.add('active'); }
+        function deleteData(t, i) { if(confirm("Hapus selamanya data ini?")) { const fd = new FormData(); fd.append('action','delete'); fd.append('kategori',t); fd.append('rowId',i); fetch(SCRIPT_URL, {method:'POST', body:fd}).then(() => loadData()); } }
+        function showPage(id) { document.querySelectorAll('.page-section').forEach(p => p.classList.remove('active')); document.getElementById(id).classList.add('active'); document.querySelectorAll('#sidebar .nav-link').forEach(l => l.classList.remove('active')); event.currentTarget.classList.add('active'); }
         function fill(d) { for(let k in d) if(document.querySelector(`[name="${k}"]`)) document.querySelector(`[name="${k}"]`).value = d[k]; }
         function filterTable(id, key) { const rows = document.getElementById(id).getElementsByTagName("tr"); for (let i=0; i<rows.length; i++) rows[i].style.display = rows[i].textContent.toLowerCase().indexOf(key.toLowerCase()) > -1 ? "" : "none"; }
         function formatDate(d) { if (!d) return '-'; let date = new Date(d); return isNaN(date.getTime()) ? d : date.toLocaleDateString('id-ID'); }
         function fmtInp(d) { if (!d) return ''; let date = new Date(d); return isNaN(date.getTime()) ? '' : date.toISOString().split('T')[0]; }
-        function startClock() { setInterval(() => { const now = new Date(); if(document.getElementById('liveClock')) document.getElementById('liveClock').innerText = now.toLocaleTimeString('id-ID'); if(document.getElementById('liveDate')) document.getElementById('liveDate').innerText = now.toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long' }); }, 1000); }
-        function exportPDF() { const element = document.getElementById('pdfArea'); html2pdf().set({ margin: 10, filename: 'Jadwal.pdf', html2canvas: { scale: 2 }, jsPDF: { orientation: 'landscape' } }).from(element).save(); }
-        document.getElementById('mainForm').addEventListener('submit', e => { e.preventDefault(); let b = document.getElementById('btnSubmit'); b.innerHTML = 'Memproses...'; b.disabled = true; fetch(SCRIPT_URL, {method:'POST', body:new FormData(e.target)}).then(() => { formModal.hide(); loadData(); }).finally(() => { b.innerHTML = 'Simpan Data'; b.disabled = false; }); });
+        function startClock() { setInterval(() => { const now = new Date(); document.getElementById('liveClock').innerText = now.toLocaleTimeString('id-ID'); if(document.getElementById('absenClockDisplay')) document.getElementById('absenClockDisplay').innerText = now.toLocaleTimeString('id-ID').substring(0,5); document.getElementById('liveDate').innerText = now.toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }); }, 1000); }
+        function exportPDF() { html2pdf().set({ margin: 10, filename: 'Jadwal_Markaz.pdf', jsPDF: { orientation: 'landscape' } }).from(document.getElementById('pdfArea')).save(); }
+        function logout() { sessionStorage.clear(); location.reload(); }
+
+        document.getElementById('mainForm').addEventListener('submit', e => { 
+            e.preventDefault(); let b = document.getElementById('btnSubmit'); b.innerHTML = 'SEDANG MENYIMPAN...'; b.disabled = true; 
+            fetch(SCRIPT_URL, {method:'POST', body:new FormData(e.target)}).then(() => { formModal.hide(); loadData(); }).finally(() => { b.innerHTML = 'SIMPAN PERUBAHAN'; b.disabled = false; }); 
+        });
     </script>
 </body>
 </html>
