@@ -35,6 +35,67 @@
         #sidebar .nav-link { color: rgba(255,255,255,0.7); font-size: 1.5rem; margin-bottom: 35px; transition: 0.3s; cursor: pointer; }
         #sidebar .nav-link:hover, #sidebar .nav-link.active { color: var(--gold-accent); text-shadow: 0 0 15px var(--gold-accent); }
 
+
+/* --- CALENDAR STYLES --- */
+.calendar-container {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    padding: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    text-align: center;
+}
+.day-name {
+    color: var(--gold-accent);
+    font-weight: 800;
+    font-size: 0.7rem;
+    padding-bottom: 10px;
+}
+.calendar-day {
+    aspect-ratio: 1 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+.calendar-day:hover {
+    background: var(--emerald-light);
+    color: var(--emerald-dark);
+}
+.calendar-day.today {
+    background: var(--gold-accent);
+    color: #000;
+    box-shadow: 0 0 15px rgba(251, 191, 36, 0.4);
+}
+.calendar-day.empty { cursor: default; }
+
+/* Tambahkan di dalam <style> */
+.day-name.sunday {
+    color: #ff4d4d; /* Merah untuk header */
+}
+.calendar-day.sunday {
+    color: #ff4d4d; /* Merah untuk angka */
+    font-weight: 800;
+}
+/* Tetap pastikan jika hari Minggu adalah 'Today', warna emas lebih prioritas */
+.calendar-day.sunday.today {
+    color: #000; 
+}
+
         /* --- CONTENT & CARDS --- */
         #content { margin-left: var(--sidebar-width); padding: 40px; width: calc(100% - var(--sidebar-width)); }
         .glass-card { 
@@ -72,10 +133,231 @@
         .detail-label { font-size: 0.75rem; color: var(--gold-accent); font-weight: 800; text-transform: uppercase; margin-bottom: 5px; }
         .detail-value { font-weight: 700; color: #ffffff; display: block; font-size: 1rem; text-shadow: none; }
 
+/* --- ENHANCED ABSENSI UI --- */
+.attendance-box {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 24px;
+    padding: 25px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.btn-absensi-group {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+}
+
+.btn-main-absen {
+    background: linear-gradient(135deg, var(--emerald-light) 0%, #059669 100%);
+    color: var(--emerald-dark) !important;
+    border: none;
+    padding: 20px;
+    border-radius: 18px;
+    font-weight: 800;
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+    transition: 0.3s;
+    box-shadow: 0 10px 20px rgba(16, 185, 129, 0.2);
+}
+
+.btn-main-absen:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 25px rgba(16, 185, 129, 0.3);
+}
+
+.btn-sub-absen {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 15px;
+    border-radius: 15px;
+    font-weight: 700;
+    transition: 0.3s;
+}
+
+.btn-sub-absen:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.status-indicator {
+    padding: 5px 12px;
+    border-radius: 10px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.bg-status-hadir { background: rgba(16, 185, 129, 0.2); color: #10b981; border: 1px solid #10b981; }
+.bg-status-izin { background: rgba(251, 191, 36, 0.2); color: #fbbf24; border: 1px solid #fbbf24; }
+.bg-status-sakit { background: rgba(239, 68, 68, 0.2); color: #ef4444; border: 1px solid #ef4444; }
+
+/* Menghilangkan garis default table agar lebih glassmorphism */
+.table-absensi-modern {
+    border-collapse: separate;
+    border-spacing: 0 8px;
+}
+.table-absensi-modern td {
+    background: rgba(255, 255, 255, 0.03);
+    border: none !important;
+}
+
         /* --- FORMS --- */
         .form-control, .form-select { background: rgba(0,0,0,0.5) !important; color: white !important; border: 2px solid var(--emerald-light) !important; font-weight: 600; padding: 12px; }
         label { color: var(--gold-accent) !important; font-weight: 800; letter-spacing: 1px; display: block; text-align: left; margin-bottom: 5px; }
 
+/* --- MODERN TIMELINE SCHEDULE --- */
+#pdfArea {
+    background: transparent;
+    padding: 10px;
+}
+
+.timeline-row {
+    display: flex;
+    margin-bottom: 15px;
+    align-items: stretch;
+}
+
+.timeline-time {
+    width: 100px;
+    min-width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(251, 191, 36, 0.1);
+    color: var(--gold-accent);
+    font-weight: 800;
+    font-size: 0.85rem;
+    border-radius: 15px;
+    margin-right: 15px;
+    border: 1px solid rgba(251, 191, 36, 0.2);
+}
+
+.timeline-cards {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr); /* 6 Hari */
+    gap: 12px;
+    width: 100%;
+}
+
+.subject-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    padding: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: 0.3s;
+    position: relative;
+}
+
+.subject-card:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--emerald-light);
+    transform: translateY(-3px);
+}
+
+.subject-title {
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: var(--emerald-light);
+    margin-bottom: 4px;
+    display: block;
+    line-height: 1.2;
+}
+
+.subject-teacher {
+    font-size: 0.7rem;
+    color: #fff;
+    opacity: 0.7;
+    display: block;
+}
+
+.subject-info {
+    margin-top: 8px;
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+}
+
+.info-pill {
+    font-size: 0.6rem;
+    padding: 2px 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    color: var(--gold-accent);
+}
+
+.break-row {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    padding: 10px;
+    text-align: center;
+    color: var(--gold-accent);
+    font-weight: 800;
+    letter-spacing: 10px;
+    font-size: 0.7rem;
+    margin: 20px 0;
+    border: 1px dashed rgba(251, 191, 36, 0.3);
+}
+
+/* --- HVS MODE (PRINT) --- */
+.hvs-mode .timeline-time {
+    background: #f0f0f0 !important;
+    color: black !important;
+    border: 1px solid black !important;
+}
+.hvs-mode .subject-card {
+    background: white !important;
+    border: 1px solid black !important;
+    color: black !important;
+}
+.hvs-mode .subject-title, .hvs-mode .subject-teacher, .hvs-mode .info-pill {
+    color: black !important;
+}
+.hvs-mode .break-row {
+    background: #eee !important;
+    color: black !important;
+    border: 1px solid black !important;
+}
+
+/* Style Khusus Baris Istirahat */
+.break-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 25px 0;
+    gap: 15px;
+}
+
+.break-line {
+    flex: 1;
+    height: 1px;
+    border-bottom: 2px dashed rgba(251, 191, 36, 0.3);
+}
+
+.break-text {
+    color: var(--gold-accent);
+    font-weight: 800;
+    font-size: 0.75rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    background: rgba(251, 191, 36, 0.1);
+    padding: 5px 20px;
+    border-radius: 20px;
+}
+
+/* Penyesuaian saat Print HVS */
+.hvs-mode .break-line {
+    border-bottom: 2px dashed #000 !important;
+}
+.hvs-mode .break-text {
+    background: #eee !important;
+    color: #000 !important;
+    border: 1px solid #000 !important;
+}
+.hvs-mode .subject-card {
+    border: 1px solid #000 !important;
+    border-left: 5px solid #000 !important;
+}
         /* --- LOGIN --- */
         #login-page { position: fixed; inset: 0; background: #012419; display: flex; align-items: center; justify-content: center; z-index: 2000; }
         .login-box { width: 420px; padding: 60px; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(40px); border: 2px solid var(--emerald-light); border-radius: 45px; text-align: center; }
@@ -132,39 +414,54 @@
             </div>
         </div>
 
-        <div id="dashboard" class="page-section active">
+     <div id="dashboard" class="page-section active">
+    <div class="row g-4 mb-4">
+        <div class="col-lg-8">
             <div class="row g-4 mb-4">
-                <div class="col-md-3">
+                <div class="col-md-6">
                     <div class="stat-card">
                         <div class="stat-icon bg-primary text-white"><i class="fas fa-users"></i></div>
                         <div><small class="text-white-50 d-block">Santri</small><h4 class="fw-800 m-0" id="stat-santri">0</h4></div>
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-6">
                     <div class="stat-card">
                         <div class="stat-icon bg-success text-white"><i class="fas fa-user-tie"></i></div>
                         <div><small class="text-white-50 d-block">Pegawai</small><h4 class="fw-800 m-0" id="stat-pegawai">0</h4></div>
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-6">
                     <div class="stat-card">
                         <div class="stat-icon bg-warning text-dark"><i class="fas fa-id-badge"></i></div>
-                        <div><small class="text-white-50 d-block">Hadir</small><h4 class="fw-800 m-0" id="stat-absen">0</h4></div>
+                        <div><small class="text-white-50 d-block">Hadir Hari Ini</small><h4 class="fw-800 m-0" id="stat-absen">0</h4></div>
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-6">
                     <div class="stat-card">
                         <div class="stat-icon bg-info text-white"><i class="fas fa-book"></i></div>
-                        <div><small class="text-white-50 d-block">Modul</small><h4 class="fw-800 m-0" id="stat-modul">0</h4></div>
+                        <div><small class="text-white-50 d-block">Total Modul</small><h4 class="fw-800 m-0" id="stat-modul">0</h4></div>
                     </div>
                 </div>
             </div>
             <div class="glass-card">
                 <h5 class="fw-800 text-gold mb-3">Selamat Datang di MYDQ Hub</h5>
-                <p class="mb-0">Silakan gunakan menu navigasi di samping untuk mengelola data operasional Markaz Anda.</p>
+                <p class="mb-0">Sistem manajemen terintegrasi untuk Yayasan Markaz Yatim Duafa Qurani. Pantau perkembangan santri dan kehadiran pegawai secara real-time.</p>
             </div>
         </div>
 
+        <div class="col-lg-4">
+            <div class="glass-card h-100">
+                <div class="calendar-header">
+                    <button class="btn btn-sm btn-link text-white" onclick="changeMonth(-1)"><i class="fas fa-chevron-left"></i></button>
+                    <h5 id="calendarMonth" class="fw-800 m-0 text-white">Januari 2026</h5>
+                    <button class="btn btn-sm btn-link text-white" onclick="changeMonth(1)"><i class="fas fa-chevron-right"></i></button>
+                </div>
+                <div class="calendar-grid" id="calendarGrid">
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
         <div id="santri" class="page-section">
             <div class="glass-card">
                 <div class="d-flex justify-content-between align-items-center mb-4">
@@ -201,57 +498,91 @@
             </div>
         </div>
 
-        <div id="absensi" class="page-section">
-            <div class="row g-4">
-                <div class="col-md-5">
-                    <div class="glass-card h-100 text-center">
-                        <h4 class="fw-800 mb-4 text-white">PRESENSI DIGITAL</h4>
-                        <div class="detail-group mb-4" style="background: rgba(0,0,0,0.6);">
-                            <h1 class="display-3 fw-800 text-gold m-0" id="absenClockDisplay" style="color: var(--gold-accent) !important; text-shadow: none;">00:00</h1>
-                            <p class="text-white fw-800 mt-2 mb-0" id="absenNameLabel">Petugas</p>
+       <div id="absensi" class="page-section">
+    <div class="row g-4">
+        <div class="col-lg-4">
+            <div class="glass-card h-100">
+                <div class="text-center mb-4">
+                    <h5 class="fw-800 text-white-50 small mb-1">PRESENSI DIGITAL</h5>
+                    <h2 id="absenClockDisplay" class="display-4 fw-800 text-gold mb-0" style="color: var(--gold-accent) !important;">00:00</h2>
+                    <p class="text-white fw-600" id="absenNameLabel">Nama Pegawai</p>
+                </div>
+
+                <div class="btn-absensi-group">
+                    <button onclick="prosesAbsen('Hadir')" class="btn-main-absen">
+                        <i class="fas fa-fingerprint me-2"></i> KLIK HADIR
+                    </button>
+                    <div class="row g-2">
+                        <div class="col-6">
+                            <button onclick="prosesAbsen('Izin')" class="btn-sub-absen w-100 text-warning">
+                                <i class="fas fa-envelope me-1"></i> IZIN
+                            </button>
                         </div>
-                        <div class="d-grid gap-2">
-                            <button onclick="prosesAbsen('Hadir')" class="btn-absen text-success">HADIR</button>
-                            <div class="row g-2">
-                                <div class="col-6"><button onclick="prosesAbsen('Izin')" class="btn-absen text-warning">IZIN</button></div>
-                                <div class="col-6"><button onclick="prosesAbsen('Sakit')" class="btn-absen text-danger">SAKIT</button></div>
-                            </div>
+                        <div class="col-6">
+                            <button onclick="prosesAbsen('Sakit')" class="btn-sub-absen w-100 text-danger">
+                                <i class="fas fa-medkit me-1"></i> SAKIT
+                            </button>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-7">
-                    <div class="glass-card h-100">
-                        <h4 class="fw-800 mb-4 text-white">RIWAYAT KEHADIRAN</h4>
-                        <div class="table-responsive">
-                            <table class="table table-custom">
-                                <thead><tr><th>TANGGAL</th><th>JAM</th><th>STATUS</th></tr></thead>
-                                <tbody id="bodyAbsensi"></tbody>
-                            </table>
-                        </div>
-                    </div>
+                
+                <div class="mt-4 p-3 rounded-4 bg-black bg-opacity-20 border border-white border-opacity-10">
+                    <small class="text-white-50 d-block mb-1"><i class="fas fa-info-circle me-1"></i> Info:</small>
+                    <small class="text-white">Absensi hanya berlaku pada jam kerja. Pastikan GPS Anda aktif jika diperlukan.</small>
                 </div>
             </div>
         </div>
 
-        <div id="jadwal" class="page-section">
-            <div class="glass-card">
-                <div class="d-flex justify-content-between align-items-center mb-4 text-white">
-                    <h4 class="fw-800 m-0">JADWAL PELAJARAN</h4>
-                    <div class="d-flex gap-2">
-                        <select id="filterBulan" class="form-select w-auto bg-dark text-white border-gold shadow-none" onchange="renderJadwal(globalJadwalData)"></select>
-                        <button class="btn btn-outline-light fw-800 px-4 shadow" onclick="exportPDF()">CETAK PDF</button>
-                        <button class="btn btn-success fw-800 shadow" onclick="openModal('Jadwal')">+</button>
-                    </div>
+        <div class="col-lg-8">
+            <div class="glass-card h-100">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h5 class="fw-800 m-0 text-white">RIWAYAT KEHADIRAN ANDA</h5>
+                    <span class="badge bg-white bg-opacity-10 fw-600">Bulan Ini</span>
                 </div>
-                <div id="pdfArea">
-                    <table class="table-kurikulum text-center">
-                        <thead><tr><th>WAKTU</th><th>SENIN</th><th>SELASA</th><th>RABU</th><th>KAMIS</th><th>JUMAT</th><th>SABTU</th></tr></thead>
-                        <tbody id="bodyJadwal"></tbody>
+                <div class="table-responsive">
+                    <table class="table table-custom table-absensi-modern">
+                        <thead>
+                            <tr>
+                                <th class="text-start">TANGGAL</th>
+                                <th>JAM</th>
+                                <th>STATUS</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bodyAbsensi">
+                            </tbody>
                     </table>
                 </div>
             </div>
         </div>
+    </div>
+</div>
+      <div id="jadwal" class="page-section">
+    <div class="glass-card">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h4 class="fw-800 m-0 text-white"><i class="fas fa-calendar-alt me-2 text-gold"></i>JADWAL AKADEMIK</h4>
+            <div class="d-flex gap-2">
+                <select id="filterBulan" class="form-select w-auto bg-dark text-white border-0" onchange="renderJadwal(globalJadwalData)"></select>
+                <button class="btn btn-outline-light btn-sm fw-bold" onclick="exportPDF()">CETAK PDF</button>
+                <button class="btn btn-success btn-sm" onclick="openModal('Jadwal')">+</button>
+            </div>
+        </div>
 
+        <div class="timeline-row mb-2" style="margin-left: 115px;">
+            <div class="timeline-cards">
+                <div class="text-center small fw-800 text-gold">SENIN</div>
+                <div class="text-center small fw-800 text-gold">SELASA</div>
+                <div class="text-center small fw-800 text-gold">RABU</div>
+                <div class="text-center small fw-800 text-gold">KAMIS</div>
+                <div class="text-center small fw-800 text-gold">JUMAT</div>
+                <div class="text-center small fw-800 text-gold">SABTU</div>
+            </div>
+        </div>
+
+        <div id="pdfArea">
+            <div id="bodyJadwal"></div>
+        </div>
+    </div>
+</div>
         <div id="modul" class="page-section">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h4 class="fw-800 m-0 text-white">MODUL BELAJAR</h4>
@@ -307,7 +638,56 @@
         let globalSantriData = [], globalPegawaiData = [], globalModulData = [], globalJadwalData = [], globalAbsensiData = [];
         const formModal = new bootstrap.Modal(document.getElementById('modalForm'));
 
-        // --- AUTH SYSTEM ---
+// --- CALENDAR LOGIC ---
+let currentCalDate = new Date(2026, 0, 1); 
+
+function renderCalendar() {
+    const grid = document.getElementById('calendarGrid');
+    const monthLabel = document.getElementById('calendarMonth');
+    
+    // Cek apakah elemen ada di DOM (untuk menghindari error)
+    if (!grid || !monthLabel) return;
+
+    grid.innerHTML = '';
+    const year = currentCalDate.getFullYear();
+    const month = currentCalDate.getMonth();
+    
+    const monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+    monthLabel.innerText = `${monthNames[month]} ${year}`;
+
+    // Header Hari
+    const days = ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'];
+    days.forEach((d, index) => {
+        const sundayClass = (index === 0) ? 'sunday' : '';
+        grid.innerHTML += `<div class="day-name ${sundayClass}">${d}</div>`;
+    });
+
+    const firstDay = new Date(year, month, 1).getDay();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+    for (let i = 0; i < firstDay; i++) grid.innerHTML += `<div class="calendar-day empty"></div>`;
+
+    const today = new Date();
+    for (let d = 1; d <= daysInMonth; d++) {
+        const checkDate = new Date(year, month, d);
+        const isSunday = (checkDate.getDay() === 0);
+        const isToday = today.getDate() === d && today.getMonth() === month && today.getFullYear() === year;
+        
+        let classList = ['calendar-day'];
+        if (isSunday) classList.push('sunday');
+        if (isToday) classList.push('today');
+
+        grid.innerHTML += `<div class="${classList.join(' ')}">${d}</div>`;
+    }
+}
+
+// Fungsi ganti bulan
+function changeMonth(dir) {
+    currentCalDate.setMonth(currentCalDate.getMonth() + dir);
+    renderCalendar();
+}
+
+      // --- AUTH SYSTEM ---
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const btn = document.getElementById('btnLogin'); btn.innerHTML = 'VERIFIKASI...'; btn.disabled = true;
@@ -328,20 +708,25 @@
             }).catch(err => { alert("Koneksi Gagal!"); btn.disabled = false; btn.innerHTML = 'MASUK SISTEM'; });
         });
 
-        document.addEventListener("DOMContentLoaded", () => { 
-            if(sessionStorage.getItem('isLoggedIn') === 'true') {
-                document.getElementById('login-page').style.display = 'none';
-                document.getElementById('displayUserName').innerText = sessionStorage.getItem('userName');
-                document.getElementById('absenNameLabel').innerText = sessionStorage.getItem('userName');
-                loadData(); startClock();
-            }
-        });
-
+       document.addEventListener("DOMContentLoaded", () => { 
+    if(sessionStorage.getItem('isLoggedIn') === 'true') {
+        document.getElementById('login-page').style.display = 'none';
+        document.getElementById('displayUserName').innerText = sessionStorage.getItem('userName');
+        document.getElementById('absenNameLabel').innerText = sessionStorage.getItem('userName');
+        
+        // PENTING: Jalankan kalender & data
+        renderCalendar(); 
+        loadData(); 
+        startClock();
+    }
+});
         function loadData() {
             fetch(SCRIPT_URL + "?action=read").then(res => res.json()).then(data => {
                 globalSantriData = data.santri || []; globalPegawaiData = data.pegawai || [];
                 globalModulData = data.modul || []; globalJadwalData = data.jadwal || [];
                 globalAbsensiData = data.absensi || [];
+renderCalendar();
+
                 
                 // Dashboard Statistics
                 document.getElementById('stat-santri').innerText = globalSantriData.length;
@@ -420,60 +805,108 @@
             new bootstrap.Modal(document.getElementById('modalDetailPegawai')).show(); 
         }
 
-        function renderAbsensi(rows) {
-            const myName = sessionStorage.getItem('userName'); let h = '';
-            const displayRows = [...rows].reverse(); 
-            displayRows.forEach(r => {
-                if(r[0] === myName) {
-                    let b = r[3] === 'Hadir' ? 'emerald-light' : (r[3] === 'Izin' ? 'warning' : 'danger');
-                    let jamRaw = String(r[2]); let jamTampil = "";
-                    if (jamRaw.includes("T")) jamTampil = jamRaw.split("T")[1].substring(0, 8);
-                    else jamTampil = jamRaw.substring(0, 8);
-                    h += `<tr><td>${formatDate(r[1])}</td><td><code class="text-white fw-bold">${jamTampil}</code></td><td><span class="text-${b} fw-bold">${r[3]}</span></td></tr>`;
-                }
-            }); document.getElementById('bodyAbsensi').innerHTML = h || '<tr><td colspan="3" class="text-center">Kosong</td></tr>';
-        }
+      function renderAbsensi(rows) {
+    const myName = sessionStorage.getItem('userName'); 
+    let h = '';
+    const displayRows = [...rows].reverse(); 
+    
+    displayRows.forEach(r => {
+        if(r[0] === myName) {
+            // Tentukan warna badge berdasarkan status
+            let statusClass = '';
+            const status = r[3];
+            if(status === 'Hadir') statusClass = 'bg-status-hadir';
+            else if(status === 'Izin') statusClass = 'bg-status-izin';
+            else if(status === 'Sakit') statusClass = 'bg-status-sakit';
 
-       // --- RENDER JADWAL ---
-         function renderJadwal(rows) {
-            const body = document.getElementById('bodyJadwal');
-            const filterBulan = document.getElementById('filterBulan');
-            if(filterBulan.options.length === 0) {
-                const bulanUnik = [...new Set(rows.map(r => String(r[0]).trim()))].filter(b => b);
-                filterBulan.innerHTML = bulanUnik.map(b => `<option value="${b}">${b}</option>`).join('');
-            }
-            const currentBulan = String(filterBulan.value).trim().toLowerCase();
-            const scheduleMap = {};
-            rows.forEach((r, index) => {
-                const dbBulan = String(r[0]).trim().toLowerCase();
-                const dbWaktu = String(r[2]).trim();
-                const dbHariRaw = String(r[1]).trim().toLowerCase();
-                if(dbBulan !== currentBulan || dbWaktu === "") return;
-                const dbHari = dbHariRaw.charAt(0).toUpperCase() + dbHariRaw.slice(1);
-                if(!scheduleMap[dbWaktu]) scheduleMap[dbWaktu] = { Senin:null, Selasa:null, Rabu:null, Kamis:null, Jumat:null, Sabtu:null };
-                if(scheduleMap[dbWaktu].hasOwnProperty(dbHari)) {
-                    scheduleMap[dbWaktu][dbHari] = { materi: r[7], guru: r[8], ruang: r[4], kls: r[5], id: index };
-                }
-            });
-            if (!scheduleMap["09:30-10:00"]) {
-                scheduleMap["09:30-10:00"] = "ISTIRAHAT_MARKER";
-            }
-            const sortedTimes = Object.keys(scheduleMap).sort();
-            let html = '';
-            sortedTimes.forEach(time => {
-                if(time === "09:30-10:00" || time.toLowerCase().includes('istirahat')) {
-                    html += `<tr class="row-istirahat"><td class="col-jam">${time}</td><td colspan="6">I S T I R A H A T</td></tr>`;
-                } else {
-                    html += `<tr><td class="col-jam">${time}</td>`;['Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'].forEach(day => {
-                        const d = scheduleMap[time][day];
-                        html += `<td>${d ? `<span class="mapel">${d.materi}</span><span class="guru">${d.guru || '-'}</span><div class="mt-2"><span class="info-badge">${d.ruang || ''}</span> <span class="info-badge">${d.kls || ''}</span></div><div class="cell-actions"><button class="btn-cell" onclick="editData('Jadwal', ${d.id})"><i class="fas fa-pen"></i></button><button class="btn-cell text-danger" onclick="deleteData('Jadwal', ${d.id})"><i class="fas fa-trash"></i></button></div>` : ''}</td>`;
-                    });
-                    html += `</tr>`;
-                }
-            });
-            body.innerHTML = html || '<tr><td colspan="7" class="text-center p-5">Jadwal tidak ditemukan.</td></tr>';
-        }
+            // Rapikan format jam
+            let jamRaw = String(r[2]);
+            let jamTampil = jamRaw.includes("T") ? jamRaw.split("T")[1].substring(0, 5) : jamRaw.substring(0, 5);
 
+            h += `
+                <tr>
+                    <td class="text-start">
+                        <div class="fw-bold">${formatDate(r[1])}</div>
+                    </td>
+                    <td><span class="text-white-50 font-monospace">${jamTampil}</span></td>
+                    <td>
+                        <span class="status-indicator ${statusClass}">${status}</span>
+                    </td>
+                </tr>`;
+        }
+    }); 
+    document.getElementById('bodyAbsensi').innerHTML = h || '<tr><td colspan="3" class="text-center p-4">Belum ada riwayat absensi</td></tr>';
+}
+
+    function renderJadwal(rows) {
+    const body = document.getElementById('bodyJadwal');
+    const filterBulan = document.getElementById('filterBulan');
+    
+    if(filterBulan.options.length === 0) {
+        const bulanUnik = [...new Set(rows.map(r => String(r[0]).trim()))].filter(b => b);
+        filterBulan.innerHTML = bulanUnik.map(b => `<option value="${b}">${b}</option>`).join('');
+    }
+    
+    const currentBulan = String(filterBulan.value).trim().toLowerCase();
+    const scheduleMap = {};
+    const hariList = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+
+    rows.forEach((r, index) => {
+        const dbBulan = String(r[0]).trim().toLowerCase();
+        if(dbBulan !== currentBulan) return;
+
+        const dbHari = r[1].charAt(0).toUpperCase() + r[1].slice(1).toLowerCase();
+        const dbWaktu = r[2];
+
+        if(!scheduleMap[dbWaktu]) scheduleMap[dbWaktu] = {};
+        scheduleMap[dbWaktu][dbHari] = { materi: r[7], guru: r[8], ruang: r[4], kls: r[5], id: index };
+    });
+
+    let html = '';
+    // Mengurutkan waktu agar berurutan dari pagi
+    const sortedTimes = Object.keys(scheduleMap).sort();
+
+    sortedTimes.forEach(time => {
+        // CEK APAKAH WAKTU ADALAH ISTIRAHAT
+        const isIstirahat = time.includes("09:30-10:00") || time.toLowerCase().includes('istirahat');
+        
+        if(isIstirahat) {
+            html += `
+                <div class="break-row">
+                    <div class="break-line"></div>
+                    <span class="break-text"><i class="fas fa-coffee me-2"></i>ISTIRAHAT (${time})</span>
+                    <div class="break-line"></div>
+                </div>`;
+        } else {
+            html += `<div class="timeline-row">
+                <div class="timeline-time">${time}</div>
+                <div class="timeline-cards">`;
+                
+            hariList.forEach(day => {
+                const d = scheduleMap[time][day];
+                html += `<div class="day-col">`;
+                if(d) {
+                    html += `
+                        <div class="subject-card">
+                            <span class="subject-title">${d.materi}</span>
+                            <span class="subject-teacher">${d.guru || ''}</span>
+                            <div class="subject-info">
+                                <span class="info-pill">${d.ruang || ''}</span>
+                                <span class="info-pill">${d.kls || ''}</span>
+                            </div>
+                            <div class="card-actions-hover">
+                                <i class="fas fa-pen text-warning me-2" onclick="editData('Jadwal', ${d.id})"></i>
+                                <i class="fas fa-trash text-danger" onclick="deleteData('Jadwal', ${d.id})"></i>
+                            </div>
+                        </div>`;
+                }
+                html += `</div>`;
+            });
+            html += `</div></div>`;
+        }
+    });
+    body.innerHTML = html || '<div class="text-center p-5 opacity-50">Jadwal Belum Tersedia</div>';
+}
 
         function renderModul(rows, filterKey = "") {
             let h = ''; const key = filterKey.toLowerCase();
