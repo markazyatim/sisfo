@@ -1,0 +1,54 @@
+<div class="space-y-6 flex flex-col w-full animate-fade-in">
+    <div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700 overflow-hidden relative">
+        <div class="h-32 bg-gradient-to-r from-blue-500 to-primary"></div>
+        <div class="px-6 pb-6 relative">
+            <div class="flex flex-col sm:flex-row items-center sm:items-end -mt-12 sm:-mt-16 mb-4 sm:space-x-5 text-center sm:text-left">
+                <div class="relative group">
+                    <div class="w-24 h-24 sm:w-32 sm:h-32 rounded-full border-4 border-white dark:border-slate-800 bg-slate-200 dark:bg-slate-700 overflow-hidden shadow-md flex items-center justify-center">
+                        <span id="profil-avatar-initial" class="text-4xl font-bold text-slate-400">?</span>
+                        <img id="profil-avatar-img" src="" alt="Foto Profil" class="w-full h-full object-cover hidden">
+                    </div>
+                    <button onclick="toggleModal('modal-upload-foto')" class="absolute bottom-0 right-0 sm:bottom-2 sm:right-2 bg-primary text-white p-2 rounded-full shadow-lg hover:bg-opacity-90 transition-transform transform hover:scale-110" title="Ganti Foto Profil">
+                        <i class="fa-solid fa-camera"></i>
+                    </button>
+                </div>
+                <div class="mt-4 sm:mt-0 flex-1">
+                    <h2 class="text-2xl font-bold" id="profil-nama-lengkap">Memuat Nama...</h2>
+                    <p class="text-primary font-semibold" id="profil-jabatan">Memuat Jabatan...</p>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">ID Pegawai: <span id="profil-id-pegawai" class="font-mono bg-slate-100 dark:bg-slate-700 px-2 py-0.5 rounded">-</span></p>
+                </div>
+                <div class="mt-4 sm:mt-0">
+                    <button onclick="toggleModal('modal-edit-profil')" class="bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-800 dark:text-white px-4 py-2 rounded-lg font-bold shadow-sm transition-colors flex items-center">
+                        <i class="fa-solid fa-pen-to-square mr-2"></i> Edit CV & Biodata
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700">
+            <h3 class="text-lg font-bold border-b border-slate-200 dark:border-slate-700 pb-2 mb-4"><i class="fa-solid fa-address-card mr-2 text-primary"></i> Data Pribadi (CV)</h3>
+            <ul class="space-y-4 text-sm">
+                <li><span class="block text-xs text-slate-500 dark:text-slate-400 font-semibold uppercase tracking-wider mb-1">Tempat, Tanggal Lahir</span><span id="profil-ttl" class="font-medium">-</span></li>
+                <li><span class="block text-xs text-slate-500 dark:text-slate-400 font-semibold uppercase tracking-wider mb-1">Pendidikan Terakhir</span><span id="profil-pendidikan" class="font-medium">-</span></li>
+                <li><span class="block text-xs text-slate-500 dark:text-slate-400 font-semibold uppercase tracking-wider mb-1">Alamat Domisili</span><span id="profil-alamat" class="font-medium leading-relaxed">-</span></li>
+            </ul>
+        </div>
+        <div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700">
+            <h3 class="text-lg font-bold border-b border-slate-200 dark:border-slate-700 pb-2 mb-4"><i class="fa-solid fa-address-book mr-2 text-green-500"></i> Kontak Tersimpan</h3>
+            <ul class="space-y-4 text-sm">
+                <li><span class="block text-xs text-slate-500 dark:text-slate-400 font-semibold uppercase tracking-wider mb-1">Nomor WhatsApp</span><div class="flex items-center"><i class="fa-brands fa-whatsapp text-green-500 mr-2 text-lg"></i> <span id="profil-nohp" class="font-medium font-mono">-</span></div></li>
+                <li><span class="block text-xs text-slate-500 dark:text-slate-400 font-semibold uppercase tracking-wider mb-1">Email SSO Sistem</span><div class="flex items-center"><i class="fa-brands fa-google text-red-500 mr-2 text-lg"></i> <span id="profil-email" class="font-medium">-</span></div></li>
+                <li><span class="block text-xs text-slate-500 dark:text-slate-400 font-semibold uppercase tracking-wider mb-1">Username Login Lokal</span><div class="flex items-center"><i class="fa-solid fa-user-lock text-slate-500 mr-2"></i> <span id="profil-username" class="font-medium font-mono bg-slate-100 dark:bg-slate-700 px-2 py-0.5 rounded">-</span></div></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700">
+        <h3 class="text-lg font-bold border-b border-slate-200 dark:border-slate-700 pb-2 mb-4"><i class="fa-regular fa-images mr-2 text-indigo-500"></i> Riwayat Foto Profil</h3>
+        <div id="profil-galeri" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+            <div class="col-span-full text-center p-4 text-slate-500 text-sm border border-dashed border-slate-300 dark:border-slate-700 rounded-lg">Belum ada riwayat foto yang diunggah.</div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,200 @@
+<div class="h-full flex flex-col w-full animate-fade-in space-y-6">
+    <div class="mb-2 bg-green-50 dark:bg-green-900/20 border-l-4 border-green-500 p-4 rounded-r-lg shadow-sm shrink-0 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div>
+            <h2 class="text-lg font-bold text-green-800 dark:text-green-300 flex items-center">
+                <i class="fa-solid fa-vault mr-2"></i> Keuangan & Kas Yayasan
+            </h2>
+            <p class="text-sm text-green-700 dark:text-green-400 mt-1">Transparansi arus kas, laporan pemasukan, pengeluaran, serta hutang piutang.</p>
+        </div>
+        <div class="flex flex-wrap gap-2">
+            <button onclick="bagikanLaporanKeuangan()" class="bg-teal-500 hover:bg-teal-600 text-white px-3 py-2 rounded-lg text-sm font-bold shadow-sm transition-all flex items-center">
+                <i class="fa-brands fa-whatsapp mr-1"></i> Bagikan
+            </button>
+            <button onclick="downloadLaporanKeuangan()" class="bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-lg text-sm font-bold shadow-sm transition-all flex items-center">
+                <i class="fa-solid fa-file-pdf mr-1"></i> Unduh PDF
+            </button>
+            <button onclick="openModalTransaksi()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm font-bold shadow-md transition-all flex items-center">
+                <i class="fa-solid fa-plus mr-2"></i> Transaksi Baru
+            </button>
+        </div>
+    </div>
+
+    <div class="flex overflow-x-auto space-x-2 pb-2 custom-scrollbar shrink-0 border-b border-slate-200 dark:border-slate-700">
+        <button onclick="switchKeuanganTab('keu-tab-dasbor')" class="keu-tab active-keu-tab px-4 py-2 text-sm font-bold whitespace-nowrap border-b-2 border-green-600 text-green-600 transition-all">Ringkasan</button>
+        <button onclick="switchKeuanganTab('keu-tab-kas')" class="keu-tab px-4 py-2 text-sm font-bold whitespace-nowrap border-b-2 border-transparent text-slate-500 hover:text-green-500 transition-all">Buku Kas (Mutasi)</button>
+        <button onclick="switchKeuanganTab('keu-tab-hutang')" class="keu-tab px-4 py-2 text-sm font-bold whitespace-nowrap border-b-2 border-transparent text-slate-500 hover:text-green-500 transition-all">Hutang & Piutang</button>
+    </div>
+
+    <div id="keuangan-content-area" class="flex-1 overflow-y-auto custom-scrollbar pr-1">
+        
+        <div id="keu-tab-dasbor" class="keu-pane block space-y-6">
+            <div id="area-cetak-keuangan" class="space-y-6 bg-transparent">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="p-5 bg-white dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-700 shadow-sm">
+                        <p class="text-xs font-bold text-slate-500 uppercase">Saldo Kas Saat Ini</p>
+                        <h3 class="text-xl font-black text-slate-800 dark:text-white mt-1" id="stat-keu-saldo">Rp 0</h3>
+                    </div>
+                    <div class="p-5 bg-white dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-700 shadow-sm border-l-4 border-l-green-500">
+                        <p class="text-xs font-bold text-slate-500 uppercase">Pemasukan (Bulan Ini)</p>
+                        <h3 class="text-xl font-black text-green-600 mt-1" id="stat-keu-masuk">Rp 0</h3>
+                    </div>
+                    <div class="p-5 bg-white dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-700 shadow-sm border-l-4 border-l-red-500">
+                        <p class="text-xs font-bold text-slate-500 uppercase">Pengeluaran (Bulan Ini)</p>
+                        <h3 class="text-xl font-black text-red-600 mt-1" id="stat-keu-keluar">Rp 0</h3>
+                    </div>
+                    <div class="p-5 bg-white dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-700 shadow-sm border-l-4 border-l-orange-500">
+                        <p class="text-xs font-bold text-slate-500 uppercase">Total Hutang</p>
+                        <h3 class="text-xl font-black text-orange-600 mt-1" id="stat-keu-hutang">Rp 0</h3>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="bg-white dark:bg-slate-800 p-5 rounded-xl border border-slate-100 dark:border-slate-700 shadow-sm flex flex-col">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-sm font-bold"><i class="fa-solid fa-chart-line mr-2 text-green-500"></i> Trend Arus Kas</h3>
+                            <select id="filter-trend-waktu" onchange="initTrendChart()" class="text-xs p-1 border border-slate-300 dark:border-slate-600 rounded bg-slate-50 dark:bg-slate-700 outline-none">
+                                <option value="6">6 Bulan Terakhir</option>
+                                <option value="12">1 Tahun Terakhir</option>
+                            </select>
+                        </div>
+                        <div class="flex-1 min-h-[250px]"><canvas id="chartTrendKeuangan"></canvas></div>
+                    </div>
+                    <div class="bg-white dark:bg-slate-800 p-5 rounded-xl border border-slate-100 dark:border-slate-700 shadow-sm flex flex-col">
+                        <h3 class="text-sm font-bold mb-4"><i class="fa-solid fa-chart-pie mr-2 text-blue-500"></i> Alokasi Pengeluaran (Bulan Ini)</h3>
+                        <div class="flex-1 min-h-[250px] flex justify-center"><canvas id="chartAlokasiKeuangan"></canvas></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="keu-tab-kas" class="keu-pane hidden">
+            <div class="bg-white dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-700 shadow-sm overflow-hidden">
+                <div class="p-4 border-b border-slate-100 dark:border-slate-700 flex justify-between items-center bg-slate-50/50 dark:bg-slate-800/50">
+                    <h3 class="font-bold text-sm">Riwayat Transaksi Kas</h3>
+                    <input type="month" id="filter-bulan-keuangan" onchange="renderKeuanganTable()" class="p-2 text-xs border border-slate-300 dark:border-slate-600 rounded bg-white dark:bg-slate-700 outline-none">
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-sm whitespace-nowrap">
+                        <thead class="bg-slate-50 dark:bg-slate-700">
+                            <tr>
+                                <th class="p-4">Tanggal</th>
+                                <th class="p-4">Kategori</th>
+                                <th class="p-4">Keterangan</th>
+                                <th class="p-4 text-right">Masuk (Rp)</th>
+                                <th class="p-4 text-right">Keluar (Rp)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-body-kas" class="divide-y divide-slate-100 dark:divide-slate-700">
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div id="keu-tab-hutang" class="keu-pane hidden">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="bg-white dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-700 shadow-sm overflow-hidden">
+                    <div class="p-4 border-b border-red-100 bg-red-50/30 dark:bg-red-900/10 flex justify-between items-center">
+                        <h3 class="font-bold text-sm text-red-600">Daftar Hutang (Liabilitas)</h3>
+                    </div>
+                    <div class="p-0 overflow-x-auto">
+                        <table class="w-full text-left text-xs">
+                            <thead class="bg-slate-50 dark:bg-slate-700">
+                                <tr><th class="p-3">Kreditur / Ket</th><th class="p-3">Nominal</th><th class="p-3">Tanggal</th><th class="p-3">Status</th></tr>
+                            </thead>
+                            <tbody id="table-body-hutang" class="divide-y divide-slate-100 dark:divide-slate-700"></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="bg-white dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-700 shadow-sm overflow-hidden">
+                    <div class="p-4 border-b border-blue-100 bg-blue-50/30 dark:bg-blue-900/10 flex justify-between items-center">
+                        <h3 class="font-bold text-sm text-blue-600">Daftar Piutang (Aset Luar)</h3>
+                    </div>
+                    <div class="p-0 overflow-x-auto">
+                        <table class="w-full text-left text-xs">
+                            <thead class="bg-slate-50 dark:bg-slate-700">
+                                <tr><th class="p-3">Debitur / Ket</th><th class="p-3">Nominal</th><th class="p-3">Tanggal</th><th class="p-3">Status</th></tr>
+                            </thead>
+                            <tbody id="table-body-piutang" class="divide-y divide-slate-100 dark:divide-slate-700"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modal-transaksi" class="hidden fixed inset-0 bg-black/60 z-[100] flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-800 rounded-xl shadow-2xl w-full max-w-4xl flex flex-col max-h-[95vh] overflow-hidden">
+        <div class="flex justify-between items-center border-b border-slate-200 dark:border-slate-700 p-4 bg-green-50 dark:bg-green-900/30 shrink-0">
+            <h3 class="text-lg font-bold text-green-700 dark:text-green-400"><i class="fa-solid fa-money-bill-transfer mr-2"></i> Input Transaksi Keuangan (Mode Bulk)</h3>
+            <button onclick="toggleModal('modal-transaksi')" class="text-slate-500 hover:text-red-500 text-xl font-bold">&times;</button>
+        </div>
+        
+        <div class="flex flex-col lg:flex-row flex-1 overflow-hidden">
+            <form id="form-transaksi" onsubmit="addTransactionToBulk(event)" class="p-5 lg:w-1/3 border-b lg:border-b-0 lg:border-r border-slate-200 dark:border-slate-700 space-y-4 overflow-y-auto bg-slate-50/50 dark:bg-slate-800/50">
+                <div>
+                    <label class="block text-xs font-bold mb-1">Tipe Transaksi</label>
+                    <select id="trans-tipe" required onchange="updateKategoriDropdown()" class="w-full p-2 text-sm border border-slate-300 dark:border-slate-600 rounded bg-white dark:bg-slate-700 outline-none focus:ring-2 focus:ring-green-500">
+                        <option value="Masuk">Uang Masuk</option>
+                        <option value="Keluar">Uang Keluar</option>
+                        <option value="Hutang">Hutang Baru</option>
+                        <option value="Piutang">Piutang Baru</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold mb-1">Kelompok / Kategori</label>
+                    <select id="trans-kategori" required class="w-full p-2 text-sm border border-slate-300 dark:border-slate-600 rounded bg-white dark:bg-slate-700 outline-none focus:ring-2 focus:ring-green-500">
+                        </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold mb-1">Tanggal</label>
+                    <input type="date" id="trans-tanggal" required class="w-full p-2 text-sm border border-slate-300 dark:border-slate-600 rounded bg-white dark:bg-slate-700 outline-none focus:ring-2 focus:ring-green-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold mb-1">Nominal (Rp)</label>
+                    <input type="number" id="trans-nominal" required placeholder="Contoh: 500000" class="w-full p-2 text-sm border border-slate-300 dark:border-slate-600 rounded bg-white dark:bg-slate-700 outline-none focus:ring-2 focus:ring-green-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold mb-1">Keterangan Detail</label>
+                    <textarea id="trans-keterangan" required rows="2" placeholder="Penjelasan..." class="w-full p-2 text-sm border border-slate-300 dark:border-slate-600 rounded bg-white dark:bg-slate-700 outline-none focus:ring-2 focus:ring-green-500"></textarea>
+                </div>
+                <button type="submit" class="w-full py-2 bg-slate-200 hover:bg-slate-300 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-800 dark:text-white rounded font-bold text-sm transition-colors border border-slate-300 dark:border-slate-600">
+                    <i class="fa-solid fa-arrow-right sm:fa-arrow-down lg:fa-arrow-right mr-1"></i> Tambah ke Keranjang
+                </button>
+            </form>
+
+            <div class="p-5 lg:w-2/3 flex flex-col h-[300px] lg:h-auto bg-white dark:bg-slate-800">
+                <div class="flex justify-between items-center mb-2 shrink-0">
+                    <h4 class="text-sm font-bold text-slate-700 dark:text-slate-300">Daftar Transaksi (Belum Disimpan)</h4>
+                    <span id="bulk-count" class="text-xs font-bold bg-green-100 text-green-700 px-2 py-1 rounded-full">0 Item</span>
+                </div>
+                <div class="flex-1 overflow-y-auto border border-slate-200 dark:border-slate-700 rounded bg-slate-50 dark:bg-slate-900/50 custom-scrollbar">
+                    <table class="w-full text-left text-xs whitespace-nowrap">
+                        <thead class="bg-slate-200 dark:bg-slate-700 sticky top-0 shadow-sm">
+                            <tr>
+                                <th class="p-2">Tipe</th>
+                                <th class="p-2">Kategori</th>
+                                <th class="p-2">Nominal</th>
+                                <th class="p-2 w-full">Keterangan</th>
+                                <th class="p-2 text-center">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-bulk-body" class="divide-y divide-slate-200 dark:divide-slate-700">
+                            <tr><td colspan="5" class="p-4 text-center text-slate-400 italic">Keranjang kosong. Tambahkan transaksi dari form di sebelah kiri.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700 flex justify-between items-center shrink-0">
+                    <div class="text-sm font-bold">Total: <span id="bulk-total-rp" class="text-green-600 text-lg ml-2">Rp 0</span></div>
+                    <div class="flex space-x-2">
+                        <button type="button" onclick="toggleModal('modal-transaksi')" class="px-4 py-2 bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-white rounded-lg text-sm font-bold hover:bg-slate-300 transition-colors">Batal</button>
+                        <button type="button" id="btn-submit-bulk" onclick="submitBulkKeuangan()" disabled class="px-5 py-2 bg-green-600 disabled:bg-slate-400 text-white rounded-lg text-sm font-bold shadow-md hover:bg-green-700 transition-all flex items-center">
+                            <i class="fa-solid fa-cloud-arrow-up mr-2"></i> Simpan Semua (<span id="btn-bulk-count">0</span>)
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

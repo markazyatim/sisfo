@@ -1,0 +1,34 @@
+<div class="h-full flex flex-col w-full animate-fade-in">
+    <div class="mb-6 bg-red-50 dark:bg-red-900/20 border-l-4 border-red-500 p-4 rounded-r-lg shadow-sm shrink-0">
+        <h2 class="text-lg font-bold text-red-800 dark:text-red-300 flex items-center">
+            <i class="fa-solid fa-triangle-exclamation mr-2"></i> Zona Administratif Khusus
+        </h2>
+        <p class="text-sm text-red-700 dark:text-red-400 mt-1">Atur visibilitas menu dasbor untuk setiap jabatan secara dinamis.</p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 flex-1 overflow-hidden">
+        <div class="bg-white dark:bg-slate-800 p-5 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700 flex flex-col h-full overflow-hidden">
+            <h3 class="text-lg font-bold border-b border-slate-200 dark:border-slate-700 pb-2 mb-4 shrink-0">Daftar Jabatan</h3>
+            <ul id="list-jabatan-wewenang" class="space-y-2 flex-1 overflow-y-auto custom-scrollbar pr-2">
+                </ul>
+        </div>
+        
+        <div class="bg-white dark:bg-slate-800 p-5 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700 lg:col-span-2 flex flex-col h-full overflow-hidden">
+            <div class="flex justify-between items-center border-b border-slate-200 dark:border-slate-700 pb-2 mb-4 shrink-0">
+                <h3 class="text-lg font-bold">Hak Akses Modul</h3>
+                <span id="label-jabatan-terpilih" class="px-3 py-1 bg-slate-100 dark:bg-slate-700 rounded font-mono text-sm text-primary font-bold">Pilih Jabatan...</span>
+            </div>
+            
+            <form id="form-wewenang" class="flex-1 flex flex-col justify-between overflow-hidden">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 overflow-y-auto custom-scrollbar pr-2 content-start" id="wewenang-checkboxes">
+                    </div>
+                
+                <div class="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700 flex justify-end shrink-0">
+                    <button type="button" onclick="simpanWewenang()" id="btn-simpan-wewenang" disabled class="bg-primary hover:bg-opacity-90 text-white font-bold py-2 px-6 rounded shadow-sm transition-colors disabled:opacity-50 flex items-center">
+                        <i class="fa-solid fa-save mr-2"></i> Simpan Konfigurasi
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

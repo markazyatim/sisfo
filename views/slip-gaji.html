@@ -1,0 +1,66 @@
+<div class="h-full flex flex-col w-full animate-fade-in p-4 sm:p-8 relative">
+
+    <div class="flex justify-center items-center space-x-2 md:space-x-4 mb-8">
+        <select id="filter-bulan" class="p-2 border border-slate-300 dark:border-slate-600 rounded bg-white dark:bg-slate-700 text-sm font-bold shadow-sm outline-none">
+            <option value="Januari">Januari</option>
+            <option value="Februari">Februari</option>
+            <option value="Maret">Maret</option>
+            <option value="April">April</option>
+            <option value="Mei">Mei</option>
+            <option value="Juni">Juni</option>
+            <option value="Juli">Juli</option>
+            <option value="Agustus">Agustus</option>
+            <option value="September">September</option>
+            <option value="Oktober">Oktober</option>
+            <option value="November">November</option>
+            <option value="Desember">Desember</option>
+        </select>
+        <select id="filter-tahun" class="p-2 border border-slate-300 dark:border-slate-600 rounded bg-white dark:bg-slate-700 text-sm font-bold shadow-sm outline-none">
+            <option value="2024">2024</option>
+            <option value="2025">2025</option>
+            <option value="2026">2026</option>
+        </select>
+        <button onclick="muatDataSlip()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded text-sm font-bold shadow-sm transition-colors">
+            Cari Slip
+        </button>
+    </div>
+
+    <div class="bg-white dark:bg-slate-800 rounded-xl shadow-lg border border-slate-200 dark:border-slate-700 max-w-3xl mx-auto w-full relative p-6 sm:p-10">
+
+        <div class="absolute top-4 right-4 flex space-x-2">
+            <button onclick="toggleAngkaSlip()" class="bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-600 dark:text-slate-300 px-3 py-1.5 rounded text-xs font-bold transition-colors flex items-center">
+                <i class="fa-solid fa-eye mr-1"></i> Tampilkan Angka
+            </button>
+            <button onclick="window.print()" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1.5 rounded text-xs font-bold shadow-sm transition-colors flex items-center">
+                <i class="fa-solid fa-file-pdf mr-1"></i> Unduh PDF
+            </button>
+        </div>
+
+        <div class="text-center mb-6 pt-8">
+            <h2 class="text-2xl font-black tracking-widest uppercase text-slate-800 dark:text-white">SLIP GAJI</h2>
+            <div class="w-full h-[2px] bg-black dark:bg-white mt-4"></div>
+        </div>
+
+        <div class="flex justify-between items-start text-sm mb-6 text-slate-700 dark:text-slate-300">
+            <div>
+                <p class="mb-1">Nama: <span id="slip-nama" class="font-bold">Memuat...</span></p>
+                <p>Jabatan: <span id="slip-jabatan" class="font-bold">Memuat...</span></p>
+            </div>
+            <div class="text-right">
+                <p>ID Pegawai: <span id="slip-id" class="font-bold">-</span></p>
+                <p class="text-xs text-slate-500 mt-1">Periode: <span id="slip-periode-label" class="font-bold">-</span></p>
+            </div>
+        </div>
+
+        <div class="w-full h-[2px] bg-black dark:bg-white mb-6"></div>
+
+        <div class="flex justify-between items-center bg-green-50 dark:bg-green-900/20 p-4 rounded-lg">
+            <span class="font-black text-lg text-slate-800 dark:text-white">Take Home Pay</span>
+            <span id="slip-thp" class="font-black text-xl text-green-600 dark:text-green-400 bg-green-100 dark:bg-green-800 px-4 py-1 rounded tracking-widest">Rp ***.***</span>
+        </div>
+
+        <div id="area-konfirmasi-gaji" class="mt-10 flex justify-center h-12">
+            </div>
+
+    </div>
+</div>

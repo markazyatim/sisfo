@@ -1,0 +1,141 @@
+<div class="h-full flex flex-col w-full animate-fade-in space-y-6">
+    <div class="mb-2 bg-orange-50 dark:bg-orange-900/20 border-l-4 border-orange-500 p-4 rounded-r-lg shadow-sm shrink-0 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div>
+            <h2 class="text-lg font-bold text-orange-800 dark:text-orange-300 flex items-center">
+                <i class="fa-solid fa-boxes-stacked mr-2"></i> Manajemen Aset & Sarpras
+            </h2>
+            <p class="text-sm text-orange-700 dark:text-orange-400 mt-1">Inventarisasi barang, tracker peminjaman, dan log perawatan fasilitas yayasan.</p>
+        </div>
+        <button onclick="openModalSarpras()" class="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-lg text-sm font-bold shadow-md transition-all flex items-center">
+            <i class="fa-solid fa-plus mr-2"></i> Tambah Aset
+        </button>
+    </div>
+
+    <div class="flex overflow-x-auto space-x-2 pb-2 custom-scrollbar shrink-0 border-b border-slate-200 dark:border-slate-700">
+        <button onclick="switchSarprasTab('sp-tab-dasbor')" class="sp-tab active-sp-tab px-4 py-2 text-sm font-bold whitespace-nowrap border-b-2 border-orange-600 text-orange-600 transition-all">Ringkasan Kondisi</button>
+        <button onclick="switchSarprasTab('sp-tab-list')" class="sp-tab px-4 py-2 text-sm font-bold whitespace-nowrap border-b-2 border-transparent text-slate-500 hover:text-orange-500 transition-all">Daftar Inventaris</button>
+        <button onclick="switchSarprasTab('sp-tab-pinjam')" class="sp-tab px-4 py-2 text-sm font-bold whitespace-nowrap border-b-2 border-transparent text-slate-500 hover:text-orange-500 transition-all">Log Peminjaman</button>
+        <button onclick="switchSarprasTab('sp-tab-servis')" class="sp-tab px-4 py-2 text-sm font-bold whitespace-nowrap border-b-2 border-transparent text-slate-500 hover:text-orange-500 transition-all">Perawatan & Servis</button>
+    </div>
+
+    <div id="sarpras-content-area" class="flex-1 overflow-y-auto custom-scrollbar pr-1">
+        
+        <div id="sp-tab-dasbor" class="sp-pane block space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="p-5 bg-white dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-700 shadow-sm">
+                    <p class="text-xs font-bold text-slate-500 uppercase">Total Aset</p>
+                    <h3 class="text-2xl font-black text-slate-800 dark:text-white mt-1" id="stat-sp-total">0</h3>
+                </div>
+                <div class="p-5 bg-white dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-700 shadow-sm border-l-4 border-l-red-500">
+                    <p class="text-xs font-bold text-slate-500 uppercase">Barang Rusak</p>
+                    <h3 class="text-2xl font-black text-red-600 mt-1" id="stat-sp-rusak">0</h3>
+                </div>
+                <div class="p-5 bg-white dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-700 shadow-sm border-l-4 border-l-blue-500">
+                    <p class="text-xs font-bold text-slate-500 uppercase">Sedang Dipinjam</p>
+                    <h3 class="text-2xl font-black text-blue-600 mt-1" id="stat-sp-pinjam">0</h3>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="bg-white dark:bg-slate-800 p-5 rounded-xl border border-slate-100 dark:border-slate-700 shadow-sm flex flex-col items-center">
+                    <h3 class="text-sm font-bold mb-4 self-start"><i class="fa-solid fa-chart-pie mr-2 text-orange-500"></i> Proporsi Kondisi Aset</h3>
+                    <div class="h-[250px] w-full flex justify-center"><canvas id="chartKondisiSarpras"></canvas></div>
+                </div>
+                <div class="bg-white dark:bg-slate-800 p-5 rounded-xl border border-slate-100 dark:border-slate-700 shadow-sm">
+                    <h3 class="text-sm font-bold mb-4"><i class="fa-solid fa- screwdriver-wrench mr-2 text-teal-500"></i> Jadwal Servis Mendatang</h3>
+                    <ul id="list-next-maintenance" class="space-y-3">
+                        <li class="p-3 text-center text-xs text-slate-500 italic">Tidak ada jadwal servis terdekat.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="sp-tab-list" class="sp-pane hidden">
+            <div class="bg-white dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-700 shadow-sm overflow-hidden">
+                <div class="p-4 border-b border-slate-100 dark:border-slate-700 flex flex-col sm:flex-row justify-between items-center bg-slate-50/50 dark:bg-slate-800/50 gap-4">
+                    <h3 class="font-bold text-sm text-slate-700 dark:text-slate-300">Inventaris Barang Yayasan</h3>
+                    <input type="text" id="search-sarpras" onkeyup="renderSarprasTable()" placeholder="Cari barang atau kode..." class="w-full sm:w-64 p-2 text-xs border border-slate-300 dark:border-slate-600 rounded bg-white dark:bg-slate-700 outline-none">
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-sm whitespace-nowrap">
+                        <thead class="bg-slate-100 dark:bg-slate-700">
+                            <tr>
+                                <th class="p-4">Kode/SKU</th>
+                                <th class="p-4">Nama Barang</th>
+                                <th class="p-4">Kategori</th>
+                                <th class="p-4">Lokasi</th>
+                                <th class="p-4">Kondisi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-body-sarpras" class="divide-y divide-slate-100 dark:divide-slate-700"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div id="sp-tab-pinjam" class="sp-pane hidden">
+            <div class="bg-white dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-700 shadow-sm overflow-hidden">
+                <table class="w-full text-left text-sm whitespace-nowrap">
+                    <thead class="bg-slate-100 dark:bg-slate-700">
+                        <tr><th class="p-4">Peminjam</th><th class="p-4">Barang</th><th class="p-4">Tgl Pinjam</th><th class="p-4 text-center">Status</th></tr>
+                    </thead>
+                    <tbody id="table-body-peminjaman" class="divide-y divide-slate-100 dark:divide-slate-700"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="sp-tab-servis" class="sp-pane hidden">
+             <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="list-servis-container"></div>
+        </div>
+
+    </div>
+</div>
+
+<div id="modal-sarpras" class="hidden fixed inset-0 bg-black/50 z-[100] flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-800 rounded-xl shadow-xl w-full max-w-lg flex flex-col">
+        <div class="flex justify-between items-center border-b p-4 bg-orange-50 dark:bg-orange-900/30 rounded-t-xl">
+            <h3 class="text-lg font-bold text-orange-700 dark:text-orange-400"><i class="fa-solid fa-barcode mr-2"></i> Registrasi Aset Baru</h3>
+            <button onclick="toggleModal('modal-sarpras')" class="text-slate-500 hover:text-red-500 text-xl font-bold">&times;</button>
+        </div>
+        <form id="form-sarpras" onsubmit="handleSarprasSubmit(event)" class="p-6 space-y-4">
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs font-bold mb-1">Kode Barang (SKU)</label>
+                    <input type="text" id="sp-sku" required placeholder="ELK-PRJ-001" class="w-full p-2 text-sm border rounded bg-slate-50 dark:bg-slate-700 outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold mb-1">Kategori</label>
+                    <select id="sp-kategori" class="w-full p-2 text-sm border rounded bg-slate-50 dark:bg-slate-700 outline-none">
+                        <option value="Elektronik">Elektronik</option>
+                        <option value="Mebel">Mebel / Furnitur</option>
+                        <option value="Kendaraan">Kendaraan</option>
+                        <option value="Alat Dapur">Alat Dapur</option>
+                        <option value="Bangunan">Bangunan</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <label class="block text-xs font-bold mb-1">Nama Barang</label>
+                <input type="text" id="sp-nama" required placeholder="Proyektor Epson EB-X400" class="w-full p-2 text-sm border rounded bg-slate-50 dark:bg-slate-700 outline-none">
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs font-bold mb-1">Lokasi Penempatan</label>
+                    <input type="text" id="sp-lokasi" required placeholder="Kantor TU" class="w-full p-2 text-sm border rounded bg-slate-50 dark:bg-slate-700 outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold mb-1">Kondisi Awal</label>
+                    <select id="sp-kondisi" class="w-full p-2 text-sm border rounded bg-slate-50 dark:bg-slate-700 outline-none">
+                        <option value="Baik">Baik</option>
+                        <option value="Rusak Ringan">Rusak Ringan</option>
+                        <option value="Rusak Berat">Rusak Berat</option>
+                    </select>
+                </div>
+            </div>
+            <div class="flex justify-end space-x-3 pt-4 border-t mt-4">
+                <button type="button" onclick="toggleModal('modal-sarpras')" class="px-4 py-2 bg-slate-200 dark:bg-slate-700 rounded font-bold text-sm">Batal</button>
+                <button type="submit" id="btn-submit-sarpras" class="px-5 py-2 bg-orange-600 text-white rounded font-bold text-sm shadow-md hover:bg-orange-700 transition-all">Simpan Aset</button>
+            </div>
+        </form>
+    </div>
+</div>

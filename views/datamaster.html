@@ -1,0 +1,49 @@
+<div class="h-full flex flex-col w-full animate-fade-in">
+    
+    <div class="mb-4 bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-500 p-4 rounded-r-lg shadow-sm shrink-0 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div>
+            <h2 class="text-lg font-bold text-blue-800 dark:text-blue-300 flex items-center">
+                <i class="fa-solid fa-database mr-2"></i> Manajemen Data Master (CRUD)
+            </h2>
+            <p class="text-sm text-blue-700 dark:text-blue-400 mt-1">Area khusus Tata Usaha dan Administrator untuk mengelola seluruh pusat data yayasan.</p>
+        </div>
+    </div>
+
+    <div class="flex overflow-x-auto space-x-2 pb-2 mb-4 custom-scrollbar shrink-0">
+        <button onclick="switchDataMasterTab('dm-lembaga')" class="dm-tab px-4 py-2 text-sm font-semibold rounded-lg bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 hover:bg-blue-600 hover:text-white transition-colors whitespace-nowrap shadow-sm"><i class="fa-solid fa-building-columns mr-2"></i>Lembaga</button>
+        <button onclick="switchDataMasterTab('dm-tugas')" class="dm-tab active-dm-tab px-4 py-2 bg-blue-600 text-white rounded-full text-sm font-bold whitespace-nowrap shadow-sm"><i class="fa-solid fa-list-check mr-2"></i>Tugas Pegawai</button>
+        <button onclick="switchDataMasterTab('dm-pegawai')" class="dm-tab px-4 py-2 bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-full text-sm font-bold whitespace-nowrap hover:bg-slate-300 transition-colors"><i class="fa-solid fa-user-tie mr-2"></i>Data Pegawai</button>
+        <button onclick="switchDataMasterTab('dm-anak')" class="dm-tab px-4 py-2 bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-full text-sm font-bold whitespace-nowrap hover:bg-slate-300 transition-colors"><i class="fa-solid fa-children mr-2"></i>Anak Asuh</button>
+        <button onclick="switchDataMasterTab('dm-donatur')" class="dm-tab px-4 py-2 bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-full text-sm font-bold whitespace-nowrap hover:bg-slate-300 transition-colors"><i class="fa-solid fa-hand-holding-heart mr-2"></i>Data Donatur</button>
+        <button onclick="switchDataMasterTab('dm-keuangan')" class="dm-tab px-4 py-2 bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-full text-sm font-bold whitespace-nowrap hover:bg-slate-300 transition-colors"><i class="fa-solid fa-money-bill-wave mr-2"></i>Keuangan Dasar</button>
+        <button onclick="switchDataMasterTab('dm-surat')" class="dm-tab px-4 py-2 bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-full text-sm font-bold whitespace-nowrap hover:bg-slate-300 transition-colors"><i class="fa-solid fa-envelope-open-text mr-2"></i>Surat Masuk/Keluar</button>
+        <button onclick="switchDataMasterTab('dm-mapel')" class="dm-tab px-4 py-2 text-sm font-semibold rounded-lg bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 hover:bg-blue-600 hover:text-white transition-colors whitespace-nowrap shadow-sm"><i class="fa-solid fa-book mr-2"></i>Mapel</button>
+        <button onclick="switchDataMasterTab('dm-kelas')" class="dm-tab px-4 py-2 text-sm font-semibold rounded-lg bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 hover:bg-blue-600 hover:text-white transition-colors whitespace-nowrap shadow-sm"><i class="fa-solid fa-door-open mr-2"></i>Kelas</button>
+        
+    </div>
+
+    <div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700 flex-1 flex flex-col overflow-hidden relative">
+        <div class="p-4 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center bg-slate-50 dark:bg-slate-800/50 shrink-0">
+            <h3 class="font-bold text-lg" id="dm-table-title">Manajemen Data</h3>
+            
+            <div class="flex items-center space-x-2">
+                <button onclick="openUniversalBulkModal()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-3 sm:px-4 py-2 rounded text-sm font-bold shadow-sm transition-colors flex items-center">
+                    <i class="fa-solid fa-layer-group mr-1 sm:mr-2"></i> <span class="hidden sm:inline">Input Bulk</span><span class="sm:hidden">Bulk</span>
+                </button>
+                <button onclick="openCRUDModal()" class="bg-blue-600 hover:bg-blue-700 text-white px-3 sm:px-4 py-2 rounded text-sm font-bold shadow-sm transition-colors flex items-center">
+                    <i class="fa-solid fa-plus mr-1 sm:mr-2"></i> <span class="hidden sm:inline">Tambah Data</span><span class="sm:hidden">Data</span>
+                </button>
+            </div>
+            
+        </div>
+        <div class="flex-1 overflow-auto custom-scrollbar p-0">
+            <table class="w-full text-left text-sm whitespace-nowrap">
+                <thead class="bg-slate-100 dark:bg-slate-700 sticky top-0 shadow-sm" id="dm-table-head">
+                    </thead>
+                <tbody id="dm-table-body" class="divide-y divide-slate-100 dark:divide-slate-700">
+                    <tr><td colspan="5" class="p-8 text-center text-slate-500">Silakan pilih kategori di atas untuk memuat data.</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

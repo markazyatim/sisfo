@@ -1,0 +1,120 @@
+<div class="h-full flex flex-col w-full animate-fade-in space-y-6">
+    <div class="mb-2 bg-indigo-50 dark:bg-indigo-900/20 border-l-4 border-indigo-500 p-4 rounded-r-lg shadow-sm shrink-0 flex justify-between items-center">
+        <div>
+            <h2 class="text-lg font-bold text-indigo-800 dark:text-indigo-300 flex items-center">
+                <i class="fa-solid fa-book-open-reader mr-2"></i> Jurnal Pengasuhan & Aktivitas
+            </h2>
+            <p class="text-sm text-indigo-700 dark:text-indigo-400 mt-1">Pantau perkembangan Tahfidz, Akhlak, Kedisiplinan, dan Prestasi santri.</p>
+        </div>
+        <button onclick="toggleModal('modal-jurnal')" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg text-sm font-bold shadow-md transition-all flex items-center">
+            <i class="fa-solid fa-plus mr-2"></i> Catatan Baru
+        </button>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 shrink-0">
+        <div class="lg:col-span-1 grid grid-cols-2 gap-4">
+            <div class="p-4 bg-white dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-700 shadow-sm">
+                <p class="text-xs font-bold text-slate-500 uppercase">Tahfidz Hari Ini</p>
+                <h3 class="text-2xl font-black text-blue-600" id="stat-jurnal-tahfidz">0</h3>
+            </div>
+            <div class="p-4 bg-white dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-700 shadow-sm">
+                <p class="text-xs font-bold text-slate-500 uppercase">Catatan Akhlak</p>
+                <h3 class="text-2xl font-black text-teal-600" id="stat-jurnal-akhlak">0</h3>
+            </div>
+            <div class="p-4 bg-white dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-700 shadow-sm">
+                <p class="text-xs font-bold text-slate-500 uppercase">Kedisiplinan</p>
+                <h3 class="text-2xl font-black text-red-600" id="stat-jurnal-disiplin">0</h3>
+            </div>
+            <div class="p-4 bg-white dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-700 shadow-sm">
+                <p class="text-xs font-bold text-slate-500 uppercase">Prestasi</p>
+                <h3 class="text-2xl font-black text-orange-600" id="stat-jurnal-prestasi">0</h3>
+            </div>
+        </div>
+
+        <div class="lg:col-span-2 bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-100 dark:border-slate-700 shadow-sm flex flex-col items-center">
+            <h3 class="text-sm font-bold mb-2 text-slate-700 dark:text-slate-300 self-start">
+                <i class="fa-solid fa-chart-radar mr-2"></i> Analisis Kumulatif Jurnal (Bulan Ini)
+            </h3>
+            <div class="w-full h-[200px] flex justify-center">
+                <canvas id="jurnalRadarChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-white dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-700 flex-1 flex flex-col overflow-hidden shadow-sm">
+        <div class="p-4 border-b border-slate-100 dark:border-slate-700 flex flex-col sm:flex-row justify-between items-center bg-slate-50/50 dark:bg-slate-800/50 gap-4">
+            <h3 class="font-bold">Riwayat Catatan Harian</h3>
+            <div class="flex items-center space-x-2 w-full sm:w-auto">
+                <select id="filter-kategori-jurnal" onchange="renderJurnalTable()" class="flex-1 sm:w-40 p-2 text-xs border border-slate-300 dark:border-slate-600 rounded bg-white dark:bg-slate-700 outline-none">
+                    <option value="Semua">Semua Kategori</option>
+                    <option value="Tahfidz">Tahfidz</option>
+                    <option value="Akhlak">Akhlak</option>
+                    <option value="Kedisiplinan">Kedisiplinan</option>
+                    <option value="Prestasi">Prestasi</option>
+                </select>
+                <input type="text" id="search-jurnal" onkeyup="renderJurnalTable()" placeholder="Cari santri..." class="flex-1 sm:w-48 p-2 text-xs border border-slate-300 dark:border-slate-600 rounded bg-white dark:bg-slate-700 outline-none">
+            </div>
+        </div>
+        <div class="flex-1 overflow-auto custom-scrollbar">
+            <table class="w-full text-left text-sm whitespace-nowrap">
+                <thead class="bg-slate-100 dark:bg-slate-700 sticky top-0 shadow-sm z-10">
+                    <tr>
+                        <th class="p-4">Tanggal</th>
+                        <th class="p-4">Nama Santri</th>
+                        <th class="p-4">Kategori</th>
+                        <th class="p-4">Catatan Detail</th>
+                        <th class="p-4">Pencatat</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body-jurnal" class="text-sm divide-y divide-slate-100 dark:divide-slate-700">
+                    <tr class="animate-pulse"><td colspan="5" class="p-6 text-center text-slate-400 font-medium"><i class="fa-solid fa-spinner fa-spin mr-2 text-primary"></i> Sedang mengambil jurnal...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div id="modal-jurnal" class="hidden fixed inset-0 bg-black/50 z-[100] flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-800 rounded-xl shadow-xl w-full max-w-lg flex flex-col max-h-[90vh]">
+        <div class="flex justify-between items-center border-b border-slate-200 dark:border-slate-700 p-4 bg-indigo-50 dark:bg-indigo-900/30 rounded-t-xl">
+            <h3 class="text-lg font-bold text-indigo-700 dark:text-indigo-400"><i class="fa-solid fa-feather mr-2"></i> Tambah Catatan Jurnal</h3>
+            <button onclick="toggleModal('modal-jurnal')" class="text-slate-500 hover:text-red-500 text-xl font-bold">&times;</button>
+        </div>
+        <form id="form-jurnal" onsubmit="handleJurnalSubmit(event)" class="p-6 space-y-4 overflow-y-auto custom-scrollbar">
+            <div>
+                <label class="block text-sm font-bold mb-1">Nama Santri</label>
+                <select id="jurnal-santri" required class="w-full p-2 border border-slate-300 dark:border-slate-600 rounded bg-slate-50 dark:bg-slate-700 outline-none focus:ring-2 focus:ring-indigo-500">
+                    </select>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-bold mb-1">Kategori</label>
+                    <select id="jurnal-kategori" required class="w-full p-2 border border-slate-300 dark:border-slate-600 rounded bg-slate-50 dark:bg-slate-700 outline-none focus:ring-2 focus:ring-indigo-500">
+                        <option value="Tahfidz">Tahfidz (Hafalan)</option>
+                        <option value="Akhlak">Akhlak & Adab</option>
+                        <option value="Kedisiplinan">Kedisiplinan</option>
+                        <option value="Prestasi">Prestasi & Sekolah</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-bold mb-1">Level Urgensi</label>
+                    <select id="jurnal-urgensi" class="w-full p-2 border border-slate-300 dark:border-slate-600 rounded bg-slate-50 dark:bg-slate-700 outline-none focus:ring-2 focus:ring-indigo-500">
+                        <option value="Informasi">Informasi Biasa</option>
+                        <option value="Penting">Penting</option>
+                        <option value="Mendesak">Kritis/Butuh Tindakan</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <label class="block text-sm font-bold mb-1">Detail Catatan</label>
+                <textarea id="jurnal-detail" required rows="4" placeholder="Tuliskan kejadian atau perkembangan santri secara detail di sini..." class="w-full p-2 border border-slate-300 dark:border-slate-600 rounded bg-slate-50 dark:bg-slate-700 outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
+            </div>
+            <div class="flex justify-end space-x-3 pt-4 border-t border-slate-200 dark:border-slate-700 mt-4">
+                <button type="button" onclick="toggleModal('modal-jurnal')" class="px-4 py-2 bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-white rounded-lg font-bold hover:bg-slate-300 transition-colors">Batal</button>
+                <button type="submit" id="btn-submit-jurnal" class="px-5 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 font-bold shadow-md flex items-center transition-all">
+                    <i class="fa-solid fa-save mr-2"></i> Simpan Catatan
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
